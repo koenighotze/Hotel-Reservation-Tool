@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="integration-test" transaction-type="RESOURCE_LOCAL">
+    <!-- java se context still need explicit list of entities? -->
+    <class>demo.domain.Guest</class>
+    <class>demo.domain.Reservation</class>
+    <class>demo.domain.Room</class>
+    <class>demo.domain.RoomEquipmentConverter</class>
+    <class>demo.domain.ReservationStatusConverter</class>
+    <!-- actually this should gather all entities, but it does not? -->
+    <!--    <exclude-unlisted-classes>false</exclude-unlisted-classes>-->
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:testDB;create=true"/>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="javax.persistence.schema-generation.create-source" value="metadata"/>
+      <property name="javax.persistence.schema-generation.drop-source" value="metadata"/>
+      <property name="eclipselink.logging.level" value="FINE"/>
+      <property name="javax.persistence.sql-load-script-source" value="META-INF/prepareTestData.sql"/>
+    </properties>
+  </persistence-unit>
+</persistence>

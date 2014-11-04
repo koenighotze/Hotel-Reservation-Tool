@@ -1,0 +1,21 @@
+body {
+  padding-top: 50px;
+}
+
+.starter-template {
+  padding: 40px 15px;
+}
+
+label {
+  text-align: left;
+}
+
+input.input-error {
+  border-color: #a94442;
+}
+
+table tbody ul {
+  list-style: none;
+}
+
+/*# sourceMappingURL=default.css.map */

@@ -1,0 +1,25 @@
+$error_border_color : #a94442;
+
+body {
+  padding-top: 50px;
+}
+
+.starter-template {
+  padding: 40px 15px;
+}
+
+label {
+    text-align: left;
+}
+
+input.input-error {
+    border-color: $error_border_color;
+}
+
+table {
+    tbody {
+        ul {
+            list-style: none;
+        }
+    }
+}

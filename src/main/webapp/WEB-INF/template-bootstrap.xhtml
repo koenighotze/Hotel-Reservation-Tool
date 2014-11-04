@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <a href="template-bootstrap.xhtml"></a>
+        <meta name="description" content=""/>
+        <meta name="author" content="David Schmitz"/>
+        <!--    <link rel="icon" href="../../favicon.ico">-->
+
+        <title><ui:insert name="title">JEE Quickstart</ui:insert></title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="#{facesContext.externalContext.requestContextPath}/resources/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom styles for this template -->
+        <link href="#{facesContext.externalContext.requestContextPath}/resources/css/default.css" rel="stylesheet"/>
+
+        <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+        <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+        <!--    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </h:head>
+
+    <h:body>
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar">f</span>
+                        <span class="icon-bar">g</span>
+                        <span class="icon-bar">g</span>
+                    </button>
+                    <a class="navbar-brand" href="#{facesContext.externalContext.requestContextPath}">#{msgs.application_title}</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">                       
+                        <li><h:link outcome="/guestbook.xhtml?faces-redirect=true" value="#{msgs.nav_view_guestbook}"/></li>                        
+                        <li><h:link outcome="/room/rooms.xhtml?faces-redirect=true" value="#{msgs.nav_show_rooms}"/></li>
+                        <li><h:link outcome="/booking/bookings.xhtml?faces-redirect=true" value="#{msgs.nav_show_bookings}"/></li>
+                        <li><h:link outcome="/about.xhtml?faces-redirect=true" value="#{msgs.about}"/></li>            
+                        <li><h:link outcome="/contact.xhtml?faces-redirect=true" value="#{msgs.contact}"/></li>            
+                        
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{msgs.options}<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="dropdown-header">#{msgs.guestbook}</li>
+                                <li><h:link outcome="/guestbook.xhtml?faces-redirect=true" value="#{msgs.view_guestbook}"/></li>
+                                <li><h:link outcome="/add_new_guest.xhtml?faces-redirect=true" value="#{msgs.enter_guest_info}"/></li>    
+                                <li><h:link outcome="/booking/add_new_reservation_wizard.xhtml?faces-redirect=true" value="#{msgs.nav_add_reservation}"/></li>
+                                <li><h:link outcome="/booking/bookings.xhtml?faces-redirect=true" value="#{msgs.nav_show_bookings}"/></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">#{msgs.other}</li>
+                                <li><a href="#">Admin</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form method="post" action="j_security_check" class="navbar-form navbar-right" role="form"> 
+                        <div class="form-group">
+                          <input type="text" placeholder="Username" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="Password" class="form-control"/>
+                        </div>
+                        <button type="submit" class="btn btn-success">Sign in</button>
+                    </form>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+
+        
+        <div class="container">
+            <div class="starter-template">
+                <div class="page-header"><h1>
+                    <ui:insert name="page_header">Page Header</ui:insert>
+                    </h1>
+                </div>
+                
+                <h:panelGroup id="messagesPanel">
+                    <ui:fragment rendered="#{!empty(facesContext.messageList)}">
+                        <ui:repeat var="msg" value="#{facesContext.messageList}">                       
+                            <div class="alert #{facesMessageHelper.getStyleClassFor(msg)}" role="alert">
+                                #{msg.summary}
+                            </div>    
+                        </ui:repeat>                                        
+                    </ui:fragment>    
+                </h:panelGroup>
+                
+                
+                <ui:insert name="content">Content</ui:insert>
+                
+                
+            </div>
+            
+            <footer>
+                <p>(c) DS, 2014</p>
+            </footer>
+        </div><!-- /.container -->
+
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="#{facesContext.externalContext.requestContextPath}/resources/js/bootstrap.min.js"></script>
+    </h:body>
+</html>

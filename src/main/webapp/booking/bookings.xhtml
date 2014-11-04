@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="/WEB-INF/template-bootstrap.xhtml">
+            <ui:define name="page_header">
+                #{msgs.bookings}
+            </ui:define>
+
+            <ui:define name="content">
+                <!-- todo filter area -->
+                <ui:fragment rendered="#{empty(bookingsBean.bookings)}">
+                    <div class="alert alert-warning" role="alert">
+                        #{msgs.no_bookings_so_far}                    
+                    </div>
+                </ui:fragment>
+                <!-- todo hide columns on mobiles -->
+                <ui:fragment rendered="#{!empty(bookingsBean.bookings)}">
+                    <div class="bookings">                       
+                        <h:dataTable var="booking" 
+                                     value="#{bookingsBean.bookings}" 
+                                     styleClass="table table-striped">
+                            <h:column>
+                                <f:facet name="header">#{msgs.actions}</f:facet>
+                                <ul class="action_items">
+                                    <li>                                    
+                                        <h:link outcome="/booking/booking.xhtml?faces-redirect=true" 
+                                                includeViewParams="true"
+                                                value="#{msgs.details}">
+                                            <f:param name="bookingId"
+                                                     value="#{booking.id}" />
+                                        </h:link>
+
+                                    </li>
+                                </ul>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{msgs.id}</f:facet>
+                                    #{booking.id}                             
+                            </h:column>                            
+                            <h:column>
+                                <f:facet name="header">#{msgs.room_number}</f:facet>
+                                    #{booking.assignedRoom.roomNumber}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{msgs.guest_id}</f:facet>
+                                    #{booking.guest.id}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{msgs.guest_name}</f:facet>
+                                    #{booking.guest.name}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{msgs.checkin_date}</f:facet>
+                                <h:outputFormat value="#{booking.checkinDate}">
+                                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                                </h:outputFormat>
+                            </h:column>    
+                            <h:column>
+                                <f:facet name="header">#{msgs.checkout_date}</f:facet>
+                                <h:outputFormat value="#{booking.checkoutDate}">
+                                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                                </h:outputFormat>
+                            </h:column>    
+                            <h:column>
+                                <f:facet name="header">#{msgs.status}</f:facet>
+                                    #{booking.reservationStatus}
+                            </h:column>    
+                        </h:dataTable>
+                    </div>
+                </ui:fragment>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,19 @@
+<arquillian xmlns="http://jboss.org/schema/arquillian"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://jboss.org/schema/arquillian
+        http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+<!--    <container qualifier="jbossas-7-managed" default="true">
+        <configuration>
+            <property name="jbossHome">${jboss.home}</property>
+        </configuration>               
+    </container>
+        
+    <container qualifier="glassfish" default="false">
+        <configuration>
+            <property name="glassFishHome">${glassfish.home}</property>
+            <property name="adminHost">localhost</property>
+            <property name="adminPort">4848</property>
+        </configuration>
+    </container>-->
+</arquillian>
