@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
@@ -77,7 +78,7 @@ public class NewReservationBean implements Serializable {
             room = this.roomService.findRoomById(this.roomId);
             if (null == room) {
                 FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, 
                                 "Cannot find room " + this.roomId, null));
             }
         }
@@ -87,7 +88,7 @@ public class NewReservationBean implements Serializable {
             guest = this.guestService.findById(this.guestId);
             if (null == guest) {
                 FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, 
                                 "Cannot find guest " + this.guestId, null));
             }
         }
@@ -107,20 +108,19 @@ public class NewReservationBean implements Serializable {
     }
     
     public void setRoomNumber(String number) {
-        System.err.println("Setting room to " +number);
         Room room = this.roomService.findRoomByNumber(number);
         if (null == room) {
             FacesMessage message 
                     = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot find room with number " + number, "");
             FacesContext.getCurrentInstance().addMessage(null, message);
-        
+            return;
         }
+        this.roomId = room.getId();
         this.booking.setRoom(room);
     }
     
     public String getRoomNumber() {
         if (null == this.booking.getRoom()) {
-            System.err.println("No Room set!");
             return null;
         }
         
@@ -134,8 +134,16 @@ public class NewReservationBean implements Serializable {
                 = this.bookingService.bookRoom(this.booking.getGuest(), this.booking.getRoom(),                        
                         this.booking.getCheckinDate(), this.booking.getCheckoutDate());
         
-        FacesMessage message = new FacesMessage("Room " + this.booking.getRoom().getRoomNumber() 
-                + " booked for " + this.booking.getGuest() + "; Reservation number " + realReservation.getReservationNumber());
+        Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+        flash.setKeepMessages(true);
+        FacesMessage message = new FacesMessage("Room " 
+                + this.booking.getRoom().getRoomNumber() 
+                + " booked for " 
+                + this.booking.getGuest() 
+                + "; Reservation number " 
+                + realReservation.getReservationNumber() 
+                + " Costs: " 
+                + realReservation.getCostsInEuro() + " EUR");
         FacesContext.getCurrentInstance().addMessage(null, message);
         this.booking = null;
     }

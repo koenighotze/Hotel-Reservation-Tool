@@ -9,5 +9,6 @@ package demo.domain;
 public enum ReservationStatus {
     OPEN,
     REJECTED,
-    CONFIRMED
+    CONFIRMED,
+    CANCELED
 }

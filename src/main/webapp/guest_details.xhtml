@@ -16,7 +16,13 @@
         <ui:define name="page_header">
             #{msgs.guest_details}
         </ui:define>
-        <ui:define name="content">         
+        <ui:define name="content"> 
+            <ui:fragment rendered="#{empty(guestDetailsBean.guest)}">
+                <div class="alert alert-warning" role="alert">
+                    #{msgs.guest_not_found}                    
+                </div>
+            </ui:fragment>
+            
             <ui:fragment rendered="#{!empty(guestDetailsBean.guest)}">
                 <h:form>
                     <div class="form-group">                                                            

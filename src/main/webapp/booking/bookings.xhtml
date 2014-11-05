@@ -32,16 +32,16 @@
                                         <h:link outcome="/booking/booking.xhtml?faces-redirect=true" 
                                                 includeViewParams="true"
                                                 value="#{msgs.details}">
-                                            <f:param name="bookingId"
-                                                     value="#{booking.id}" />
+                                            <f:param name="reservationNumber"
+                                                     value="#{booking.reservationNumber}" />
                                         </h:link>
 
                                     </li>
                                 </ul>
                             </h:column>
                             <h:column>
-                                <f:facet name="header">#{msgs.id}</f:facet>
-                                    #{booking.id}                             
+                                <f:facet name="header">#{msgs.reservation_number}</f:facet>
+                                    #{booking.reservationNumber}                             
                             </h:column>                            
                             <h:column>
                                 <f:facet name="header">#{msgs.room_number}</f:facet>
@@ -54,6 +54,12 @@
                             <h:column>
                                 <f:facet name="header">#{msgs.guest_name}</f:facet>
                                     #{booking.guest.name}
+                            </h:column>
+                             <h:column>
+                                <f:facet name="header">#{msgs.costs_in_euros}</f:facet>
+                                    <h:outputFormat value="#{booking.costsInEuro}">
+                                        <f:convertNumber currencyCode="EUR" type="currency"/>
+                                    </h:outputFormat>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">#{msgs.checkin_date}</f:facet>
@@ -69,7 +75,7 @@
                             </h:column>    
                             <h:column>
                                 <f:facet name="header">#{msgs.status}</f:facet>
-                                    #{booking.reservationStatus}
+                                    #{msgs[booking.reservationStatus]}
                             </h:column>    
                         </h:dataTable>
                     </div>

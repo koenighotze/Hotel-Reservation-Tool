@@ -4,7 +4,6 @@ package demo.frontend;
 
 import demo.business.BookingService;
 import demo.domain.Reservation;
-import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;

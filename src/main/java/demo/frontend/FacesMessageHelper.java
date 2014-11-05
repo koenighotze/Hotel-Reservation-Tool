@@ -15,6 +15,12 @@ import javax.inject.Named;
 @Named
 @ApplicationScoped
 public class FacesMessageHelper {
+    public static void addMessage(String clientId, FacesMessage.Severity severity, String summary, String details) {
+        FacesContext.getCurrentInstance().addMessage(clientId,
+                    new FacesMessage(severity,
+                        summary, details));
+    }
+    
     public boolean isErrorMessage(FacesMessage message) {
         return message.getSeverity().equals(FacesMessage.SEVERITY_ERROR);
     }
