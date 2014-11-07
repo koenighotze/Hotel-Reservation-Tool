@@ -14,3 +14,5 @@ derby.log
 faces-config.NavData
 target
 nb-configuration.xml
+.idea
+*.iml

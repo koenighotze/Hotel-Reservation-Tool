@@ -89,6 +89,20 @@
             <scope>test</scope>
         </dependency>     
         
+         <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-api-maven</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        
         <dependency>
             <groupId>org.jboss.weld</groupId>
             <artifactId>weld-core</artifactId>
@@ -110,7 +124,7 @@
             <scope>test</scope>
         </dependency>
         
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
             <version>2.5.2</version>
@@ -436,12 +450,12 @@
                     <version>1.0.0.CR3</version>
                     <scope>test</scope>
                 </dependency>
-                <dependency>
+                <!-- <dependency>
                     <groupId>org.glassfish.main.extras</groupId>
                     <artifactId>glassfish-embedded-all</artifactId>
                     <version>3.1.2</version>
                     <scope>provided</scope>
-                </dependency>
+                </dependency> -->
             </dependencies>
         </profile>
     </profiles>

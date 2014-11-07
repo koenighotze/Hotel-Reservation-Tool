@@ -29,6 +29,23 @@ mvn wildfly:run
 mvn wildfly:deploy -Dforce=true
 ```
 
+
+How to run integration tests
+----------------------------
+
+
+###Wildfly
+Remember to set ```-Djboss.home``` or similar!
+
+```
+mvn -o clean integration-test verify  -Djboss.home= -Pwildfly-managed-integration-tests
+```
+
+###Glassfish
+```
+mvn clean integration-test verify -Pglassfish-integration-tests
+```
+
 Introduction
 ------------
 
@@ -40,32 +57,32 @@ Introduction
 
 Presentation layer
 ------------------
-[ ] Basic JSF 2.2
-[ ] Ajax
-[ ] HTML 5 integration
-[ ] Flows
+* Basic JSF 2.2
+* Ajax
+* HTML 5 integration
+* Flows
 
 
 Business layer
 --------------
-[ ] Security
-[ ] REST
-[ ] IIOP
-[ ] WebSocket
+* Security
+* REST
+* IIOP
+* WebSocket
 
 Domain layer
 ------------
-[ ] Basic JPA
-[ ] Criteria API
-[ ] Stored Procedures
-[ ] Events, PostTransaction Events
-
+* Basic JPA
+* Criteria API
+* Stored Procedures
+* Events
+* PostTransaction Events
+* EntityListener
 
 
 Testing
 -------
-[ ] Arquillian
-[ ] DeltaSpike
-[ ] WeldSE, CDIUnit
-mvn -o clean integration-test verify -Djboss.home=/Users/dschmitz/dev/java/javaee7_tutorial/wildfly-8.1.0.Final/  
-mvn clean integration-test -Djboss.home=/Users/dschmitz/dev/java/javaee7_tutorial/wildfly-8.1.0.Final/ -Pglassfish-integration-tests
+* Arquillian
+* DeltaSpike
+* WeldSE, CDIUnit
+
