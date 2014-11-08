@@ -2,11 +2,11 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="integration-test" transaction-type="RESOURCE_LOCAL">
     <!-- java se context still need explicit list of entities? -->
-    <class>demo.domain.Guest</class>
-    <class>demo.domain.Reservation</class>
-    <class>demo.domain.Room</class>
-    <class>demo.domain.RoomEquipmentConverter</class>
-    <class>demo.domain.ReservationStatusConverter</class>
+    <class>org.koenighotze.jee7hotel.domain.Guest</class>
+    <class>org.koenighotze.jee7hotel.domain.Reservation</class>
+    <class>org.koenighotze.jee7hotel.domain.Room</class>
+    <class>org.koenighotze.jee7hotel.domain.RoomEquipmentConverter</class>
+    <class>org.koenighotze.jee7hotel.domain.ReservationStatusConverter</class>
     <!-- actually this should gather all entities, but it does not? -->
     <!--    <exclude-unlisted-classes>false</exclude-unlisted-classes>-->
     <exclude-unlisted-classes>true</exclude-unlisted-classes>

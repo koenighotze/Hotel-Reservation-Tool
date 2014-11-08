@@ -3,15 +3,9 @@
               xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-
-    
     <application>
-<!--         <locale-config>
-            <default-locale>en_US</default-locale>
-            <supported-locale>en_US</supported-locale>
-        </locale-config>-->
         <resource-bundle>
-            <base-name>demo.messages</base-name>
+            <base-name>org.koenighotze.jee7hotel.messages</base-name>
             <var>msgs</var>
         </resource-bundle>
     </application>

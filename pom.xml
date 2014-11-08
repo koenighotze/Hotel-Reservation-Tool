@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.koenighotze</groupId>
-    <artifactId>jee7quickstart</artifactId>
+    <artifactId>jee7hotel</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     
@@ -19,35 +19,18 @@
     </properties>
     
     <scm>
-        <url>https://github.com/senacor/fullstackweb_training</url>
-        <connection>scm:git:git://github.com/senacor/fullstackweb_training.git</connection>
-        <developerConnection>scm:git:git@github.com:senacor/fullstackweb_training.git</developerConnection>
+        <url>https://github.com/koenighotze/jee7hotelreservationtool</url>
+        <connection>scm:git:git@github.com:koenighotze/jee7hotelreservationtool.git</connection>
+        <developerConnection>scm:git:git@github.com:koenighotze/jee7hotelreservationtool.git</developerConnection>
     </scm>    
     
-    <dependencies>
-      
-        <!--        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency>-->
-        
-        <!--         <dependency>
-            <groupId>org.glassfish.extras</groupId>
-            <artifactId>glassfish-embedded-all</artifactId>
-            <version>3.1</version>
-            <scope>provided</scope>
-        </dependency>-->
-        
+    <dependencies>    
         <dependency>
             <groupId>org.glassfish.main.extras</groupId>
             <artifactId>glassfish-embedded-all</artifactId>
             <version>4.1</version>
             <scope>provided</scope>
         </dependency>
-
-
         
         <dependency>
             <groupId>junit</groupId>
@@ -101,8 +84,7 @@
             <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
             <scope>test</scope>
         </dependency>
-        
-        
+                
         <dependency>
             <groupId>org.jboss.weld</groupId>
             <artifactId>weld-core</artifactId>
@@ -123,23 +105,16 @@
             <version>10.7.1.1</version>
             <scope>test</scope>
         </dependency>
-        
-        <!--        <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
-            <version>2.5.2</version>
-        </dependency>-->
-
+                
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>2.5</version>
         </dependency>
 
-
     </dependencies>
     <build>
-        <finalName>jee7quickstart</finalName>
+        <finalName>jee7hotel</finalName>
 
         <resources>
             <resource>
@@ -195,50 +170,24 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>1.0.2.Final</version>
-                <!-- <executions>
-                    <execution>
-                        <id>add-datasource</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>add-resource</goal>
-                        </goals>
-                        <configuration>
-                            <address>subsystem=datasources,data-source=java:jboss/myDs</address>
-                            <resources>
-                                <resource>
-                                    <properties>
-                                        <jndi-name>java:jboss/myDs</jndi-name>
-                                        <enabled>true</enabled>
-                                        <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</connection-url>
-                                        <driver-class>org.h2.Driver</driver-class>
-                                        <driver-name>h2</driver-name>
-                                        <user-name>sa</user-name>
-                                        <password>sa</password>
-                                    </properties>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions> -->
-
+                <version>1.0.2.Final</version>                
             </plugin>
+
             <plugin>
                 <groupId>org.glassfish.embedded</groupId>
                 <artifactId>maven-embedded-glassfish-plugin</artifactId>
                 <version>4.0</version>
                 <configuration>
-                    <app>target/jee7quickstart</app>
+                    <app>target/jee7hotel</app>
                     <port>${glassfish.port}</port>
-                    <contextRoot>/jee7quickstart</contextRoot>
+                    <contextRoot>/jee7hotel</contextRoot>
                 </configuration>
                 <goals>
                     <goal>run</goal>
                     <goal>deploy</goal>
                 </goals>
             </plugin>
-           
-            
+                       
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
@@ -261,8 +210,7 @@
                     <revisionOnScmFailure/>
                 </configuration>
             </plugin>
-      
-            
+                  
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
