@@ -8,7 +8,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,12 +38,26 @@ public class BookingService {
     @PersistenceContext
     private EntityManager em;
 
+    @Inject
+    private Event<NewReservationEvent> reservationEvents;
+    
+    @Inject
+    private Event<ReservationStatusChangeEvent> reservationConfirmedEvents;
+    
+    private static final Logger LOGGER = Logger.getLogger(BookingService.class.getName());
+    
     public void cancelReservation(Reservation reservation) {
         // TODO: refactor such that op. of. lock is used
         Reservation current = this.em.find(Reservation.class, reservation.getId());
+        if (null == current) {
+            LOGGER.log(Level.WARNING, "Cannot find reservation {0}", reservation.getId());
+            return;
+        }
+        
         current.setReservationStatus(ReservationStatus.CANCELED);
     }
 
+    // TODO: extract to calculation strategy or similar
     public BigDecimal calculateRateFor(Room room, Date checkin, Date checkout) {
         // rather simple...
         DateTime dtCi = new DateTime(checkin);
@@ -65,6 +83,7 @@ public class BookingService {
         return rate.multiply(BigDecimal.valueOf(days));
     }
 
+    // 
     public String newReservationNumer() {
         return UUID.randomUUID().toString();
     }
@@ -75,6 +94,8 @@ public class BookingService {
         return query.getResultList();
     }
 
+    
+    // TODO: protect using basic auth
     @GET
     @Produces({"application/xml", "application/json"})
     public List<Reservation> getAllReservations() {
@@ -87,7 +108,10 @@ public class BookingService {
         Reservation reservation = new Reservation(guest, newReservationNumer(), room, checkin, checkout, calculateRateFor(room, checkin, checkout));
 
         this.em.persist(reservation);
-
+        
+        if (null != this.reservationEvents)
+            this.reservationEvents.fire(new NewReservationEvent(reservation.getReservationNumber()));
+        
         return reservation;
     }
 
@@ -99,6 +123,7 @@ public class BookingService {
         TypedQuery<Reservation> query = this.em.createQuery("from Reservation r where r.reservationNumber = :number", Reservation.class);
         query.setParameter("number", reservationNumber);
         if (query.getResultList().size() == 0) {
+            LOGGER.log(Level.WARNING, "Cannot find reservation {0}", reservationNumber);
             return null;
         }
 
@@ -109,5 +134,17 @@ public class BookingService {
         // TODO: refactor such that op. of. lock is used
         Reservation current = this.em.find(Reservation.class, reservation.getId());
         current.setReservationStatus(ReservationStatus.OPEN);
+    }
+
+    public void confirmReservation(String reservationNumber) {
+        Reservation reservation = findReservationByNumber(reservationNumber);
+        
+        if (null == reservation) {
+            LOGGER.log(Level.WARNING, "Cannot find reservation {0}", reservationNumber);
+            return;
+        } 
+        reservation.setReservationStatus(ReservationStatus.CONFIRMED);
+        
+        this.reservationConfirmedEvents.fire(new ReservationStatusChangeEvent(reservationNumber, null, ReservationStatus.CONFIRMED));
     }
 }

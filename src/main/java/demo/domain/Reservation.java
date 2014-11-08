@@ -2,6 +2,7 @@ package demo.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.enterprise.event.Event;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -58,7 +59,7 @@ public class Reservation {
     private Long version;
     
   
-    
+   
     
     Reservation() {        
     }

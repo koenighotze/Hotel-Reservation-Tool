@@ -26,9 +26,9 @@
             
             
             <ui:fragment rendered="#{!empty(bookingDetailsBean.reservation)}">
-
+                
                 <form jsf:id="bookingDetailsForm">
-                    <div class="form-group">                                                            
+                    <div class="form-group" >                                                            
                         <label for="reservation_number">#{msgs.reservation_number}</label>
                         <h:inputText id="reservation_number"
                                      value="#{bookingDetailsBean.reservation.reservationNumber}"
@@ -107,8 +107,12 @@
                         </ui:fragment>
                     </div>
                 </form>
-
-            </ui:fragment>    
+            </ui:fragment> 
+                        
+        </ui:define>
+        
+        <ui:define name="miscjavascript">
+            <script src="#{facesContext.externalContext.requestContextPath}/resources/js/update_booking.js"></script>
         </ui:define>
     </ui:composition>
 </html>

@@ -129,7 +129,7 @@ public class NewReservationBean implements Serializable {
            
     
     
-    public void addReservation() {         
+    public String addReservation() {         
         Reservation realReservation 
                 = this.bookingService.bookRoom(this.booking.getGuest(), this.booking.getRoom(),                        
                         this.booking.getCheckinDate(), this.booking.getCheckoutDate());
@@ -146,6 +146,8 @@ public class NewReservationBean implements Serializable {
                 + realReservation.getCostsInEuro() + " EUR");
         FacesContext.getCurrentInstance().addMessage(null, message);
         this.booking = null;
+        
+        return String.format("/booking/booking.xhtml?reservationNumber=%s&faces-redirect=true", realReservation.getReservationNumber());
     }
     
     

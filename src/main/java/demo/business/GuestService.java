@@ -2,8 +2,8 @@ package demo.business;
 
 import demo.domain.Guest;
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
-import javax.ejb.Stateless;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -15,14 +15,18 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 /**
- *
+ * Sample for a REST-based bean, that can also be used locally.
+ * 
  * @author dschmitz
  */
 @Named
 @ApplicationScoped
 @Path("guest")
+@Transactional
 // @RolesAllowed({ "ADMIN" })
 public class GuestService {
+    private static final Logger LOGGER = Logger.getLogger(GuestService.class.getName());
+    
     @PersistenceContext
     private EntityManager em;
 
@@ -35,6 +39,8 @@ public class GuestService {
         this.em.persist(guest);
     }
        
+    
+    // TODO: protect using basic auth!
     @GET
     @Produces({"application/xml", "application/json"})
     public List<Guest> findAllGuests() {
@@ -52,7 +58,5 @@ public class GuestService {
             return null;
         }        
         return this.em.merge(guest);
-        
-        
     }
 }

@@ -7,6 +7,8 @@ import demo.domain.Room;
 import demo.domain.RoomEquipment;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -26,6 +28,8 @@ import javax.transaction.Transactional;
 @ApplicationScoped
 @Transactional
 public class RoomService {
+    
+    private static final Logger LOGGER = Logger.getLogger(RoomService.class.getName());
     @PersistenceContext
     private EntityManager em;
     
@@ -34,7 +38,7 @@ public class RoomService {
     }
     
     public List<Room> findAvailableRooms(Date checkinDate, Date checkoutDate, RoomEquipment equiment) {
-        return null;
+        throw new UnsupportedOperationException("not implemented yet");
     }
     
     public List<Room> getAllRooms() {
@@ -48,6 +52,7 @@ public class RoomService {
         query.setParameter("number", roomNumber);
         List<Room> resultList = query.getResultList();
         if (resultList.size() == 0) {
+            LOGGER.log(Level.WARNING, "Cannot find room {0}", roomNumber);
             return null;
         }
         return resultList.get(0);

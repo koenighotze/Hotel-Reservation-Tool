@@ -23,6 +23,7 @@
                 <ui:fragment rendered="#{!empty(bookingsBean.bookings)}">
                     <div class="bookings">                       
                         <h:dataTable var="booking" 
+                                     id="bookingstable"
                                      value="#{bookingsBean.bookings}" 
                                      styleClass="table table-striped">
                             <h:column>
@@ -75,7 +76,8 @@
                             </h:column>    
                             <h:column>
                                 <f:facet name="header">#{msgs.status}</f:facet>
-                                    #{msgs[booking.reservationStatus]}
+                                <ui:remove>Provide id such that javascript can find this element</ui:remove>
+                                <span id="status_#{booking.reservationNumber}">#{msgs[booking.reservationStatus]}</span>
                             </h:column>    
                         </h:dataTable>
                     </div>
@@ -84,6 +86,11 @@
 
             </ui:define>
 
+            <ui:define name="miscjavascript">
+                <script src="#{facesContext.externalContext.requestContextPath}/resources/js/update_bookings.js"></script>
+            </ui:define>
+
+            
         </ui:composition>
 
     </body>
