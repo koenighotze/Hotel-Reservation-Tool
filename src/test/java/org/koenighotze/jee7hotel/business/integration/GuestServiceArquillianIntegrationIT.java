@@ -7,6 +7,7 @@ import org.koenighotze.jee7hotel.domain.Guest;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -30,11 +31,15 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 @RunWith(Arquillian.class)
 public class GuestServiceArquillianIntegrationIT {
     
+    private static final Logger LOGGER = Logger.getLogger(GuestServiceArquillianIntegrationIT.class.getName());
+    
     @Inject
     private GuestService guestService;
     
     @Deployment
     public static Archive<?> createMicroDeployment() {
+        
+        Thread.dumpStack();
         // get special integration test persistence unit
         String asset = AssetUtil
                 .getClassLoaderResourceName(GuestServiceArquillianIntegrationIT.class.getPackage(), 
@@ -47,11 +52,12 @@ public class GuestServiceArquillianIntegrationIT {
                 .withTransitivity()
                 .asFile();
                         
+        LOGGER.info("Adding as dependencies " + Arrays.toString(deps));
                      
         WebArchive archiv = ShrinkWrap.create(WebArchive.class)
                 // add demo and all recursive packages 
                 // as of yet, we do not deploy the web layer   
-                .addPackages(true, "demo.business", "demo.domain") 
+                .addPackages(true, "org.koenighotze.jee7hotel.business", "org.koenighotze.jee7hotel.domain") 
                 .addAsResource(asset, "META-INF/persistence.xml")
                 // this is not needed for jee7
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
@@ -60,7 +66,7 @@ public class GuestServiceArquillianIntegrationIT {
             archiv.addAsLibraries(f);
         }
         
-        System.out.println(archiv.toString(Formatters.VERBOSE));
+        LOGGER.info(archiv.toString(Formatters.VERBOSE));
         return archiv;
     }
     

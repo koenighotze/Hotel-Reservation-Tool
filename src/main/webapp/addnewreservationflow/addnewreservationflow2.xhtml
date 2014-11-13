@@ -9,10 +9,16 @@
 
     <ui:composition template="/WEB-INF/template-bootstrap.xhtml">
         <ui:define name="page_header">
-            #{msgs.room_details}
+             #{msgs.add_new_reservation_wizard_choose_params}
         </ui:define>
-        <ui:define name="content">         
-            Under construction...
+        <ui:define name="content">      
+            Page 2
+            <p>Has a flow: #{null != facesContext.application.flowHandler.currentFlow}.</p>
+            
+            <h:form prependId="false">
+                 <p><h:commandButton id="prev" value="#{msgs.back_select_guest}" action="addnewreservationflow" /></p>
+                 <p><h:commandButton id="next" value="#{msgs.next_choose_room}" action="addnewreservationflow3" /></p>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>

@@ -13,6 +13,7 @@ tutorial/course.
 The main fictional background is a pseudo Hotel Reservation Frontend used by receptionist.
 
 Key technologies include:
+
 * JSF 2.2
 * CDI 1.1
 * EJB 3.2
@@ -25,7 +26,18 @@ Key technologies include:
 * Selenium for UI testing
 * SASS 
 
+The todo list includes (among other stuff):
+
+* Thymeleaf
+* Docker or such
+* AngularJS Demo
+* Generating reports/graphs using d3.js
+* load testing loader.io
+* Authentication using OAuth
+
+
 Pseudo use cases are chosen only to demonstrate certain technologies, obviously not all are implemented yet:
+
 * CRUD Frontends for Reservations, Guests, Rooms (CLERK role only)
 * Import and export for administrators (via REST, ADMINISTRATOR role only)
 * CRUD for clerks for administrator (via REST, ADMINISTRATOR, role only)
@@ -35,6 +47,7 @@ Pseudo use cases are chosen only to demonstrate certain technologies, obviously 
 
 How to build and run
 --------------------
+
 In short: 
 
 ```
@@ -62,6 +75,7 @@ How to run integration tests
 
 
 ###Wildfly
+
 Remember to set ```-Djboss.home``` or similar!
 
 ```
@@ -84,6 +98,7 @@ Introduction
 
 Presentation layer
 ------------------
+
 * Basic JSF 2.2
 * Ajax
 * HTML 5 integration
@@ -91,11 +106,13 @@ Presentation layer
 
 Business layer
 --------------
+
 * REST
 * WebSocket
 
 Domain layer
 ------------
+
 * Basic JPA
 * Criteria API
 * Events
