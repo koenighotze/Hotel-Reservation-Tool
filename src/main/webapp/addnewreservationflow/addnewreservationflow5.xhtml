@@ -7,7 +7,7 @@
 
     <ui:composition template="/WEB-INF/template-bootstrap.xhtml">
         <ui:define name="page_header">
-            #{msgs.add_new_reservation_wizard_choose_params}
+            #{msgs.add_new_reservation_wizard_verify_and_confirm}
         </ui:define>
 
         <ui:define name="content">
@@ -16,22 +16,19 @@
                 INSERT FORM HERE
 
                 <div class="btn-toolbar">
+
                     <h:commandButton styleClass="btn btn-sm"
                                      id="prev"
-                                     value="#{msgs.btn_prev_choose_guest}"
-                                     action="addnewreservationflow2" />
-
+                                     value="#{msgs.btn_prev_choose_room}"
+                                     action="addnewreservationflow4" />
                     <h:commandButton styleClass="btn btn-primary btn-sm"
                                      id="next"
-                                     value="#{msgs.btn_next_choose_room}"
-                                     action="addnewreservationflow4" />
+                                     value="#{msgs.btn_book_room}"
+                                     action="returnFromAddnewreservationflow" />
+
                 </div>
             </h:form>
         </ui:define>
-
-
-
-
 
     </ui:composition>
 </html>

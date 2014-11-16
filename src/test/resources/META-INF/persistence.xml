@@ -5,8 +5,9 @@
     <class>org.koenighotze.jee7hotel.domain.Guest</class>
     <class>org.koenighotze.jee7hotel.domain.Reservation</class>
     <class>org.koenighotze.jee7hotel.domain.Room</class>
-    <class>org.koenighotze.jee7hotel.domain.RoomEquipmentConverter</class>
-    <class>org.koenighotze.jee7hotel.domain.ReservationStatusConverter</class>
+    <class>org.koenighotze.jee7hotel.domain.converter.RoomEquipmentConverter</class>
+    <class>org.koenighotze.jee7hotel.domain.converter.ReservationStatusConverter</class>
+    <class>org.koenighotze.jee7hotel.domain.converter.LocalDateConverter</class>
     <!-- actually this should gather all entities, but it does not? -->
     <!--    <exclude-unlisted-classes>false</exclude-unlisted-classes>-->
     <exclude-unlisted-classes>true</exclude-unlisted-classes>

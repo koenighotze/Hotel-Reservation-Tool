@@ -1,6 +1,6 @@
 
 
-package org.koenighotze.jee7hotel.business;
+package org.koenighotze.jee7hotel.business.events;
 
 /**
  *

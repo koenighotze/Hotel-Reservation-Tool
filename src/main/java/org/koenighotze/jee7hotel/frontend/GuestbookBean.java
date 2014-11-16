@@ -2,18 +2,17 @@ package org.koenighotze.jee7hotel.frontend;
 
 import org.koenighotze.jee7hotel.business.GuestService;
 import org.koenighotze.jee7hotel.domain.Guest;
-import java.util.List;
+
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Model;
 import javax.inject.Inject;
-import javax.inject.Named;
+import java.util.List;
 
 /**
  *
  * @author dschmitz
  */
-@Named
-@RequestScoped
+@Model
 public class GuestbookBean {
     @Inject
     private GuestService guestService;
@@ -33,6 +32,6 @@ public class GuestbookBean {
     
     @PostConstruct
     public void init() {
-        this.guestList = this.guestService.findAllGuests();
+        this.guestList = this.guestService.getAllGuests();
     }    
 }

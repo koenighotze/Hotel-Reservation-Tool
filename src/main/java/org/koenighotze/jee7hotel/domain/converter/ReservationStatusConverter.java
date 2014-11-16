@@ -1,6 +1,8 @@
 
 
-package org.koenighotze.jee7hotel.domain;
+package org.koenighotze.jee7hotel.domain.converter;
+
+import org.koenighotze.jee7hotel.domain.ReservationStatus;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

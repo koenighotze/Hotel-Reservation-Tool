@@ -2,19 +2,17 @@ package org.koenighotze.jee7hotel.frontend;
 
 import org.koenighotze.jee7hotel.business.GuestService;
 import org.koenighotze.jee7hotel.domain.Guest;
-import java.io.Serializable;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
+import java.util.Optional;
 
+import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
 /**
  *
  * @author dschmitz
@@ -33,19 +31,17 @@ public class GuestDetailsBean implements Serializable {
     public void loadGuest(ComponentSystemEvent evt) {
         if (null == this.guestId) {
             this.guest = new Guest("", "");
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        "No guest id provided!", null));
+            addMessage(FacesMessage.SEVERITY_ERROR,
+                    "No guest id provided!");
             return;
         }
         if (null == this.guest) {
-            this.guest = this.service.findById(this.guestId);
-            if (null == this.guest) {
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                                "Cannot find guest " + this.guestId, null));
-                
-            }             
+            this.guest = this.service.findById(this.guestId)
+                    .orElseGet(() -> {
+                        addMessage(FacesMessage.SEVERITY_ERROR,
+                                "Cannot find guest " + this.guestId);
+                        return new Guest("", "");
+                    });
         }
     }
     
@@ -69,15 +65,14 @@ public class GuestDetailsBean implements Serializable {
     }
 
     public void saveChanges() {
-        Guest updated = this.service.updateGuestDetails(this.guest);
-        if (null == updated) {
+        Optional<Guest> updated = this.service.updateGuestDetails(this.guest);
+        if (!updated.isPresent()) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot update guest " + this.guest, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
             return;
         }
 
-        FacesMessage message = new FacesMessage("Guest updated: " + this.guest);
-        FacesContext.getCurrentInstance().addMessage(null, message);
+        addMessage(FacesMessage.SEVERITY_INFO, "Guest updated: " + updated.get());
 
         this.guest = null;
     }

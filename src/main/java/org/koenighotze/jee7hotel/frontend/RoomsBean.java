@@ -4,20 +4,19 @@ package org.koenighotze.jee7hotel.frontend;
 
 import org.koenighotze.jee7hotel.business.RoomService;
 import org.koenighotze.jee7hotel.domain.Room;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.inject.Named;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.inject.Model;
+import javax.faces.application.FacesMessage;
+import javax.inject.Inject;
+import java.util.List;
+
+import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
 /**
  *
  * @author dschmitz
  */
-@Named
-@RequestScoped
+@Model
 public class RoomsBean {
     @Inject
     private RoomService roomService;
@@ -28,9 +27,8 @@ public class RoomsBean {
         this.rooms = this.roomService.getAllRooms();
         
         if (this.rooms.isEmpty()) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        "No rooms found!", null));
+            addMessage(FacesMessage.SEVERITY_ERROR,
+                        "No rooms found!");
         }
     }
     

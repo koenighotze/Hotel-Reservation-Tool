@@ -2,22 +2,19 @@
 
 package org.koenighotze.jee7hotel.business;
 
-import org.koenighotze.jee7hotel.domain.Guest;
 import org.koenighotze.jee7hotel.domain.Room;
 import org.koenighotze.jee7hotel.domain.RoomEquipment;
+
+import javax.ejb.Stateless;
+import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.transaction.Transactional;
 
 /**
  *
@@ -25,8 +22,7 @@ import javax.transaction.Transactional;
  * 
  */
 @Named
-@ApplicationScoped
-@Transactional
+@Stateless
 public class RoomService {
     
     private static final Logger LOGGER = Logger.getLogger(RoomService.class.getName());
@@ -48,7 +44,7 @@ public class RoomService {
     }
 
     public Room findRoomByNumber(String roomNumber) {
-        TypedQuery<Room> query = this.em.createQuery("from Room r where r.roomNumber = :number", Room.class);
+        TypedQuery<Room> query = this.em.createQuery("select r from Room r where r.roomNumber = :number", Room.class);
         query.setParameter("number", roomNumber);
         List<Room> resultList = query.getResultList();
         if (resultList.size() == 0) {

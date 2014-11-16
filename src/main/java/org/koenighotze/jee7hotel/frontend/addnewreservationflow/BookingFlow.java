@@ -2,13 +2,11 @@
 
 package org.koenighotze.jee7hotel.frontend.addnewreservationflow;
 
-import java.io.Serializable;
-import java.util.logging.Logger;
-import javax.enterprise.inject.Produces;
 import javax.faces.flow.Flow;
 import javax.faces.flow.builder.FlowBuilder;
 import javax.faces.flow.builder.FlowBuilderParameter;
-import javax.faces.flow.builder.FlowDefinition;
+import java.io.Serializable;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,8 +16,8 @@ import javax.faces.flow.builder.FlowDefinition;
 public class BookingFlow implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(BookingFlow.class.getName());
     
-    @Produces
-    @FlowDefinition
+//    @Produces
+//    @FlowDefinition
     public Flow defineBookingFlow(@FlowBuilderParameter FlowBuilder builder) {
         new RuntimeException().printStackTrace();
         

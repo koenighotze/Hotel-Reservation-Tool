@@ -4,12 +4,13 @@ package org.koenighotze.jee7hotel.frontend;
 
 import org.koenighotze.jee7hotel.business.BookingService;
 import org.koenighotze.jee7hotel.domain.Reservation;
-import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 
 /**
  *
@@ -32,7 +33,8 @@ public class BookingDetailsBean implements Serializable {
             return;
         }
         
-        this.reservation = this.bookingService.findReservationByNumber(this.reservationNumber);
+        this.bookingService.findReservationByNumber(this.reservationNumber)
+                .ifPresent(r -> this.reservation = r);
     }
 
     public String getReservationNumber() {
@@ -52,7 +54,7 @@ public class BookingDetailsBean implements Serializable {
     }
     
     public void reopen() {
-        this.bookingService.reopenReservation(this.reservation);
+        this.bookingService.reopenReservation(this.reservation.getReservationNumber());
         
         FacesMessageHelper.addMessage(null, FacesMessage.SEVERITY_INFO, 
                     "Reservation " + this.reservationNumber + " is reopened!", "");

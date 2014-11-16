@@ -3,21 +3,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+        >
 
     <ui:composition template="/WEB-INF/template-bootstrap.xhtml">
         <ui:define name="page_header">
             #{msgs.add_new_reservation_wizard_choose_guest}
         </ui:define>
-        <ui:define name="content">      
-            Page 1
-            <p>Has a flow: #{null != facesContext.application.flowHandler.currentFlow}.</p>
-            Flow bean is #{addNewReservationWizardBean}
-            <h:form prependId="false">
-                 <p><h:commandButton id="next" value="next" action="addnewreservationflow2" /></p>
-            </h:form>
+
+        <ui:define name="content">
+            <div class="jumbotron">
+                <div class="container">
+                    <h1>#{msgs.add_reservation_wizard_title}</h1>
+                    <p>
+                        #{msgs.add_reservation_wizard_title_intro_text}
+                    </p>
+
+                    <h:form id="addNewReservationWizardForm">
+                        <h:commandButton styleClass="btn btn-primary btn-lg" id="next" value="#{msgs.btn_choose_guest}"
+                                         action="addnewreservationflow2" />
+                    </h:form>
+                </div>
+            </div>
+
         </ui:define>
     </ui:composition>
 </html>

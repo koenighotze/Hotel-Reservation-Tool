@@ -1,29 +1,34 @@
 package org.koenighotze.jee7hotel.domain;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import javax.enterprise.event.Event;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
+import org.koenighotze.jee7hotel.domain.converter.LocalDateConverter;
+import org.koenighotze.jee7hotel.domain.converter.ReservationStatusConverter;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * Represents a simple reservation.
- *
+ * <p>
  * Each guest may have one or many reservations.
  *
  * @author dschmitz
  */
 @Entity
 @XmlRootElement
+@NamedQueries(
+        {
+        @NamedQuery(
+                name = "Reservation.findByGuest",
+                query = "select r from Reservation r where r.guest = :guest"
+        ),
+        @NamedQuery(
+                name = "Reservation.findByReservationNumber",
+                query = "select r from Reservation r where r.reservationNumber = :number"
+        )}
+)
 public class Reservation {
 
     @Id
@@ -33,43 +38,41 @@ public class Reservation {
     @NotNull
     @OneToOne
     private Guest guest;
-   
+
     @NotNull
     private String reservationNumber;
 
-    // TODO: move to jdk 1.8 and use new date abstractions
-    @Temporal(TemporalType.DATE)
+    //@Temporal(TemporalType.)
     @NotNull
-    private Date checkinDate;
+    @Convert(converter = LocalDateConverter.class)
+    private LocalDate checkinDate;
 
-    @Temporal(TemporalType.DATE)
+    ///@Temporal(TemporalType.DATE)
     @NotNull
-    private Date checkoutDate;
-    
+    @Convert(converter = LocalDateConverter.class)
+    private LocalDate checkoutDate;
+
     @OneToOne(optional = true)
     private Room assignedRoom;
 
     @Convert(converter = ReservationStatusConverter.class)
     private ReservationStatus reservationStatus = ReservationStatus.OPEN;
-    
+
     @NotNull
     private BigDecimal costsInEuro;
-    
+
     @Version
     private Long version;
-    
-  
-   
-    
-    Reservation() {        
+
+    Reservation() {
     }
-    
-    public Reservation(Guest guest, String reservationNumber, Room room, Date checkinDate, Date checkoutDate, BigDecimal costs) {
+
+    public Reservation(Guest guest, String reservationNumber, Room room, LocalDate checkinDate, LocalDate checkoutDate, BigDecimal costs) {
         this.guest = guest;
         this.assignedRoom = room;
         this.reservationNumber = reservationNumber;
-        this.checkinDate = new Date(checkinDate.getTime());
-        this.checkoutDate = new Date(checkoutDate.getTime());
+        this.checkinDate = checkinDate;
+        this.checkoutDate = checkoutDate;
         this.costsInEuro = costs;
     }
 
@@ -81,7 +84,7 @@ public class Reservation {
         this.costsInEuro = costsInEuro;
     }
 
-    
+
     public Long getId() {
         return id;
     }
@@ -90,15 +93,15 @@ public class Reservation {
         return reservationNumber;
     }
 
-    public Date getCheckinDate() {
-        return new Date(checkinDate.getTime());
+    public LocalDate getCheckinDate() {
+        return this.checkinDate;
     }
 
-    public Date getCheckoutDate() {
-        return new Date(checkoutDate.getTime());
+    public LocalDate getCheckoutDate() {
+        return this.checkoutDate;
     }
 
-    
+
     public Room getAssignedRoom() {
         return assignedRoom;
     }
@@ -122,7 +125,7 @@ public class Reservation {
     public void setReservationStatus(ReservationStatus reservationStatus) {
         this.reservationStatus = reservationStatus;
     }
-    
+
     public boolean isOpen() {
         return ReservationStatus.OPEN == this.reservationStatus;
     }
@@ -131,12 +134,11 @@ public class Reservation {
         return ReservationStatus.CANCELED == this.reservationStatus;
     }
 
-    
+
     @Override
     public String toString() {
         return "Reservation{" + "id=" + id + ", guest=" + guest + ", reservationNumber=" + reservationNumber + ", checkinDate=" + checkinDate + ", checkoutDate=" + checkoutDate + ", assignedRoom=" + assignedRoom + ", version=" + version + '}';
     }
-    
-    
+
 
 }

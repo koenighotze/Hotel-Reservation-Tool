@@ -19,7 +19,7 @@
                 </div>
             </ui:fragment>
 
-            <form jsf:id="new_guest_form">  
+            <form jsf:id="new_guest_form">
                 <div class="btn-toolbar"> 
                     <input type="submit" 
                            jsf:id="newGuestButton"
@@ -34,6 +34,10 @@
                                jsf:action="#{guestbookBean.fillInitialGuestBook()}">
                         </input>
                     </ui:fragment>
+
+                    <h:commandButton action="addnewreservationflow" id="newReservationWizardButton"
+                                     styleClass="btn btn-sm btn-primary"
+                                     value="#{msgs.btn_new_reservation_wizard}"/>
                 </div>
             </form>
 

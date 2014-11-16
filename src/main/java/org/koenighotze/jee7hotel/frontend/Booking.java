@@ -4,7 +4,8 @@ package org.koenighotze.jee7hotel.frontend;
 
 import org.koenighotze.jee7hotel.domain.Guest;
 import org.koenighotze.jee7hotel.domain.Room;
-import java.util.Date;
+
+import java.time.LocalDate;
 
 /**
  *
@@ -15,9 +16,9 @@ public class Booking {
    
     private Room room;
     
-    private Date checkinDate;
+    private LocalDate checkinDate;
 
-    private Date checkoutDate;
+    private LocalDate checkoutDate;
 
     public Guest getGuest() {
         return guest;
@@ -37,19 +38,19 @@ public class Booking {
 
     
     
-    public Date getCheckinDate() {
+    public LocalDate getCheckinDate() {
         return checkinDate;
     }
 
-    public void setCheckinDate(Date checkinDate) {
+    public void setCheckinDate(LocalDate checkinDate) {
         this.checkinDate = checkinDate;
     }
 
-    public Date getCheckoutDate() {
+    public LocalDate getCheckoutDate() {
         return checkoutDate;
     }
 
-    public void setCheckoutDate(Date checkoutDate) {
+    public void setCheckoutDate(LocalDate checkoutDate) {
         this.checkoutDate = checkoutDate;
     }
     

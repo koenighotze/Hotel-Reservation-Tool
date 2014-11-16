@@ -55,7 +55,7 @@
                                      p:placeholder="#{msgs.checkin_date}" 
                                      styleClass="form-control #{component.valid ? '' : 'input-error'}"
                                      >    
-                            <f:convertDateTime pattern="yyyy-MM-dd"/>
+                            <!-- f:convertDateTime pattern="yyyy-MM-dd"/ -->
                             <f:ajax render="@this :messagesPanel" />
                         </h:inputText>
 
@@ -68,7 +68,7 @@
                                      p:placeholder="#{msgs.checkout_date}" 
                                      styleClass="form-control #{component.valid ? '' : 'input-error'}"
                                      >            
-                            <f:convertDateTime pattern="yyyy-MM-dd"/>
+                            <!-- f:convertDateTime pattern="yyyy-MM-dd"/ -->
                             <f:ajax render="@this :messagesPanel" />
                         </h:inputText>
                     </div>

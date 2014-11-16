@@ -1,15 +1,9 @@
 
 
-package org.koenighotze.jee7hotel.business;
+package org.koenighotze.jee7hotel.business.tracker;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.koenighotze.jee7hotel.business.events.ReservationStatusChangeEvent;
+
 import javax.ejb.Singleton;
 import javax.enterprise.event.Observes;
 import javax.json.Json;
@@ -18,6 +12,14 @@ import javax.websocket.OnClose;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Sample class demonstrating WebSocket integration
@@ -29,7 +31,7 @@ import javax.websocket.server.ServerEndpoint;
 public class RoomReservationTracker {
     private static final Logger LOGGER = Logger.getLogger(RoomReservationTracker.class.getName());
     
-    private final Set<Session> sessions = Collections.<Session>synchronizedSet(new HashSet<Session>());
+    private final Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
 
     @OnOpen
     public void onOpen(final Session session) {

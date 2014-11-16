@@ -1,8 +1,9 @@
 
 
-package org.koenighotze.jee7hotel.domain;
+package org.koenighotze.jee7hotel.domain.converter;
 
-import java.lang.annotation.Annotation;
+import org.koenighotze.jee7hotel.domain.RoomEquipment;
+
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 

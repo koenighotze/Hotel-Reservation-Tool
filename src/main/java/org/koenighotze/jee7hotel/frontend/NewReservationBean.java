@@ -9,18 +9,19 @@ import org.koenighotze.jee7hotel.domain.Guest;
 import org.koenighotze.jee7hotel.domain.Reservation;
 import org.koenighotze.jee7hotel.domain.Room;
 import org.koenighotze.jee7hotel.domain.RoomEquipment;
-import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ComponentSystemEvent;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Optional;
 
+import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
 /**
  *
  * @author dschmitz
@@ -54,13 +55,13 @@ public class NewReservationBean implements Serializable {
     public void setGuestId(Long guestId) {
         this.guestId = guestId;
         if (null != this.guestId) {
-            Guest guest = this.guestService.findById(this.guestId);
-            if (null == guest) {
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                                "Cannot find guest " + this.guestId, null));
-            }
-            this.booking.setGuest(guest);
+            Optional<Guest> guest = this.guestService.findById(this.guestId);
+
+            this.booking.setGuest(guest.orElseGet(() -> {
+                addMessage(FacesMessage.SEVERITY_WARN,
+                        "Cannot find guest " + this.guestId);
+                return null;
+            }));
         }
     }
 
@@ -85,31 +86,24 @@ public class NewReservationBean implements Serializable {
         
         Guest guest = new Guest("", "");
         if (null != this.guestId) {
-            guest = this.guestService.findById(this.guestId);
-            if (null == guest) {
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_ERROR, 
-                                "Cannot find guest " + this.guestId, null));
-            }
+            Optional<Guest> tmpGuest = this.guestService.findById(this.guestId);
+            guest = tmpGuest.orElseGet(() -> {
+                addMessage(FacesMessage.SEVERITY_ERROR,
+                        "Cannot find guest " + this.guestId);
+                return new Guest("", "");
+            });
         }
-        
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, 1);
-        
-        Date tomorrow = cal.getTime();
-        cal.add(Calendar.DAY_OF_MONTH, 1);
-        Date twoDaysAhead = cal.getTime();
         
         this.booking = new Booking();
         this.booking.setGuest(guest);
         this.booking.setRoom(room);
-        this.booking.setCheckinDate(tomorrow);
-        this.booking.setCheckoutDate(twoDaysAhead);
+        this.booking.setCheckinDate(LocalDate.now().plusDays(1));
+        this.booking.setCheckoutDate(LocalDate.now().plusDays(2));
     }
     
     public void setRoomNumber(String number) {
         Room room = this.roomService.findRoomByNumber(number);
-        if (null == room) {
+        if (null == room) { // TODO use Optional
             FacesMessage message 
                     = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot find room with number " + number, "");
             FacesContext.getCurrentInstance().addMessage(null, message);

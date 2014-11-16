@@ -2,22 +2,15 @@
 
 package org.koenighotze.jee7hotel.business;
 
-import org.koenighotze.jee7hotel.business.GuestService;
+import org.junit.Test;
 import org.koenighotze.jee7hotel.domain.Guest;
+
+import java.util.Optional;
 import java.util.Scanner;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
+
 import static org.hamcrest.CoreMatchers.*;
-import org.junit.After;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -48,7 +41,7 @@ public class GuestServiceTest extends AbstractBasePersistenceTest {
     
     @Test
     public void testFindAllGuests() {
-        assertThat(guestService.findAllGuests(), is(not(nullValue())));
+        assertThat(guestService.getAllGuests(), is(not(nullValue())));
     }
     
     @Test
@@ -73,18 +66,18 @@ public class GuestServiceTest extends AbstractBasePersistenceTest {
     public void testUpdateGuest() {
         final String newName = "Bratislav Metulski";
         
-        Guest guest = this.guestService.findById(WELL_KNOWN_ID);
-        assertThat("Well known guest not found!", guest, is(not(nullValue())));
-        assertThat("Name should not be " + newName, guest.getName(), is(not(equalTo(newName))));
+        Optional<Guest> guest = this.guestService.findById(WELL_KNOWN_ID);
+        assertThat("Well known guest not found!", guest.get(), is(not(nullValue())));
+        assertThat("Name should not be " + newName, guest.get().getName(), is(not(equalTo(newName))));
        
-        guest.setName(newName);
-        getEntityManager().detach(guest);
+        guest.get().setName(newName);
+        getEntityManager().detach(guest.get());
         
-        Guest updated = this.guestService.updateGuestDetails(guest);
+        Optional<Guest> updated = this.guestService.updateGuestDetails(guest.get());
         getEntityManager().flush();
         
-        assertThat("Name should be " + newName, updated.getName(), is(equalTo(newName)));
+        assertThat("Name should be " + newName, updated.get().getName(), is(equalTo(newName)));
         
-        assertTrue("Version should be incremented ", updated.getVersion() > guest.getVersion());
+        assertTrue("Version should be incremented ", updated.get().getVersion() > guest.get().getVersion());
     }
 }
