@@ -3,14 +3,13 @@
               xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-    
-    <!-- 
+    <!--
     note that you either must set the discovery mode in beans.xml to "all" or 
     define the flow using xml
     -->
     <flow-definition id="addnewreservationflow">
         <flow-return id="returnFromAddnewreservationflow" >
-            <from-outcome>#{addNewReservationWizardBean.returnValue}</from-outcome>                
+            <from-outcome>#{addNewReservationWizardBean.confirmBooking()}</from-outcome>
         </flow-return>
     </flow-definition>
 </faces-config>

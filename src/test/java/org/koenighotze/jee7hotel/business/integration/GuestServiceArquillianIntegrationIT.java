@@ -3,7 +3,9 @@
 package org.koenighotze.jee7hotel.business.integration;
 
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -24,7 +26,11 @@ import org.koenighotze.jee7hotel.domain.Room;
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import java.io.File;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -43,7 +49,8 @@ import static org.junit.Assert.assertThat;
 public class GuestServiceArquillianIntegrationIT {
     
     private static final Logger LOGGER = Logger.getLogger(GuestServiceArquillianIntegrationIT.class.getName());
-    
+    private static String archiveName;
+
     @Inject
     private GuestService guestService;
 
@@ -65,29 +72,36 @@ public class GuestServiceArquillianIntegrationIT {
         String loadSql = AssetUtil
                 .getClassLoaderResourceName(GuestServiceArquillianIntegrationIT.class.getPackage(),
                         "integration-prepareTestData.sql");
-        
+        String jbossWebXml = AssetUtil
+                .getClassLoaderResourceName(GuestServiceArquillianIntegrationIT.class.getPackage(),
+                        "integration-jboss-web.xml");
+
         // build list of needed maven dependencies
         File[] deps = Maven.resolver().loadPomFromFile("pom.xml")
                 .importRuntimeDependencies()
                 .resolve()
                 .withTransitivity()
                 .asFile();
-                        
+
         WebArchive archive = ShrinkWrap.create(WebArchive.class)
                 // add demo and all recursive packages 
                 // as of yet, we do not deploy the web layer   
-                .addPackages(true, "org.koenighotze.jee7hotel.business", "org.koenighotze.jee7hotel.domain") 
+                .addPackages(true, "org.koenighotze.jee7hotel", "org.koenighotze.jee7hotel")
                 .addAsResource(persistenceXml, "META-INF/persistence.xml")
                 .addAsResource(loadSql, "META-INF/load.sql")
+                .addAsWebInfResource(jbossWebXml, "jboss-web.xml")
                 // this is not needed for jee7
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-        
+
+
         for (File f : deps) {
             LOGGER.info(() -> "Add " + f.getName() + " as dependency");
             archive.addAsLibraries(f);
         }
         
         LOGGER.info(() -> archive.toString(Formatters.VERBOSE));
+
+        GuestServiceArquillianIntegrationIT.archiveName = archive.getName();
         return archive;
     }
     
@@ -108,7 +122,6 @@ public class GuestServiceArquillianIntegrationIT {
 
         Room room = this.roomService.getAllRooms().get(0);
 
-
         Reservation reservation = this.bookingService.bookRoom(guest, room, LocalDate.now(), LocalDate.now().plus(10, ChronoUnit.DAYS));
 
         assertThat("A reservation should be created", reservation, is(not(nullValue())));
@@ -126,6 +139,33 @@ public class GuestServiceArquillianIntegrationIT {
         Optional<Reservation> updatedReservation = this.bookingService.findReservationByNumber(reservation.getReservationNumber());
         reservation = updatedReservation.get();
         assertThat("The reservation should be confirmed", reservation.getReservationStatus(), is(equalTo(ReservationStatus.CONFIRMED)));
+    }
+
+    @Test
+    @RunAsClient
+    public void testRestInterface(@ArquillianResource URL baseURI) throws InterruptedException {
+        String targetUrl = baseURI + "rest/guest";
+
+        LOGGER.info("Looking up rest interface using " + targetUrl);
+
+        // Client does not implement autoclosable :(
+        Client client = null;
+        WebTarget webTarget = null;
+
+        try {
+            client = ClientBuilder.newClient();
+            webTarget = client.target(targetUrl);
+
+            Guest[] guests = webTarget
+                    .request()
+                    .get(Guest[].class);
+
+            assertThat("expected an array of guests", guests, is(not(nullValue())));
+            assertThat("expected one or more guests", guests.length, is(not(equalTo(0))));
+        }
+        finally {
+            client.close();
+        }
     }
 }
 

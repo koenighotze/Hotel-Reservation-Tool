@@ -5,7 +5,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:jsf="http://xmlns.jcp.org/jsf">
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:kh="http://java.sun.com/jsf/composite/org/koenighotze"  >
 
     <ui:composition template="/WEB-INF/template-bootstrap.xhtml">
         <ui:define name="page_header">
@@ -43,45 +44,28 @@
 
             <ui:fragment rendered="#{!empty(guestbookBean.guestList)}">
                 <form jsf:id="guestbook_form">
-                <div class="guestbook">
-                    <h:dataTable var="guest" 
-                                 value="#{guestbookBean.guestList}" 
-                                 styleClass="table table-striped">
-                        <h:column>
-                            <f:facet name="header">#{msgs.actions}</f:facet>
-                            <ul class="action_items">
-                                <li>                                    
-                                    <h:link outcome="guest_details.xhtml?faces-redirect=true" 
-                                            includeViewParams="true"
-                                            value="#{msgs.details}">
-                                        <f:param name="guestId"
-                                                 value="#{guest.id}" />
-                                    </h:link>
-                                </li>
-                                <li>
-                                    <h:link outcome="/booking/add_new_reservation.xhtml?faces-redirect=true" 
-                                            includeViewParams="true"
-                                            value="#{msgs.new_reservation}">
-                                        <f:param name="guestId"
-                                                 value="#{guest.id}" />
-                                    </h:link>   
-                                </li>
-                            </ul>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">#{msgs.id}</f:facet>
-                                #{guest.id}                             
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">#{msgs.guest_name}</f:facet>
-                                #{guest.name}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">#{msgs.email}</f:facet>
-                                #{guest.email}
-                        </h:column>
-                    </h:dataTable>
-                </div>
+                <kh:guestlist guestList="#{guestbookBean.guestList}">
+                    <f:facet name="actions">
+                        <ul class="action_items">
+                            <li>
+                                <h:link outcome="guest_details.xhtml?faces-redirect=true"
+                                        includeViewParams="true"
+                                        value="#{msgs.details}">
+                                    <f:param name="guestId"
+                                             value="#{guest.id}" />
+                                </h:link>
+                            </li>
+                            <li>
+                                <h:link outcome="/booking/add_new_reservation.xhtml?faces-redirect=true"
+                                        includeViewParams="true"
+                                        value="#{msgs.new_reservation}">
+                                    <f:param name="guestId"
+                                             value="#{guest.id}" />
+                                </h:link>
+                            </li>
+                        </ul>
+                    </f:facet>
+                </kh:guestlist>
                 </form>
             </ui:fragment>
         </ui:define>
