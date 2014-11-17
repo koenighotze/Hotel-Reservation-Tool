@@ -27,8 +27,7 @@ public class ReservationBackendHandler {
     
     @Inject
     private BookingService bookingService;
-            
-    
+
     private final Random rand = new Random();
     
     @Asynchronous
@@ -39,6 +38,7 @@ public class ReservationBackendHandler {
         try {
             LOGGER.log(Level.INFO, "delaying {0} secs before accepting", duration);
             Thread.sleep(duration * 1000L);
+
             this.bookingService.confirmReservation(newReservation.getReservationNumber());
 
             LOGGER.log(Level.INFO, "Sending Email to guest about confirmation for {0}",

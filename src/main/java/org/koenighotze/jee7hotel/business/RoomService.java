@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +35,8 @@ public class RoomService {
     }
     
     public List<Room> findAvailableRooms(Date checkinDate, Date checkoutDate, RoomEquipment equiment) {
-        throw new UnsupportedOperationException("not implemented yet");
+        TypedQuery<Room> query = this.em.createNamedQuery("Room.findAvailable", Room.class);
+        return query.getResultList();
     }
     
     public List<Room> getAllRooms() {
@@ -43,19 +45,19 @@ public class RoomService {
         return this.em.createQuery(cq).getResultList(); 
     }
 
-    public Room findRoomByNumber(String roomNumber) {
-        TypedQuery<Room> query = this.em.createQuery("select r from Room r where r.roomNumber = :number", Room.class);
+    public Optional<Room> findRoomByNumber(String roomNumber) {
+        TypedQuery<Room> query = this.em.createNamedQuery("Room.findByRoomNumber", Room.class);
         query.setParameter("number", roomNumber);
         List<Room> resultList = query.getResultList();
         if (resultList.size() == 0) {
             LOGGER.log(Level.WARNING, "Cannot find room {0}", roomNumber);
-            return null;
+            return Optional.empty();
         }
-        return resultList.get(0);
+        return Optional.of(resultList.get(0));
     }
 
-    public Room findRoomById(Long roomId) {
-        return this.em.find(Room.class, roomId);
+    public Optional<Room> findRoomById(Long roomId) {
+        return Optional.ofNullable(this.em.find(Room.class, roomId));
     }
     
 }

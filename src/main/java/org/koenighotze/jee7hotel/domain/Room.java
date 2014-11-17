@@ -12,6 +12,17 @@ import javax.validation.constraints.NotNull;
  * @author dschmitz
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(
+                // TODO: fix query
+                name = "Room.findAvailable",
+                query = "select r from Room r"
+        ),
+        @NamedQuery(
+                name = "Room.findByRoomNumber",
+                query = "select r from Room r where r.roomNumber = :number"
+        )
+})
 public class Room {    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

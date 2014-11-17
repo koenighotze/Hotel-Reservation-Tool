@@ -15,6 +15,11 @@ import javax.enterprise.event.Event;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+
 @RunWith(MockitoJUnitRunner.class)
 public class ReservationTest extends AbstractBasePersistenceTest {
     private static final Long WELL_KNOWN_ID = 9999L;
@@ -45,10 +50,9 @@ public class ReservationTest extends AbstractBasePersistenceTest {
     @Test
     public void testSave() {
         Optional<Guest> guest = this.guestService.findById(WELL_KNOWN_ID);
-        Room room = this.roomService.findRoomByNumber(WELL_KNOWN_ROOM_NUMBER);
-        Reservation reservation = this.bookingService.bookRoom(guest.get(), room, LocalDate.now(), LocalDate.now());
-
-
+        Optional<Room> room = this.roomService.findRoomByNumber(WELL_KNOWN_ROOM_NUMBER);
+        Reservation reservation = this.bookingService.bookRoom(guest.get(), room.get(), LocalDate.now(), LocalDate.now());
+        assertThat(reservation, is(not(nullValue())));
         getEntityManager().flush();
     }
 

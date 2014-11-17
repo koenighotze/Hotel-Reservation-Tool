@@ -63,8 +63,9 @@ public class BookingServiceTest extends AbstractBasePersistenceTest {
     @Test
     public void testBookRoom() {
         Optional<Guest> guest = this.guestService.findById(WELL_KNOWN_ID);
-        Room room = this.roomService.findRoomByNumber(WELL_KNOWN_ROOM_NUMBER);
-        Reservation reservation = this.bookingService.bookRoom(guest.get(), room, LocalDate.now(), LocalDate.now());
+        Optional<Room> room = this.roomService.findRoomByNumber(WELL_KNOWN_ROOM_NUMBER);
+        Reservation reservation =
+                this.bookingService.bookRoom(guest.get(), room.get(), LocalDate.now(), LocalDate.now());
         getEntityManager().flush();
         assertThat(reservation, is(not(nullValue())));
         assertThat(reservation.getReservationNumber(), is(not(nullValue())));

@@ -51,11 +51,7 @@ public class GuestService {
     public Optional<Guest> findById(Long guestId) {
         Guest guest = this.em.find(Guest.class, guestId);
 
-        if (null == guest) {
-            return Optional.empty();
-        }
-
-        return Optional.of(guest);
+        return Optional.ofNullable(guest);
     }
 
     public Optional<Guest> updateGuestDetails(Guest guest) {

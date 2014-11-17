@@ -5,12 +5,16 @@ package org.koenighotze.jee7hotel.business;
 import org.koenighotze.jee7hotel.business.RoomService;
 import org.koenighotze.jee7hotel.domain.Room;
 import java.util.List;
+import java.util.Optional;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
 /**
@@ -46,20 +50,20 @@ public class RoomServiceTest extends AbstractBasePersistenceTest {
     
     @Test
     public void testFindByIdKnownRoom() {
-        Room room = this.roomService.findRoomById(WELL_KNOWN_ROOM_ID);
+        Room room = this.roomService.findRoomById(WELL_KNOWN_ROOM_ID).get();
         assertThat(room, is(not(nullValue())));
         assertThat(room.getId(), is(equalTo(WELL_KNOWN_ROOM_ID)));
     }
     
     @Test
     public void testFindByIdUnkownRoom() {
-        Room room = this.roomService.findRoomById(1234L);
-        assertThat(room, is(nullValue()));
+        Optional<Room> room = this.roomService.findRoomById(1234L);
+        assertFalse(room.isPresent());
     }    
     
     @Test
     public void testFindByNumber() {
-        Room room = this.roomService.findRoomByNumber(WELL_KNOWN_ROOM_NUMBER);
+        Room room = this.roomService.findRoomByNumber(WELL_KNOWN_ROOM_NUMBER).get();
         assertThat(room, is(not(nullValue())));
         assertThat(room.getId(), is(equalTo(WELL_KNOWN_ROOM_ID)));
     }
