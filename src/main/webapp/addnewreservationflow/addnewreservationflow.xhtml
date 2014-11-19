@@ -7,7 +7,6 @@
 
     <ui:composition template="/WEB-INF/template-bootstrap.xhtml">
         <ui:define name="page_header">
-            #{msgs.add_new_reservation_wizard_choose_guest}
         </ui:define>
 
         <ui:define name="content">
@@ -19,7 +18,7 @@
                     </p>
 
                     <h:form id="addNewReservationWizardForm">
-                        <h:commandButton styleClass="btn btn-primary btn-lg" id="next" value="#{msgs.btn_choose_guest}"
+                        <h:commandButton styleClass="btn btn-primary btn-lg" id="next" value="#{msgs.btn_wizard_choose_guest}"
                                          action="addnewreservationflow2" />
                     </h:form>
                 </div>

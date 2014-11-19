@@ -22,13 +22,13 @@ public class PerformanceLogger {
         long start = System.currentTimeMillis();
 
         // using a supplier defers eval of string
-        LOGGER.info(() -> "Entering " + ctx.getMethod().getName());
+        LOGGER.info("Entering " + ctx.getMethod().getName());
 
         try {
             return ctx.proceed();
         } finally {
             long duration = System.currentTimeMillis() - start;
-            LOGGER.info(() -> "Leaving " + ctx.getMethod().getName() + "; Took " + duration + " ms");
+            LOGGER.info("Leaving " + ctx.getMethod().getName() + "; Took " + duration + " ms");
         }
 
     }

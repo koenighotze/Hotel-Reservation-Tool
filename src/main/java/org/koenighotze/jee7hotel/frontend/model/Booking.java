@@ -1,6 +1,6 @@
 
 
-package org.koenighotze.jee7hotel.frontend;
+package org.koenighotze.jee7hotel.frontend.model;
 
 import org.koenighotze.jee7hotel.domain.Guest;
 import org.koenighotze.jee7hotel.domain.Room;

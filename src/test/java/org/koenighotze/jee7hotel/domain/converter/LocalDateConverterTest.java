@@ -29,4 +29,6 @@ public class LocalDateConverterTest {
         Date date = new Date(Date.parse("1/1/13 12:00 AM"));
         new LocalDateConverter().convertToEntityAttribute(date);
     }
+
+
 }

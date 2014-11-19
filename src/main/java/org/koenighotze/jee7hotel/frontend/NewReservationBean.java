@@ -9,6 +9,7 @@ import org.koenighotze.jee7hotel.domain.Guest;
 import org.koenighotze.jee7hotel.domain.Reservation;
 import org.koenighotze.jee7hotel.domain.Room;
 import org.koenighotze.jee7hotel.domain.RoomEquipment;
+import org.koenighotze.jee7hotel.frontend.model.Booking;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;

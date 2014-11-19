@@ -6,7 +6,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.logging.Logger;
 
 /**
@@ -24,7 +23,8 @@ public class LocalDateConverter implements Converter {
         if (null == s) {
             return null;
         }
-        return DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).parse(s);
+        // as we are using html5 date components, this pattern is submitted
+        return LocalDate.parse(s, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
     @Override
@@ -35,7 +35,6 @@ public class LocalDateConverter implements Converter {
         if (null == o || !(o instanceof LocalDate)) {
             return null;
         }
-
-        return DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).format((LocalDate) o);
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd").format((LocalDate) o);
     }
 }

@@ -1,5 +1,6 @@
 package org.koenighotze.jee7hotel.business;
 
+import org.koenighotze.jee7hotel.business.logging.PerformanceLog;
 import org.koenighotze.jee7hotel.domain.Guest;
 
 import javax.ejb.Stateless;
@@ -23,7 +24,9 @@ import java.util.logging.Logger;
 @Stateless
 @Path("guest")
 // @RolesAllowed({ "ADMIN" })
-//@PerformanceLog
+
+// Example for annotation based interceptor binding; needs a real beans.xml!
+@PerformanceLog
 public class GuestService {
     private static final Logger LOGGER = Logger.getLogger(GuestService.class.getName());
 
@@ -43,7 +46,7 @@ public class GuestService {
     @GET
     @Produces({"application/xml", "application/json"})
     public List<Guest> getAllGuests() {
-        CriteriaQuery cq = this.em.getCriteriaBuilder().createQuery();
+        CriteriaQuery<Guest> cq = this.em.getCriteriaBuilder().createQuery(Guest.class);
         cq.select(cq.from(Guest.class));
         return this.em.createQuery(cq).getResultList();
     }

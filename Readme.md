@@ -82,6 +82,12 @@ Remember to set ```-Djboss.home``` or similar!
 mvn -o clean integration-test verify  -Djboss.home= -Pwildfly-managed-integration-tests
 ```
 
+or 
+
+```
+./src/test/scripts/run_wildfly_test.sh
+```
+
 ###Glassfish
 ```
 mvn clean integration-test verify -Pglassfish-integration-tests
@@ -136,10 +142,10 @@ Things to do
 * Angular JS Frontend
 * ```@Model```
 * JMS 2.0 
-** ```@Command```
-** ```@Unpacked```
+ * ```@Command```
+ * ```@Unpacked```
 * Role based security
-** Role ```**```
+ * Role ```**```
 * ```@Delegate```
 * Timer
 * Futures

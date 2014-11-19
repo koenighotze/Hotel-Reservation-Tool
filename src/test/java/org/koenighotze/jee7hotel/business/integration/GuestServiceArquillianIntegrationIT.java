@@ -12,7 +12,6 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.formatter.Formatters;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.impl.base.asset.AssetUtil;
-import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.koenighotze.jee7hotel.business.BookingService;
@@ -29,7 +28,6 @@ import javax.inject.Inject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -49,7 +47,6 @@ import static org.junit.Assert.assertThat;
 public class GuestServiceArquillianIntegrationIT {
     
     private static final Logger LOGGER = Logger.getLogger(GuestServiceArquillianIntegrationIT.class.getName());
-    private static String archiveName;
 
     @Inject
     private GuestService guestService;
@@ -77,16 +74,16 @@ public class GuestServiceArquillianIntegrationIT {
                         "integration-jboss-web.xml");
 
         // build list of needed maven dependencies
-        File[] deps = Maven.resolver().loadPomFromFile("pom.xml")
-                .importRuntimeDependencies()
-                .resolve()
-                .withTransitivity()
-                .asFile();
+//        File[] deps = Maven.resolver().loadPomFromFile("pom.xml")
+//                .importRuntimeDependencies()
+//                .resolve()
+//                .withTransitivity()
+//                .asFile();
 
         WebArchive archive = ShrinkWrap.create(WebArchive.class)
                 // add demo and all recursive packages 
                 // as of yet, we do not deploy the web layer   
-                .addPackages(true, "org.koenighotze.jee7hotel", "org.koenighotze.jee7hotel")
+                .addPackages(true, "org.koenighotze.jee7hotel")
                 .addAsResource(persistenceXml, "META-INF/persistence.xml")
                 .addAsResource(loadSql, "META-INF/load.sql")
                 .addAsWebInfResource(jbossWebXml, "jboss-web.xml")
@@ -94,14 +91,13 @@ public class GuestServiceArquillianIntegrationIT {
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
 
 
-        for (File f : deps) {
-            LOGGER.info(() -> "Add " + f.getName() + " as dependency");
-            archive.addAsLibraries(f);
-        }
+//        for (File f : deps) {
+//            LOGGER.info(() -> "Add " + f.getName() + " as dependency");
+//            archive.addAsLibraries(f);
+//        }
         
         LOGGER.info(() -> archive.toString(Formatters.VERBOSE));
 
-        GuestServiceArquillianIntegrationIT.archiveName = archive.getName();
         return archive;
     }
     

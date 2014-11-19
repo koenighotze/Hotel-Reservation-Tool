@@ -1,6 +1,7 @@
 (function () {
+    "use strict";
     console.log("setting up websocket");
-    var ws = new WebSocket("ws://localhost:8080/jee7quickstart/booking/tracking");
+    var ws = new WebSocket("ws://localhost:8080/jee7hotel/booking/tracking");
     
     ws.onopen = function(event) {
         onConnect(event);
@@ -10,20 +11,24 @@
         onMessage(event);
     };
 
-    onConnect = function(event) {
+    var onConnect = function(event) {
         console.log("Connected " + event);
     };
 
-    onMessage = function(event) {
+    var onMessage = function(event) {
         updateBooking(event);
     };
 
-    updateBooking = function(event) {
+    var updateBooking = function(event) {
         var jsonObject = JSON.parse(event.data);
 
-        var field = $('span#status_' + jsonObject.reservationNumber)
+        var field = $('span#status_' + jsonObject.reservationNumber);
         if (field) {
-            field.text(jsonObject.newState);
+            field.slideUp(500).promise().done(function() {
+                field.text(jsonObject.newState);
+                field.slideDown(500);
+            });
+
         }
     };
 })();

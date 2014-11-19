@@ -2,12 +2,14 @@ package org.koenighotze.jee7hotel.business;
 
 import org.koenighotze.jee7hotel.business.events.NewReservationEvent;
 import org.koenighotze.jee7hotel.business.events.ReservationStatusChangeEvent;
+import org.koenighotze.jee7hotel.business.logging.PerformanceLogger;
 import org.koenighotze.jee7hotel.domain.*;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -32,6 +34,9 @@ import java.util.logging.Logger;
 @Stateless
 @Path("bookings")
 
+// declare interceptor w/o using a stereotype (annotation based) binding
+// this way the interceptor will work w/o beans.xml
+@Interceptors(PerformanceLogger.class)
 public class BookingService {
 
     @PersistenceContext
@@ -104,7 +109,7 @@ public class BookingService {
     @GET
     @Produces({"application/xml", "application/json"})
     public List<Reservation> getAllReservations() {
-        CriteriaQuery cq = this.em.getCriteriaBuilder().createQuery();
+        CriteriaQuery<Reservation> cq = this.em.getCriteriaBuilder().createQuery(Reservation.class);
         cq.select(cq.from(Reservation.class));
         return this.em.createQuery(cq).getResultList();
     }

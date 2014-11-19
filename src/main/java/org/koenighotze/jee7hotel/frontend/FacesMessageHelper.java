@@ -5,6 +5,7 @@ package org.koenighotze.jee7hotel.frontend;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.inject.Named;
 
 /**
@@ -23,7 +24,14 @@ public class FacesMessageHelper {
                     new FacesMessage(severity,
                         summary, details));
     }
-    
+
+    public static void addFlashMessage(FacesMessage.Severity severity, String summary) {
+        Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+        flash.setKeepMessages(true);
+        FacesMessage message = new FacesMessage(severity, summary, summary);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
     public boolean isErrorMessage(FacesMessage message) {
         return message.getSeverity().equals(FacesMessage.SEVERITY_ERROR);
     }

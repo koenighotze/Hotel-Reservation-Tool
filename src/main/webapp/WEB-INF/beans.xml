@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-
-this is no longer needed 
+this actually needed in jee7 if some features like i.e. programmatic flows
+and annotation based interceptor bindings should be used.
 
 
 - but note that unless flows are declared using XML a bean-discovery-mode="all" must be used
@@ -11,4 +11,8 @@ this is no longer needed
        xmlns="http://xmlns.jcp.org/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_2.xsd">
+
+       <interceptors>
+              <class>org.koenighotze.jee7hotel.business.logging.PerformanceLogger</class>
+       </interceptors>
 </beans>

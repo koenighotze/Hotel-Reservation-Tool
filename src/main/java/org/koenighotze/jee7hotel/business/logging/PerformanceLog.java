@@ -1,11 +1,13 @@
 package org.koenighotze.jee7hotel.business.logging;
 
-import javax.inject.Qualifier;
+
 import javax.interceptor.InterceptorBinding;
+import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 /**
  * Created by dschmitz on 14.11.14.
@@ -13,8 +15,8 @@ import static java.lang.annotation.ElementType.TYPE;
 
 
 @InterceptorBinding
+@Inherited
 @Retention(RetentionPolicy.RUNTIME)
-@Target({TYPE})
-@Qualifier
+@Target({TYPE, METHOD})
 public @interface PerformanceLog {
 }

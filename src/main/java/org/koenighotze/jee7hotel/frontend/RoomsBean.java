@@ -16,6 +16,7 @@ import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
  *
  * @author dschmitz
  */
+// stereotype example -> effectively RequestScope and Named
 @Model
 public class RoomsBean {
     @Inject

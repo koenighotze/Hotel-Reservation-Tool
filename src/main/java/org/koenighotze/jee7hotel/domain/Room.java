@@ -6,6 +6,7 @@ import org.koenighotze.jee7hotel.domain.converter.RoomEquipmentConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * Represents a single room.
@@ -23,7 +24,7 @@ import javax.validation.constraints.NotNull;
                 query = "select r from Room r where r.roomNumber = :number"
         )
 })
-public class Room {    
+public class Room implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;    

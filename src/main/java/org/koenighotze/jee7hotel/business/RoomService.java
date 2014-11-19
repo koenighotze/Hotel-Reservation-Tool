@@ -2,6 +2,7 @@
 
 package org.koenighotze.jee7hotel.business;
 
+import org.koenighotze.jee7hotel.business.logging.PerformanceLog;
 import org.koenighotze.jee7hotel.domain.Room;
 import org.koenighotze.jee7hotel.domain.RoomEquipment;
 
@@ -24,6 +25,7 @@ import java.util.logging.Logger;
  */
 @Named
 @Stateless
+@PerformanceLog
 public class RoomService {
     
     private static final Logger LOGGER = Logger.getLogger(RoomService.class.getName());
@@ -40,7 +42,7 @@ public class RoomService {
     }
     
     public List<Room> getAllRooms() {
-        CriteriaQuery cq = this.em.getCriteriaBuilder().createQuery();
+        CriteriaQuery<Room> cq = this.em.getCriteriaBuilder().createQuery(Room.class);
         cq.select(cq.from(Room.class));
         return this.em.createQuery(cq).getResultList(); 
     }

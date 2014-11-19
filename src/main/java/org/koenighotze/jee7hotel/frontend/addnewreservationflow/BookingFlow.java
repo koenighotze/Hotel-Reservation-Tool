@@ -25,18 +25,7 @@ public class BookingFlow implements Serializable {
         
         String flowId = "addnewreservationflow";
         builder.id("", flowId);
-// 
-//        flowBuilder.inboundParameter("param1FromJoinFlow", 
-//                "#{flowScope.param1Value}");
-//        flowBuilder.inboundParameter("param2FromJoinFlow", 
-//                "#{flowScope.param2Value}");
-// 
-//        flowBuilder.flowCallNode("calljoin").flowReference("", "joinFlow").
-//                outboundParameter("param1FromCheckoutFlow", 
-//                    "#{checkoutFlowBean.name}").
-//                outboundParameter("param2FromCheckoutFlow", 
-//                    "#{checkoutFlowBean.city}");
-        
+
         // define start page
         builder.viewNode(flowId, 
                 "/addnewreservationflow/addnewreservationflow.xhtml")
