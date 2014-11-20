@@ -15,7 +15,12 @@ input.input-error {
 }
 
 table tbody ul {
+  padding-left: 0;
   list-style: none;
+}
+
+div.error_box div.exceptionErrorMessage div.stackTrace {
+  font-family: monospace;
 }
 
 /*# sourceMappingURL=default.css.map */

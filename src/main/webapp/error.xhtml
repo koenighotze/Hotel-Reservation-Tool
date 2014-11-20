@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/WEB-INF/template-bootstrap.xhtml">
+
+    <ui:define name="page_header">
+        #{msgs.alas_an_error_occured}
+    </ui:define>
+
+    <ui:define name="content">
+        #{session.invalidate()}
+        <ui:fragment
+                rendered="#{initParam['javax.faces.PROJECT_STAGE'] == 'Development'}">
+
+            <div class="errorBox">
+                <h:link value="#{msgs.back_to_start}"
+                        outcome="/index.xhtml" />
+                <div class="exceptionErrorMessage"></div>
+                <hr />
+                <div class="stackTrace">
+                    <pre>#{errorBean.getExceptionStackTrace(requestScope['javax.servlet.error.exception'])}</pre>
+                </div>
+                <ui:debug />
+            </div>
+        </ui:fragment>
+
+        <ui:fragment
+                rendered="#{initParam['javax.faces.PROJECT_STAGE'] != 'Development'}">
+            <h:link value="#{msgs.back_to_start}"
+                    outcome="/index.xhtml" />
+            <p>#{msgs.unexpected_error_content}</p>
+            <h:link value="#{msgs.back_to_start}"
+                    outcome="/index.xhtml" />
+        </ui:fragment>
+    </ui:define>
+</ui:composition>
+</html>

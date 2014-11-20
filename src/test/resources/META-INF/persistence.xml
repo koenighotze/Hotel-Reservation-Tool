@@ -11,6 +11,7 @@
     <!-- actually this should gather all entities, but it does not? -->
     <!--    <exclude-unlisted-classes>false</exclude-unlisted-classes>-->
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:testDB;create=true"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
@@ -20,5 +21,7 @@
       <property name="eclipselink.logging.level" value="INFO"/>
       <property name="javax.persistence.sql-load-script-source" value="META-INF/prepareTestData.sql"/>
     </properties>
+
+
   </persistence-unit>
 </persistence>

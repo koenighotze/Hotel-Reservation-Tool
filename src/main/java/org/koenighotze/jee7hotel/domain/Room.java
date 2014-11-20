@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Entity
 @NamedQueries({
         @NamedQuery(
-                // TODO: fix query
+                // TODO: fix query with actual date operations
                 name = "Room.findAvailable",
                 query = "select r from Room r"
         ),
@@ -24,6 +24,7 @@ import java.io.Serializable;
                 query = "select r from Room r where r.roomNumber = :number"
         )
 })
+@Cacheable
 public class Room implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +37,6 @@ public class Room implements Serializable {
     private String roomNumber;
     
     @NotNull
-//    @Enumerated(EnumType.STRING)
     @Convert(converter = RoomEquipmentConverter.class)
     private RoomEquipment roomEquipment;
     

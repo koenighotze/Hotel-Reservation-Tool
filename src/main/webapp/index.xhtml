@@ -3,13 +3,15 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
     <ui:composition template="/WEB-INF/template-bootstrap.xhtml">
         <ui:define name="page_header">
-            #{msgs.intro}
         </ui:define>
 
         <ui:define name="content">
+            <!-- TODO react to ?view_expired=true -->
+
             <div class="jumbotron">
                 <div class="container">
                     <h1>#{msgs.welcome_to_the_app}</h1>
@@ -17,34 +19,29 @@
                         #{msgs.intro_text}
                     </p>
 
-                    <p><a class="btn btn-primary btn-lg" role="button">#{msgs.learn_more}</a></p>
+                    <p>
+                        <h:link outcome="guestbook"
+                                styleClass="btn btn-primary btn-lg"
+                                p:role="button" value="#{msgs.learn_more}"/>
+                    </p>
                 </div>
             </div>
 
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
-                        <h2>#{msgs.jsf}</h2>
-                        <p>#{msgs.jsf_text}</p>
-                        <p>
-                            <h:link styleClass="btn btn-default" role="button" outcome="guestbook.xhtml?faces-redirect=true" value="#{msgs.nav_view_guestbook}"/>
-                        </p>
+                        <h2>#{msgs.design_principles}</h2>
+                        <p>#{msgs.design_principles_txt}</p>
                     </div>
                     
                     <div class="col-md-4">
-                        <h2>#{msgs.remoting}</h2>
-                        <p>#{msgs.remoting_text}</p>
-                        <p>
-                            <h:link styleClass="btn btn-default" role="button" outcome="add_new_guest.xhtml?faces-redirect=true" value="#{msgs.nav_enter_guest_info}"/>            
-                        </p>
+                        <h2>#{msgs.technologies}</h2>
+                        <p>#{msgs.technologies_txt}</p>
                     </div>
                     
                     <div class="col-md-4">
-                        <h2>#{msgs.persistence}</h2>
-                        <p>#{msgs.persistence_text}</p>
-                        <p>
-                            <h:link styleClass="btn btn-default" role="button" outcome="/room/rooms.xhtml?faces-redirect=true" value="#{msgs.guest_details}"/>
-                        </p>
+                        <h2>#{msgs.testing}</h2>
+                        <p>#{msgs.testing_txt}</p>
                     </div>
                     
                 </div>

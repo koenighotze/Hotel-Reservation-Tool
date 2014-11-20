@@ -52,16 +52,15 @@ com.sun.faces.enableMissingResourceLibraryDetection
 com.sun.faces.numberOfLogicalViews
 com.sun.faces.numberOfViewsInSession
  -->
-    <!--     
 	<error-page>
 		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
-		<location>/faces/index.xhtml</location>
-	</error-page> -->
-    <!--    <error-page>
+		<location>/faces/index.xhtml?view_expired=true</location>
+	</error-page>
+    <error-page>
 		<error-code>500</error-code>
 		<location>/faces/error.xhtml</location>
 	</error-page>
-    -->
+
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
