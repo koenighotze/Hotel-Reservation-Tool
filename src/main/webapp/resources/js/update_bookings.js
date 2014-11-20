@@ -1,8 +1,10 @@
-(function () {
+var setupWs = function (contextRoot) {
     "use strict";
+
+    var host = window.location.host;
     console.log("setting up websocket");
-    var ws = new WebSocket("ws://localhost:8080/jee7hotel/booking/tracking");
-    
+    var ws = new WebSocket("ws://" + host + contextRoot + "/booking/tracking");
+
     ws.onopen = function(event) {
         onConnect(event);
     };
@@ -31,4 +33,4 @@
 
         }
     };
-})();
+};

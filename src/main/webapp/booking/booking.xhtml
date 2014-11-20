@@ -107,12 +107,17 @@
                         </ui:fragment>
                     </div>
                 </form>
-            </ui:fragment> 
-                        
+            </ui:fragment>
+
+
         </ui:define>
         
         <ui:define name="miscjavascript">
-            <script src="#{facesContext.externalContext.requestContextPath}/resources/js/update_booking.js"></script>
+            <script src="#{facesContext.externalContext.requestContextPath}/resources/js/update_booking.js" type="text/javascript"></script>
+
+            <script type="text/javascript">
+                setupWs("#{request.contextPath}");
+            </script>
         </ui:define>
     </ui:composition>
 </html>
