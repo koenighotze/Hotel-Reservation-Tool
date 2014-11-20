@@ -1,9 +1,9 @@
-var setupWs = function (contextRoot) {
+var setupWs = function (baseUrl) {
     "use strict";
 
     var host = window.location.host;
     console.log("setting up websocket");
-    var ws = new WebSocket("ws://" + host + contextRoot + "/booking/tracking");
+    var ws = new WebSocket(baseUrl + "/booking/tracking");
 
     // the number we display
     var currResNumber = $("#bookingDetailsForm\\:reservation_number").val();

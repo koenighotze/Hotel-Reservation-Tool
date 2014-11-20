@@ -116,7 +116,7 @@
             <script src="#{facesContext.externalContext.requestContextPath}/resources/js/update_booking.js" type="text/javascript"></script>
 
             <script type="text/javascript">
-                setupWs("#{request.contextPath}");
+                setupWs("#{envBean.getWebSocketPath()}");
             </script>
         </ui:define>
     </ui:composition>
