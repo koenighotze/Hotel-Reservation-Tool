@@ -13,6 +13,14 @@
                 #{msgs.lorem}
             </div>
         </ui:define>
+
+        <ui:define name="miscjavascript">
+            <ui:fragment rendered="#{initParam['javax.faces.PROJECT_STAGE'] == 'Development'}">
+                <script type="text/javascript">
+                    console.log("Application settings: ", jee7hotelconfig.settings);
+                </script>
+            </ui:fragment>
+        </ui:define>
     </ui:composition>
 </html>
 

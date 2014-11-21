@@ -4,6 +4,7 @@ package org.koenighotze.jee7hotel.business.tracker;
 
 import org.koenighotze.jee7hotel.business.events.ReservationStatusChangeEvent;
 
+import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.enterprise.event.Observes;
 import javax.json.Json;
@@ -45,7 +46,26 @@ public class RoomReservationTracker {
         sessions.remove(session);
     }
 
-    public void onReservationConfirmed(@Observes ReservationStatusChangeEvent reservationStateChange) {
+    @PreDestroy
+    public void shutdown() {
+        LOGGER.log(Level.INFO, "Shutting down...");
+        this.sessions
+                .stream()
+                .forEach(session -> closeAndRemoveSession(session));
+    }
+
+    private void closeAndRemoveSession(Session session) {
+        try {
+            session.close();
+        } catch (IOException e) {
+            LOGGER.log(Level.WARNING,
+                    "Cannot close session " + session.getId(), e);
+        }
+        onClose(session);
+    }
+
+
+    public void onReservationStateChange(@Observes ReservationStatusChangeEvent reservationStateChange) {
         Writer writer = new StringWriter();
 
         try (JsonGenerator generator = Json.createGenerator(writer)) {
@@ -53,21 +73,23 @@ public class RoomReservationTracker {
                     .writeStartObject()
                     .write("reservationNumber", reservationStateChange.getReservationNumber())
                     .write("oldState", "null")
-                    // TODO: this breaks the translation of enum to string
+                    // TODO: this breaks the translation of enum to string and should be modified
                     .write("newState", reservationStateChange.getNewState().name())
                     .writeEnd();
         }
 
         String jsonValue = writer.toString();
-        for (Session session : sessions) {
-            LOGGER.log(Level.INFO, "sending data to session {0}", session.getId());
-            try {
-                session.getBasicRemote().sendText(jsonValue);
-            } catch (IOException ex) {
-                LOGGER.log(Level.WARNING, 
-                        "Cannot handle " + jsonValue + " for session " + session.getId(), ex);
-            }
-        }
 
+        this.sessions.forEach(session -> sendDataToSession(session, jsonValue));
+    }
+
+    private void sendDataToSession(Session session, String jsonValue) {
+        LOGGER.log(Level.INFO, "sending data to session {0}", session.getId());
+        try {
+            session.getBasicRemote().sendText(jsonValue);
+        } catch (IOException ex) {
+            LOGGER.log(Level.WARNING,
+                    "Cannot handle " + jsonValue + " for session " + session.getId(), ex);
+        }
     }
 }

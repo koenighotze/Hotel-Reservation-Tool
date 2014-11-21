@@ -178,7 +178,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.0.2</version>
+                <version>2.3</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -191,6 +191,16 @@
                             <Version>${project.version}</Version>                            
                         </manifestEntries>
                     </archive>
+
+                    <webResources>
+                        <resource>
+                            <filtering>true</filtering>
+                            <directory>src/main/webapp</directory>
+                            <includes>
+                                <include>**/*.js</include>
+                            </includes>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
             
@@ -249,6 +259,18 @@
     </pluginRepositories>
     
     <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <properties>
+                <ws.port>8080</ws.port>
+            </properties>
+        </profile>
+
+
         <profile>
             <id>wildfly</id>
             <build>
@@ -357,6 +379,10 @@
                     </plugin>
                 </plugins>
             </build>
+
+            <properties>
+                <ws.port>8000</ws.port>
+            </properties>
         </profile>
     </profiles>
 </project>

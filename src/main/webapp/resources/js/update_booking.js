@@ -1,9 +1,8 @@
-var setupWs = function (baseUrl) {
+var setupWs = function (config) {
     "use strict";
-
-    var host = window.location.host;
-    console.log("setting up websocket");
-    var ws = new WebSocket(baseUrl + "/booking/tracking");
+    var url = config.webSocketBaseUrl() + "/booking/tracking";
+    console.log("setting up websocket on url " + url);
+    var ws = new WebSocket(url);
 
     // the number we display
     var currResNumber = $("#bookingDetailsForm\\:reservation_number").val();
@@ -18,7 +17,7 @@ var setupWs = function (baseUrl) {
     };
 
     var onConnect = function(event) {
-        console.log("Connected " + event);
+        console.log("Connected ", event);
     };
 
     var onMessage = function(event) {
@@ -27,15 +26,23 @@ var setupWs = function (baseUrl) {
 
 
     var updateBooking = function(event) {
-        console.log("Received " + event);
         var jsonObject = JSON.parse(event.data);
 
         if (currResNumber === jsonObject.reservationNumber) {
-            console.log("new status " + jsonObject.newState);
-            statusField.slideUp(500).promise().done(function() {
-                statusField.val(jsonObject.newState);
-                statusField.slideDown(500);
-            });
+            var orgWidth = statusField.css('border-width');
+            statusField
+                .parent()
+                    .toggleClass('has-success');
+            statusField
+                .animate({'borderWidth': 3}, 1000)
+                .promise()
+                .done(function() {
+                    statusField.val(jsonObject.newState);
+                    statusField
+                        .animate({'borderWidth' : orgWidth }, 1000)
+                        .promise()
+                        .done(function() { statusField.parent().toggleClass('has-success'); });
+                });
         }
     };
 };

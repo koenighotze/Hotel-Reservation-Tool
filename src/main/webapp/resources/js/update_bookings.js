@@ -1,9 +1,8 @@
-var setupWs = function (baseUrl) {
+var setupWs = function (config) {
     "use strict";
 
-    var host = window.location.host;
     console.log("setting up websocket");
-    var ws = new WebSocket(baseUrl + "/booking/tracking");
+    var ws = new WebSocket(config.webSocketBaseUrl()  + "/booking/tracking");
 
     ws.onopen = function(event) {
         onConnect(event);
@@ -26,11 +25,13 @@ var setupWs = function (baseUrl) {
 
         var field = $('span#status_' + jsonObject.reservationNumber);
         if (field) {
-            field.slideUp(500).promise().done(function() {
-                field.text(jsonObject.newState);
-                field.slideDown(500);
-            });
-
+            field
+                .fadeOut('slow')
+                .promise()
+                .done(function() {
+                    field.text(jsonObject.newState);
+                    field.fadeIn('slow');
+                });
         }
     };
 };

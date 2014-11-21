@@ -39,7 +39,7 @@ public class ReservationTest extends AbstractBasePersistenceTest {
         super.initHook();
         this.bookingService.setEntityManager(super.getEntityManager());
         this.bookingService.setReservationEvents(this.mockEvent);
-        this.bookingService.setReservationConfirmedEvents(this.mockResEvent);
+        this.bookingService.setReservationStateChangeEvents(this.mockResEvent);
 
         this.guestService.setEntityManager(super.getEntityManager());
         this.roomService.setEntityManager(super.getEntityManager());

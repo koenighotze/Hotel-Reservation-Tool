@@ -46,12 +46,12 @@ public class BookingService {
     private Event<NewReservationEvent> reservationEvents;
 
     @Inject
-    private Event<ReservationStatusChangeEvent> reservationConfirmedEvents;
+    private Event<ReservationStatusChangeEvent> reservationStateChangeEvents;
     
     private static final Logger LOGGER = Logger.getLogger(BookingService.class.getName());
 
-    public void setReservationConfirmedEvents(Event<ReservationStatusChangeEvent> reservationConfirmedEvents) {
-        this.reservationConfirmedEvents = reservationConfirmedEvents;
+    public void setReservationStateChangeEvents(Event<ReservationStatusChangeEvent> reservationStateChangeEvents) {
+        this.reservationStateChangeEvents = reservationStateChangeEvents;
     }
 
     public void setReservationEvents(Event<NewReservationEvent> reservationEvents) {
@@ -67,6 +67,7 @@ public class BookingService {
         }
         
         current.setReservationStatus(ReservationStatus.CANCELED);
+        this.reservationStateChangeEvents.fire(new ReservationStatusChangeEvent(reservation.getReservationNumber(), null, ReservationStatus.CONFIRMED));
     }
 
     // TODO: extract to calculation strategy or similar
@@ -148,7 +149,7 @@ public class BookingService {
         
         reservation.ifPresent(r -> {
             r.setReservationStatus(ReservationStatus.CONFIRMED);
-            this.reservationConfirmedEvents.fire(new ReservationStatusChangeEvent(reservationNumber, null, ReservationStatus.CONFIRMED));
+            this.reservationStateChangeEvents.fire(new ReservationStatusChangeEvent(reservationNumber, null, ReservationStatus.CONFIRMED));
         } );
         
 

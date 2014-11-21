@@ -34,6 +34,7 @@ The todo list includes (among other stuff):
 * Generating reports/graphs using d3.js
 * load testing loader.io
 * Authentication using OAuth
+* REST Service for Url lookup
 
 
 Pseudo use cases are chosen only to demonstrate certain technologies, obviously not all are implemented yet:
