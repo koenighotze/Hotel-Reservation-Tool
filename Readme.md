@@ -3,6 +3,20 @@ JEE7 Demo and Quickstart
 
 This project shows some basic JEE7 technologies using a simple guestbook use case.
 
+Open Shift
+----------
+An open shift application hosts this tool: http://jee7hotel-koenighotze.rhcloud.com
+
+The respective jenkins is located at http://jenkins-koenighotze.rhcloud.com/job/jee7hotel-build/
+
+
+Preconditions
+-------------
+
+One goal was to demonstrate building an App using only JEE7 and JDK8 at runtime, no other external dependencies are used.
+
+Testing however uses based on Mockito and Arquillian.
+
 
 Overview
 --------
