@@ -123,7 +123,7 @@ Presentation layer
 * Basic JSF 2.2
 * Ajax
 * HTML 5 integration
-
+* JSF Flows
 
 Business layer
 --------------
@@ -148,20 +148,17 @@ Testing
 
 Things to do
 ------------
-* JSF Flows
+
 * Security
 * IIOP
 * Stored Procedures
 * DeltaSpike
 * WeldSE, CDIUnit
 * Angular JS Frontend
-* ```@Model```
 * JMS 2.0 
- * ```@Command```
- * ```@Unpacked```
 * Role based security
- * Role ```**```
+* Role ```**```
 * ```@Delegate```
-* Timer
+
 * Futures
 * Embedded container ```EJBContainer.createEJBContainer```
