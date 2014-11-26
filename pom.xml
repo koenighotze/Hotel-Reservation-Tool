@@ -329,6 +329,11 @@
                                     <name>java.util.logging.manager</name>
                                     <value>org.jboss.logmanager.LogManager</value>
                                 </property>
+
+                                <property>
+                                    <name>arquillian.launch</name>
+                                    <value>wildfly</value>
+                                </property>
                             </systemProperties>
                         </configuration>
                     </plugin>
@@ -347,16 +352,59 @@
                     <version>1.0.0.CR4</version>
                     <scope>test</scope>
                 </dependency>
-                <!--<dependency>-->
-                    <!--<groupId>org.glassfish.main.extras</groupId>-->
-                    <!--<artifactId>glassfish-embedded-all</artifactId>-->
-                    <!--<version>3.1.2</version>-->
-                    <!--<scope>provided</scope>-->
-                <!--</dependency> -->
+            </dependencies>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <property>
+                                    <name>arquillian.launch</name>
+                                    <value>arquillian-glassfish-managed-3.1</value>
+                                </property>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>glassfish-remote-integration-tests</id>
+            <properties>
+            </properties>
+            <dependencies>
+                <dependency>
+                  <groupId>org.jboss.arquillian.container</groupId>
+                  <artifactId>arquillian-glassfish-remote-3.1</artifactId>
+                  <version>1.0.0.CR4</version>
+                  <scope>test</scope>
+                </dependency>
             </dependencies>
         </profile>
 
 
+
+        <profile>
+            <id>glassfish-embedded-integration-tests</id>
+            <properties>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.arquillian.container</groupId>
+                    <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
+                    <version>1.0.0.CR4</version>
+                    <scope>test</scope>
+                </dependency>
+               <dependency>
+            <groupId>org.glassfish.main.extras</groupId>
+            <artifactId>glassfish-embedded-all</artifactId>
+            <version>4.1</version>
+        </dependency>
+            </dependencies>
+        </profile>
 
         <profile>
             <!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->

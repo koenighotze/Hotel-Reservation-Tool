@@ -78,4 +78,20 @@ public class BookingServiceTest extends AbstractBasePersistenceTest {
         BigDecimal rate = this.bookingService.calculateRateFor(RoomEquipment.BUDGET, from, to);
         assertThat(rate, is(equalTo(BigDecimal.valueOf(240L))));
     }
+
+    @Test
+    public void findReservationsForGuest() {
+        Optional<Guest> guest = this.guestService.findById(WELL_KNOWN_ID);
+        List<Reservation> reservations = this.bookingService.findReservationForGuest(guest.get());
+
+        assertThat(reservations.size(), is(equalTo(0)));
+
+        Optional<Room> room = this.roomService.findRoomByNumber(WELL_KNOWN_ROOM_NUMBER);
+        Reservation reservation =
+                this.bookingService.bookRoom(guest.get(), room.get(), LocalDate.now(), LocalDate.now());
+
+        reservations = this.bookingService.findReservationForGuest(guest.get());
+        assertThat(reservations.size(), is(equalTo(1)));
+
+    }
 }

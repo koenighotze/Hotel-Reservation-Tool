@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messaging-deployment xmlns="urn:jboss:messaging-deployment:1.0">
+
+    <!--
+   Deactivated:
+
+   Queues are created by using JMSDestinationDefinition!
+   -->
+
+    <!--<hornetq-server>-->
+        <!--<jms-destinations>-->
+            <!--<jms-queue name="reservation-integration-test">-->
+                <!--<entry name="java:app/jms/jee7hotel/reservation"/>-->
+                <!--<entry name="java:jboss/exported/jms/jee7hotel/reservation"/>-->
+            <!--</jms-queue>-->
+        <!--</jms-destinations>-->
+    <!--</hornetq-server>-->
+</messaging-deployment>

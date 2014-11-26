@@ -39,6 +39,8 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
+
+import static org.koenighotze.jee7hotel.business.integration.BaseArquillianSetup.*;
 /**
  *
  * @author dschmitz
@@ -62,43 +64,12 @@ public class GuestServiceArquillianIntegrationIT {
 
     @Deployment
     public static Archive<?> createMicroDeployment() {
-        // get special integration test persistence unit
-        String persistenceXml = AssetUtil
-                .getClassLoaderResourceName(GuestServiceArquillianIntegrationIT.class.getPackage(),
-                "integration-test-persistence.xml");
-        String loadSql = AssetUtil
-                .getClassLoaderResourceName(GuestServiceArquillianIntegrationIT.class.getPackage(),
-                        "integration-prepareTestData.sql");
-        String jbossWebXml = AssetUtil
-                .getClassLoaderResourceName(GuestServiceArquillianIntegrationIT.class.getPackage(),
-                        "integration-jboss-web.xml");
+        WebArchive baseDeployment = createBaseDeployment();
 
-        // build list of needed maven dependencies
-//        File[] deps = Maven.resolver().loadPomFromFile("pom.xml")
-//                .importRuntimeDependencies()
-//                .resolve()
-//                .withTransitivity()
-//                .asFile();
+        baseDeployment.addPackages(true, "org.koenighotze.jee7hotel");
+        LOGGER.info(() -> baseDeployment.toString(Formatters.VERBOSE));
 
-        WebArchive archive = ShrinkWrap.create(WebArchive.class)
-                // add demo and all recursive packages 
-                // as of yet, we do not deploy the web layer   
-                .addPackages(true, "org.koenighotze.jee7hotel")
-                .addAsResource(persistenceXml, "META-INF/persistence.xml")
-                .addAsResource(loadSql, "META-INF/load.sql")
-                .addAsWebInfResource(jbossWebXml, "jboss-web.xml")
-                // this is not needed for jee7
-                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-
-
-//        for (File f : deps) {
-//            LOGGER.info(() -> "Add " + f.getName() + " as dependency");
-//            archive.addAsLibraries(f);
-//        }
-        
-        LOGGER.info(() -> archive.toString(Formatters.VERBOSE));
-
-        return archive;
+        return baseDeployment;
     }
     
     @Test

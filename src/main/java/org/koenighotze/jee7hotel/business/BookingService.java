@@ -33,7 +33,6 @@ import java.util.logging.Logger;
 @Named
 @Stateless
 @Path("bookings")
-
 // declare interceptor w/o using a stereotype (annotation based) binding
 // this way the interceptor will work w/o beans.xml
 @Interceptors(PerformanceLogger.class)
@@ -94,7 +93,7 @@ public class BookingService {
         return rate.multiply(BigDecimal.valueOf(days));
     }
 
-    // 
+    // TODO: extract to real number producer bean
     public String newReservationNumber() {
         return UUID.randomUUID().toString();
     }
@@ -119,8 +118,13 @@ public class BookingService {
         Reservation reservation = 
                 new Reservation(guest, newReservationNumber(), room,
                         checkin, checkout, calculateRateFor(room.getRoomEquipment(), checkin, checkout));
+
+        LOGGER.info(() -> "Storing " + reservation);
         this.em.persist(reservation);
+
         this.reservationEvents.fire(new NewReservationEvent(reservation.getReservationNumber()));
+
+        this.em.flush();
         return reservation;
     }
 
