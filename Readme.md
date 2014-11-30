@@ -3,6 +3,20 @@ JEE7 Demo and Quickstart
 
 This project shows some basic JEE7 technologies using a simple guestbook use case.
 
+Open Shift
+----------
+An open shift application hosts this tool: http://jee7hotel-koenighotze.rhcloud.com
+
+The respective jenkins is located at http://jenkins-koenighotze.rhcloud.com/job/jee7hotel-build/
+
+
+Preconditions
+-------------
+
+One goal was to demonstrate building an App using only JEE7 and JDK8 at runtime, no other external dependencies are used.
+
+Testing however uses based on Mockito and Arquillian.
+
 
 Overview
 --------
@@ -109,7 +123,7 @@ Presentation layer
 * Basic JSF 2.2
 * Ajax
 * HTML 5 integration
-
+* JSF Flows
 
 Business layer
 --------------
@@ -134,21 +148,18 @@ Testing
 
 Things to do
 ------------
-* JSF Flows
+
 * Security
 * IIOP
 * Stored Procedures
 * DeltaSpike
 * WeldSE, CDIUnit
 * Angular JS Frontend
-* ```@Model```
 * JMS 2.0 
- * ```@Command```
- * ```@Unpacked```
 * Role based security
- * Role ```**```
+* Role ```**```
 * ```@Delegate```
-* Timer
+
 * Futures
 * Embedded container ```EJBContainer.createEJBContainer```
 
