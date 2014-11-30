@@ -7,16 +7,14 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.formatter.Formatters;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.impl.base.asset.AssetUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.koenighotze.jee7hotel.business.BookingService;
 import org.koenighotze.jee7hotel.business.GuestService;
 import org.koenighotze.jee7hotel.business.RoomService;
+import org.koenighotze.jee7hotel.business.eventsource.EventSourceBean;
 import org.koenighotze.jee7hotel.business.events.NewReservationEvent;
 import org.koenighotze.jee7hotel.domain.Guest;
 import org.koenighotze.jee7hotel.domain.Reservation;
@@ -66,7 +64,8 @@ public class GuestServiceArquillianIntegrationIT {
     public static Archive<?> createMicroDeployment() {
         WebArchive baseDeployment = createBaseDeployment();
 
-        baseDeployment.addPackages(true, "org.koenighotze.jee7hotel");
+        baseDeployment.addPackages(true, "org.koenighotze.jee7hotel")
+            .deleteClass(EventSourceBean.class);
         LOGGER.info(() -> baseDeployment.toString(Formatters.VERBOSE));
 
         return baseDeployment;

@@ -2,6 +2,9 @@ package org.koenighotze.jee7hotel.business;
 
 import org.koenighotze.jee7hotel.business.events.NewReservationEvent;
 import org.koenighotze.jee7hotel.business.events.ReservationStatusChangeEvent;
+import org.koenighotze.jee7hotel.business.eventsource.EventSource;
+import org.koenighotze.jee7hotel.business.eventsource.EventSourceInterceptor;
+import org.koenighotze.jee7hotel.business.logging.PerformanceLog;
 import org.koenighotze.jee7hotel.business.logging.PerformanceLogger;
 import org.koenighotze.jee7hotel.domain.*;
 
@@ -35,7 +38,13 @@ import java.util.logging.Logger;
 @Path("bookings")
 // declare interceptor w/o using a stereotype (annotation based) binding
 // this way the interceptor will work w/o beans.xml
-@Interceptors(PerformanceLogger.class)
+//@Interceptors({
+//        PerformanceLogger.class,
+//})
+@Interceptors({
+        PerformanceLogger.class,
+        EventSourceInterceptor.class
+})
 public class BookingService {
 
     @PersistenceContext
@@ -57,16 +66,13 @@ public class BookingService {
         this.reservationEvents = reservationEvents;
     }
 
-
-    public void cancelReservation(Reservation reservation) {
-        Reservation current = this.em.find(Reservation.class, reservation.getId());
-        if (null == current) {
-            LOGGER.log(Level.WARNING, "Cannot find reservation {0}", reservation.getId());
-            return;
-        }
-        
-        current.setReservationStatus(ReservationStatus.CANCELED);
-        this.reservationStateChangeEvents.fire(new ReservationStatusChangeEvent(reservation.getReservationNumber(), null, ReservationStatus.CONFIRMED));
+    // TODO refactor to reservation number
+    public void cancelReservation(String reservationNumber) {
+        Optional<Reservation> reservation = findReservationByNumber(reservationNumber);
+        reservation.ifPresent(r -> {
+            r.setReservationStatus(ReservationStatus.CANCELED);
+            this.reservationStateChangeEvents.fire(new ReservationStatusChangeEvent(r.getReservationNumber(), null, ReservationStatus.CONFIRMED));
+        });
     }
 
     // TODO: extract to calculation strategy or similar
@@ -145,7 +151,10 @@ public class BookingService {
 
     public void reopenReservation(String reservationNumber) {
         Optional<Reservation> reservation = findReservationByNumber(reservationNumber);
-        reservation.ifPresent(r -> r.setReservationStatus(ReservationStatus.OPEN));
+        reservation.ifPresent(r -> {
+            r.setReservationStatus(ReservationStatus.OPEN);
+            this.reservationStateChangeEvents.fire(new ReservationStatusChangeEvent(reservationNumber, null, ReservationStatus.OPEN));
+        });
     }
 
     public void confirmReservation(String reservationNumber) {

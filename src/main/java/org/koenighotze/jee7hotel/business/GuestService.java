@@ -1,10 +1,13 @@
 package org.koenighotze.jee7hotel.business;
 
+import org.koenighotze.jee7hotel.business.eventsource.EventSourceInterceptor;
 import org.koenighotze.jee7hotel.business.logging.PerformanceLog;
+import org.koenighotze.jee7hotel.business.logging.PerformanceLogger;
 import org.koenighotze.jee7hotel.domain.Guest;
 
 import javax.ejb.Stateless;
 import javax.inject.Named;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
@@ -26,7 +29,10 @@ import java.util.logging.Logger;
 // @RolesAllowed({ "ADMIN" })
 
 // Example for annotation based interceptor binding; needs a real beans.xml!
-@PerformanceLog
+@Interceptors({
+        PerformanceLogger.class,
+        EventSourceInterceptor.class
+})
 public class GuestService {
     private static final Logger LOGGER = Logger.getLogger(GuestService.class.getName());
 

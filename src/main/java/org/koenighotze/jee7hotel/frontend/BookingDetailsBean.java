@@ -62,7 +62,7 @@ public class BookingDetailsBean implements Serializable {
     
     
     public void cancel() {
-        this.bookingService.cancelReservation(this.reservation);
+        this.bookingService.cancelReservation(this.reservation.getReservationNumber());
         
         FacesMessageHelper.addMessage(null, FacesMessage.SEVERITY_INFO, 
                     "Reservation " + this.reservationNumber + " is canceled!", "");

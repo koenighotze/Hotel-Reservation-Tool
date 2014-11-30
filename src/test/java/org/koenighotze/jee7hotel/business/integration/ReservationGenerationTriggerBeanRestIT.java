@@ -37,7 +37,7 @@ public class ReservationGenerationTriggerBeanRestIT {
     @Test
     @RunAsClient
     public void testRestInterface(@ArquillianResource URL baseURI) throws InterruptedException {
-        String targetUrl = baseURI + "rest/bookings";
+        String targetUrl = baseURI + "rest/bookingstrigger";
 
         // Client does not implement autoclosable :(
         Client client = null;

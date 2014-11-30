@@ -34,7 +34,7 @@ import java.util.logging.Logger;
  */
 @Named
 @Stateless
-@Path("bookings")
+@Path("bookingstrigger")
 public class ReservationGenerationTriggerBean {
 
     private static final Logger LOGGER = Logger.getLogger(ReservationGenerationBean.class.getName());
@@ -58,8 +58,6 @@ public class ReservationGenerationTriggerBean {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response triggerReservation(BookingMessageTO messageTO) {
         try {
-//            BookingMessageTO messageTO = new BookingMessageTO(guest.getId(), room.getRoomNumber(), checkin, checkout);
-
             LOGGER.fine(() -> "Sending " + messageTO + " to " + this.queue);
 
             TextMessage textMessage = this.jmsContext.createTextMessage(bookingMessageTOToJson(messageTO));

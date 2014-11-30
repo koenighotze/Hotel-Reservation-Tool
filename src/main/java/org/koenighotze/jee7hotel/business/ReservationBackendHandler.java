@@ -3,12 +3,15 @@
 package org.koenighotze.jee7hotel.business;
 
 import org.koenighotze.jee7hotel.business.events.NewReservationEvent;
+import org.koenighotze.jee7hotel.business.eventsource.EventSourceInterceptor;
+import org.koenighotze.jee7hotel.business.logging.PerformanceLogger;
 
 import javax.ejb.Asynchronous;
 import javax.ejb.Singleton;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.interceptor.Interceptors;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +25,9 @@ import java.util.logging.Logger;
  */
 @Named
 @Singleton
+@Interceptors({
+        PerformanceLogger.class
+})
 public class ReservationBackendHandler {
     private static final Logger LOGGER = Logger.getLogger(ReservationBackendHandler.class.getName()); 
     
