@@ -19,10 +19,12 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -117,8 +119,16 @@ public class BookingService {
     public List<Reservation> getAllReservations() {
         CriteriaQuery<Reservation> cq = this.em.getCriteriaBuilder().createQuery(Reservation.class);
         cq.select(cq.from(Reservation.class));
-        return this.em.createQuery(cq).getResultList();
+        return new ArrayList(this.em.createQuery(cq).getResultList());
     }
+
+    @GET
+    @Produces({"application/xml", "application/json"})
+    @Path("{id}")
+    public Reservation getReservation(@PathParam("id") Long id) {
+        return this.em.find(Reservation.class, id);
+    }
+
 
     public Reservation bookRoom(Guest guest, Room room, LocalDate checkin, LocalDate checkout) {
         Reservation reservation = 

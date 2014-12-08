@@ -5,6 +5,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.formatter.Formatters;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.koenighotze.jee7hotel.business.BookingService;
@@ -12,6 +13,7 @@ import org.koenighotze.jee7hotel.business.GuestService;
 import org.koenighotze.jee7hotel.business.ReservationBackendHandler;
 import org.koenighotze.jee7hotel.business.RoomService;
 import org.koenighotze.jee7hotel.business.eventsource.EventSourceBean;
+import org.koenighotze.jee7hotel.business.eventsource.LoggingEventSourceBean;
 import org.koenighotze.jee7hotel.domain.Guest;
 import org.koenighotze.jee7hotel.domain.Reservation;
 import org.koenighotze.jee7hotel.domain.Room;
@@ -48,15 +50,9 @@ public class EventSourceIT extends BaseArquillianSetup {
     public static Archive<?> createMicroDeployment() {
         WebArchive baseDeployment = createBaseDeployment();
 
-//        baseDeployment.addPackages(true, "org.koenighotze.jee7hotel");
-//
-//        baseDeployment.addClass(BookingService.class)
-//            .addClass(GuestService.class)
-//            .addClass(RoomService.class);
-//            .addPackage(EventSourceBean.class.getPackage());
         baseDeployment.addPackages(true, "org.koenighotze.jee7hotel")
-//                .deleteClass(EventSourceBean.class)
-                .deleteClass(ReservationBackendHandler.class);
+                .deleteClass(ReservationBackendHandler.class)
+                .deleteClass(LoggingEventSourceBean.class);
 
         LOGGER.info(() -> baseDeployment.toString(Formatters.VERBOSE));
 

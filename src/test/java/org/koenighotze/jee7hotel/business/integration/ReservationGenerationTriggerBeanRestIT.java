@@ -1,5 +1,6 @@
 package org.koenighotze.jee7hotel.business.integration;
 
+import junit.framework.TestSuite;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -32,6 +33,7 @@ public class ReservationGenerationTriggerBeanRestIT {
 
         return baseDeployment;
     }
+
 
 
     @Test

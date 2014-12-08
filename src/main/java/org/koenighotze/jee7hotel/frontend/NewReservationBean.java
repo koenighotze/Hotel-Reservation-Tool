@@ -128,8 +128,13 @@ public class NewReservationBean implements Serializable {
                 = this.bookingService.bookRoom(this.booking.getGuest(), this.booking.getRoom(),                        
                         this.booking.getCheckinDate(), this.booking.getCheckoutDate());
         
+
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
         flash.setKeepMessages(true);
+
+
+
+
         FacesMessage message = new FacesMessage("Room " 
                 + this.booking.getRoom().getRoomNumber() 
                 + " booked for " 

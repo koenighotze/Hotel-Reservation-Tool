@@ -1,11 +1,11 @@
 package org.koenighotze.jee7hotel.batch.guestdataimport;
 
-import com.sun.istack.NotNull;
 
 import javax.batch.operations.JobOperator;
 import javax.batch.runtime.BatchRuntime;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 import java.util.Properties;
 import java.util.logging.Logger;
 
