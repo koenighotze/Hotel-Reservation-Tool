@@ -11,7 +11,6 @@ import static org.mockito.Mockito.when;
 
 public class GuestDataReaderTest {
     @Test
-    @org.junit.Ignore
     public void testReadValidObject() throws Exception {
         GuestDataReader guestDataReader = new GuestDataReader();
 

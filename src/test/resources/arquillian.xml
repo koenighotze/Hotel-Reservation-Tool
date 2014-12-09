@@ -11,6 +11,14 @@
         </configuration>
     </container>
 
+    <container qualifier="wildfly-remote">
+        <configuration>
+            <!--
+             [managementAddress, password, managementPort, managementProtocol, username]
+            -->
+        </configuration>
+    </container>
+
     <container qualifier="arquillian-glassfish-managed-3.1" >
         <configuration>
             <property name="outputToConsole">true</property>

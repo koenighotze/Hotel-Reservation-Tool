@@ -9,13 +9,17 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.formatter.Formatters;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.koenighotze.jee7hotel.RestApplicationConfig;
 import org.koenighotze.jee7hotel.business.BookingService;
 import org.koenighotze.jee7hotel.business.GuestService;
+import org.koenighotze.jee7hotel.business.ReservationBackendHandler;
 import org.koenighotze.jee7hotel.business.RoomService;
 import org.koenighotze.jee7hotel.business.eventsource.EventSourceBean;
 import org.koenighotze.jee7hotel.business.events.NewReservationEvent;
+import org.koenighotze.jee7hotel.business.monitor.ApplicationMonitorBean;
 import org.koenighotze.jee7hotel.domain.Guest;
 import org.koenighotze.jee7hotel.domain.Reservation;
 import org.koenighotze.jee7hotel.domain.ReservationStatus;
@@ -64,8 +68,11 @@ public class GuestServiceArquillianIntegrationIT {
     public static Archive<?> createMicroDeployment() {
         WebArchive baseDeployment = createBaseDeployment();
 
-        baseDeployment.addPackages(true, "org.koenighotze.jee7hotel")
-            .deleteClass(EventSourceBean.class);
+        baseDeployment//.addPackages(true, BaseArquillianSetup::excludeTest, "org.koenighotze.jee7hotel")
+            .addClasses(GuestService.class, RoomService.class,
+                    BookingService.class, RestApplicationConfig.class,
+                    ReservationBackendHandler.class);
+//            .deletePackage("org.koenighotze.jee7hotel.frontend")
         LOGGER.info(() -> baseDeployment.toString(Formatters.VERBOSE));
 
         return baseDeployment;

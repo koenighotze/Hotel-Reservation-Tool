@@ -31,8 +31,6 @@ public class GuestDataReader extends AbstractItemReader {
     }
 
 
-
-
     @Inject
     @BatchProperty(name = "resourceNameDefault")
     private String resourceNameDefault;
@@ -69,7 +67,7 @@ public class GuestDataReader extends AbstractItemReader {
     @Override
     public Object readItem() throws Exception {
         Object obj = this.reader.readLine();
-        LOGGER.info("Read " + obj);
+        LOGGER.fine(() -> "Read " + obj);
         return obj;
     }
 }

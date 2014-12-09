@@ -4,6 +4,7 @@ import com.mongodb.*;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -27,8 +28,8 @@ import java.util.stream.Collectors;
  * Created by dschmitz on 26.11.14.
  */
 
-@Singleton
-@Path("events")
+@Stateless
+//@Path("events")
 public class EventSourceBean implements IEventSource {
 
     private static final Logger LOGGER = Logger.getLogger(EventSourceBean.class.getName());
@@ -75,7 +76,7 @@ public class EventSourceBean implements IEventSource {
         try (DBCursor cursor = coll.find()) {
             while (cursor.hasNext()) {
                 DBObject next = cursor.next();
-                LOGGER.info("PArsing " + next);
+                LOGGER.info("Parsing " + next);
                 result.add(Event.fromJson((String) next.get("event")));
             }
         }

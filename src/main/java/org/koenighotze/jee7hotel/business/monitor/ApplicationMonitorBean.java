@@ -17,9 +17,9 @@ import java.util.logging.Logger;
  *
  * @author dschmitz
  */
-@Startup
-@Singleton
-@Path("monitor")
+//@Startup
+//@Singleton
+//@Path("monitor")
 public class ApplicationMonitorBean {
     private static final Logger LOGGER = Logger.getLogger(ApplicationMonitorBean.class.getName());   
 

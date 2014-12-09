@@ -1,5 +1,6 @@
 package org.koenighotze.jee7hotel.business.integration;
 
+import com.mongodb.MongoClient;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -13,12 +14,15 @@ import org.koenighotze.jee7hotel.business.GuestService;
 import org.koenighotze.jee7hotel.business.ReservationBackendHandler;
 import org.koenighotze.jee7hotel.business.RoomService;
 import org.koenighotze.jee7hotel.business.eventsource.EventSourceBean;
+import org.koenighotze.jee7hotel.business.eventsource.IEventSource;
 import org.koenighotze.jee7hotel.business.eventsource.LoggingEventSourceBean;
 import org.koenighotze.jee7hotel.domain.Guest;
 import org.koenighotze.jee7hotel.domain.Reservation;
 import org.koenighotze.jee7hotel.domain.Room;
+import org.koenighotze.jee7hotel.frontend.model.Booking;
 
 import javax.inject.Inject;
+import java.net.UnknownHostException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.logging.Logger;
@@ -43,14 +47,21 @@ public class EventSourceIT extends BaseArquillianSetup {
     @Inject
     private RoomService roomService;
 
-//    @Inject
-//    private EventSourceBean eventSourceBean;
+    @Inject
+    private IEventSource eventSourceBean;
+
+
 
     @Deployment
     public static Archive<?> createMicroDeployment() {
-        WebArchive baseDeployment = createBaseDeployment();
+//        WebArchive baseDeployment = createBaseDeployment();
 
-        baseDeployment.addPackages(true, "org.koenighotze.jee7hotel")
+//        baseDeployment.addPackages(true, "org.koenighotze.jee7hotel")
+        WebArchive baseDeployment = createBaseDeployment()
+                .addClass(EventSourceBean.class)
+                .addClass(BookingService.class)
+                .addClass(GuestService.class)
+                .addClass(RoomService.class)
                 .deleteClass(ReservationBackendHandler.class)
                 .deleteClass(LoggingEventSourceBean.class);
 
@@ -59,6 +70,19 @@ public class EventSourceIT extends BaseArquillianSetup {
         return baseDeployment;
     }
 
+    @Before
+    public void clearDb() throws UnknownHostException {
+        MongoClient mongoClient = null;
+        try {
+            mongoClient = new MongoClient();
+            mongoClient.dropDatabase("jee7hotel");
+        }
+        finally {
+            if (null != mongoClient) {
+                mongoClient.close();
+            }
+        }
+    }
 
     @Test
     public void testEventSourceEndToEnd() {
@@ -74,7 +98,7 @@ public class EventSourceIT extends BaseArquillianSetup {
         this.bookingService.reopenReservation(reservation.getReservationNumber());
 
         // now we'd expect three events to be added to the event store
-//        assertThat(this.eventSourceBean.fetchAllEvents().size(), is(equalTo(3)));
+        assertThat(this.eventSourceBean.fetchAllEvents().size(), is(equalTo(5)));
     }
 
     private Reservation createReservation() {

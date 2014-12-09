@@ -3,10 +3,18 @@ package org.koenighotze.jee7hotel.batch.guestdataimport;
 import com.sun.xml.ws.api.tx.at.Transactional;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.formatter.Formatters;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.impl.base.asset.AssetUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.koenighotze.jee7hotel.business.GuestService;
+import org.koenighotze.jee7hotel.business.eventsource.EventSourceBean;
+import org.koenighotze.jee7hotel.business.eventsource.EventSourceInterceptor;
+import org.koenighotze.jee7hotel.business.eventsource.LoggingEventSourceBean;
+import org.koenighotze.jee7hotel.business.integration.BaseArquillianSetup;
+import org.koenighotze.jee7hotel.business.logging.PerformanceLogger;
 import org.koenighotze.jee7hotel.domain.Guest;
 
 import javax.batch.operations.JobOperator;
@@ -16,6 +24,10 @@ import javax.batch.runtime.JobExecution;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import java.util.EnumSet;
 import java.util.Properties;
@@ -29,7 +41,7 @@ import static org.koenighotze.jee7hotel.business.integration.BaseArquillianSetup
 import static org.junit.Assert.*;
 
 
-// @RunWith(Arquillian.class)
+@RunWith(Arquillian.class)
 public class GuestDataImportBatchBeanIT {
     private static final Logger LOGGER = Logger.getLogger(GuestDataImportBatchBeanIT.class.getName());
 
@@ -40,7 +52,7 @@ public class GuestDataImportBatchBeanIT {
     @PersistenceContext
     private EntityManager entityManager;
 
-    // @Deployment
+    @Deployment
     public static WebArchive setup() {
         WebArchive deployment = createBaseDeployment();
 
@@ -48,18 +60,26 @@ public class GuestDataImportBatchBeanIT {
                 .getClassLoaderResourceName(GuestDataImportBatchBeanIT.class.getPackage(),
                         "integration-guest-data.csv");
 
-        deployment.addPackage(GuestDataImportBatchBean.class.getPackage())
+        deployment
+                .addPackages(false,
+                        BaseArquillianSetup::excludeTest,
+                        GuestDataImportBatchBean.class.getPackage())
+                .addClass(GuestService.class)
+                .addClass(PerformanceLogger.class)
                 .addAsResource("META-INF/batch-jobs/guest-import.xml")
-                .addAsResource(dataCsv, "META-INF/guest-data.csv");
+                .addAsResource(dataCsv, "META-INF/guest-data.csv")
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 
+        LOGGER.info(deployment.toString(Formatters.VERBOSE));
         return deployment;
 
     }
 
-    // @Test
+    @Test
     @Transactional
     public void testBatch() throws InterruptedException {
         JobOperator jobOperator = BatchRuntime.getJobOperator();
+
         Properties props = new Properties();
         props.put("resourceName", "guest-data.csv");
 
@@ -76,7 +96,13 @@ public class GuestDataImportBatchBeanIT {
 
         assertEquals(BatchStatus.COMPLETED, jobExecution.getBatchStatus());
 
-        // Guest guest = this.entityManager.find(Guest.class, 123L);
-        // assertThat("Expected to find a guest with id "+ 123L, guest, is(not(nullValue())));
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Guest> cq = cb.createQuery(Guest.class);
+        Root<Guest> from = cq.from(Guest.class);
+        cq.select(from).where(cb.equal(from.get("name"), "Schmi"));
+
+        Guest guestFromDb = this.entityManager.createQuery(cq).getSingleResult();
+
+        assertThat("Expected to find a guest with name " + "Schmi", guestFromDb, is(not(nullValue())));
     }
 }

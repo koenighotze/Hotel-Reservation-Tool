@@ -1,7 +1,6 @@
 package org.koenighotze.jee7hotel.business;
 
 import org.koenighotze.jee7hotel.business.eventsource.EventSourceInterceptor;
-import org.koenighotze.jee7hotel.business.logging.PerformanceLog;
 import org.koenighotze.jee7hotel.business.logging.PerformanceLogger;
 import org.koenighotze.jee7hotel.domain.Guest;
 
@@ -44,6 +43,7 @@ public class GuestService {
     }
 
     public void saveGuest(Guest guest) {
+        LOGGER.info(() -> "Saving guest " + guest);
         this.em.persist(guest);
     }
 
@@ -59,7 +59,6 @@ public class GuestService {
 
     public Optional<Guest> findById(Long guestId) {
         Guest guest = this.em.find(Guest.class, guestId);
-
         return Optional.ofNullable(guest);
     }
 

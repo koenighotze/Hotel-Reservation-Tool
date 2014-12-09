@@ -1,7 +1,9 @@
 package org.koenighotze.jee7hotel.batch.guestdataimport;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.koenighotze.jee7hotel.business.AbstractBasePersistenceTest;
+import org.koenighotze.jee7hotel.business.GuestService;
 import org.koenighotze.jee7hotel.domain.Guest;
 
 import javax.persistence.TypedQuery;
@@ -14,10 +16,15 @@ import static org.junit.Assert.assertThat;
 public class GuestDataWriterTest extends AbstractBasePersistenceTest {
 
     @Test
-    @org.junit.Ignore
     public void testWriteItem() throws Exception {
+        GuestService guestService = new GuestService();
+        guestService.setEntityManager(getEntityManager());
+
+        assertThat(getEntityManager(), is(not(nullValue())));
+
         GuestDataWriter guestDataWriter = new GuestDataWriter();
         guestDataWriter.setEntityManager(getEntityManager());
+        guestDataWriter.setGuestService(guestService);
 
         List<Object> items = Arrays.asList(new Guest("foo", "baz@bar.com"));
         guestDataWriter.writeItems(items);

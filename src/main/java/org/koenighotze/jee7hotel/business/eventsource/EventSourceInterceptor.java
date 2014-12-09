@@ -22,7 +22,6 @@ public class EventSourceInterceptor {
     public Object around(InvocationContext ctx) throws Exception {
         LOGGER.info(() -> "Handling event source " + ctx.getMethod().getName());
 
-
         this.eventSourceBean.storeEvent(ctx.getTarget().getClass(), ctx.getMethod(), ctx.getParameters());
 
         return ctx.proceed();

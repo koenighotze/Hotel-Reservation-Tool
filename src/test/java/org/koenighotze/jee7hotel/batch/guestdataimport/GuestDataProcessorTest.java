@@ -11,7 +11,6 @@ import static org.junit.Assert.*;
 
 public class GuestDataProcessorTest {
     @Test
-    @org.junit.Ignore
     public void processReturnsGuest() throws Exception {
         Object processItem = new GuestDataProcessor().processItem("foo bar, bratzen@putz.de");
         Guest guest = (Guest) processItem;
@@ -20,8 +19,7 @@ public class GuestDataProcessorTest {
         assertThat("bratzen@putz.de", is(equalTo(guest.getEmail())));
     }
 
-    @org.junit.Ignore
-    @Test(expected = IllegalFormatException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void processThrowsExceptionIfInvalidEmail() throws Exception {
         new GuestDataProcessor().processItem("foo bar, invalidemail.de");
     }

@@ -109,13 +109,13 @@
         </dependency>
 
 
-        <dependency>
+       <!--  <dependency>
             <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>graphene-webdriver</artifactId>
+            <artifactId>graphene-webdriver</artifactId> -->
             <!--<version>2.0.3.Final</version>-->
-            <type>pom</type>
-            <scope>test</scope>
-        </dependency>
+            <!-- <type>pom</type> -->
+            <!-- <scope>test</scope> -->
+        <!-- </dependency> --> 
 
 
         <dependency>
@@ -391,25 +391,25 @@
             </dependency>
 
             <!-- Arquillian -->
-            <dependency>
-                <groupId>org.jboss.arquillian.extension</groupId>
-                <artifactId>arquillian-drone-bom</artifactId>
-                <version>1.3.1.Final</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.arquillian.selenium</groupId>
-                <artifactId>selenium-bom</artifactId>
-                <version>2.43.1</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.jboss.arquillian.extension</groupId>-->
+                <!--<artifactId>arquillian-drone-bom</artifactId>-->
+                <!--<version>1.3.1.Final</version>-->
+                <!--<type>pom</type>-->
+                <!--<scope>import</scope>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.jboss.arquillian.selenium</groupId>-->
+                <!--<artifactId>selenium-bom</artifactId>-->
+                <!--<version>2.43.1</version>-->
+                <!--<type>pom</type>-->
+                <!--<scope>import</scope>-->
+            <!--</dependency>-->
 
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>1.1.5.Final</version>
+                <version>1.1.2.Final</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -557,13 +557,6 @@
                     <artifactId>wildfly-arquillian-container-remote</artifactId>
                     <scope>test</scope>
                 </dependency>
-
-                <!--<dependency>-->
-                    <!--<groupId>org.glassfish.main.extras</groupId>-->
-                    <!--<artifactId>glassfish-embedded-all</artifactId>-->
-                    <!--<scope>provided</scope>-->
-                <!--</dependency>-->
-
             </dependencies>
 
             <build>
@@ -581,7 +574,7 @@
 
                                 <property>
                                     <name>arquillian.launch</name>
-                                    <value>wildfly</value>
+                                    <value>wildfly-remote</value>
                                 </property>
                             </systemProperties>
                         </configuration>

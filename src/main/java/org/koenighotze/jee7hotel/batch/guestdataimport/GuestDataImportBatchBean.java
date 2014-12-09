@@ -18,6 +18,7 @@ public class GuestDataImportBatchBean {
 
     private static final Logger LOGGER = Logger.getLogger(GuestDataImportBatchBean.class.getName());
 
+    @SuppressWarnings("unused")
     public void importGuestData(@NotNull String resourceName) {
         JobOperator jobOperator = BatchRuntime.getJobOperator();
         Properties props = new Properties();
