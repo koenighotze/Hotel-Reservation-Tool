@@ -2,6 +2,11 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          >
     <context-param>
+        <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+        <param-value>.xhtml</param-value>
+    </context-param>
+
+    <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
@@ -55,11 +60,11 @@ com.sun.faces.numberOfViewsInSession
  -->
 	<error-page>
 		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
-		<location>/faces/index.xhtml?view_expired=true</location>
+		<location>/index.xhtml?view_expired=true</location>
 	</error-page>
     <error-page>
 		<error-code>500</error-code>
-		<location>/faces/error.xhtml</location>
+		<location>/error.html</location>
 	</error-page>
 
     <servlet>
@@ -69,7 +74,7 @@ com.sun.faces.numberOfViewsInSession
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
+        <url-pattern>*.html</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -104,7 +109,7 @@ com.sun.faces.numberOfViewsInSession
         <role-name>Organisator</role-name>
     </security-role>-->
     <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
+        <welcome-file>/index.html</welcome-file>
     </welcome-file-list>
     <!-- <security-constraint>
         <display-name>Admin only access to rest resources</display-name>
