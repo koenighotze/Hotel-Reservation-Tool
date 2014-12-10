@@ -1,18 +1,48 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        >
 
-    <ui:composition template="/WEB-INF/template-bootstrap.xhtml">
-        <ui:define name="page_header">
-            #{msgs.room_details}
-        </ui:define>
-        <ui:define name="content">         
-            Under construction...
-        </ui:define>
-    </ui:composition>
+
+<f:metadata>
+    <f:viewParam name="roomId" value="#{roomDetailsBean.roomId}"/>
+    <f:event type="preRenderView" listener="#{roomDetailsBean.loadRoom}"/>
+</f:metadata>
+
+<ui:composition template="/WEB-INF/template-bootstrap.html">
+    <ui:define name="page_header">
+        #{msgs.room_details}
+    </ui:define>
+    <ui:define name="content">
+        <form jsf:id="room_detail_form">
+            <div class="form-group">
+                <label for="room_id">#{msgs.id}</label>
+                <input type="text"
+                       jsf:id="room_id"
+                       value="#{roomDetailsBean.room.id}"
+                       readonly="true"
+                       class="form-control uneditable-input"/>
+            </div>
+            <div class="form-group">
+                <label for="room_number">#{msgs.room_number}</label>
+                <input type="text"
+                       jsf:id="room_number"
+                       value="#{roomDetailsBean.room.roomNumber}"
+                       readonly="true"
+                       class="form-control uneditable-input"/>
+            </div>
+
+            <div class="form-group">
+                <label for="room_equipment">#{msgs.room_equipment}</label>
+                <input type="text"
+                       jsf:id="room_equipment"
+                       value="#{msgs[roomDetailsBean.room.roomEquipment]}"
+                       readonly="true"
+                       class="form-control uneditable-input"/>
+            </div>
+        </form>
+    </ui:define>
+</ui:composition>
 </html>

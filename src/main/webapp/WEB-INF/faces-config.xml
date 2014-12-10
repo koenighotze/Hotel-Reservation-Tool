@@ -8,13 +8,10 @@
             <base-name>org.koenighotze.jee7hotel.messages</base-name>
             <var>msgs</var>
         </resource-bundle>
-
-
     </application>
 
     <navigation-rule>
         <from-view-id>*</from-view-id>
-
         <navigation-case>
             <from-outcome>addnewreservationflow</from-outcome>
             <to-view-id>/addnewreservationflow/addnewreservationflow.xhtml</to-view-id>

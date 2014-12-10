@@ -8,10 +8,7 @@
     define the flow using xml
     -->
     <flow-definition id="addnewreservationflow">
-
-
-
-        <flow-return id="returnFromAddnewreservationflow" >
+        <flow-return id="returnFromAddnewreservationflow">
             <from-outcome>#{addNewReservationWizardBean.confirmBooking()}</from-outcome>
         </flow-return>
     </flow-definition>
