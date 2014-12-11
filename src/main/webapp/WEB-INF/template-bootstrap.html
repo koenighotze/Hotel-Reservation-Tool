@@ -38,19 +38,18 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">                       
-                        <li><h:link outcome="/guestbook.xhtml?faces-redirect=true" value="#{msgs.nav_view_guestbook}"/></li>                        
-                        <li><h:link outcome="/room/rooms.xhtml?faces-redirect=true" value="#{msgs.nav_show_rooms}"/></li>
-                        <li><h:link outcome="/booking/bookings.xhtml?faces-redirect=true" value="#{msgs.nav_show_bookings}"/></li>
-                        <li><h:link outcome="/about.xhtml?faces-redirect=true" value="#{msgs.about}"/></li>            
-                        <!--<li><h:link outcome="/contact.xhtml?faces-redirect=true" value="#{msgs.contact}"/></li>            -->
-                        
+                        <li><h:link outcome="/guestbook.xhtml" value="#{msgs.nav_view_guestbook}"/></li>
+                        <li><h:link outcome="/room/rooms.xhtml" value="#{msgs.nav_show_rooms}"/></li>
+                        <li><h:link outcome="/booking/bookings.xhtml" value="#{msgs.nav_show_bookings}"/></li>
+                        <li><h:link outcome="/about.xhtml" value="#{msgs.about}"/></li>
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{msgs.options}<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li class="dropdown-header">#{msgs.guestbook}</li>
-                                <li><h:link outcome="/guestbook.xhtml?faces-redirect=true" value="#{msgs.view_guestbook}"/></li>
-                                <li><h:link outcome="/add_new_guest.xhtml?faces-redirect=true" value="#{msgs.enter_guest_info}"/></li>                                   
-                                <li><h:link outcome="/booking/bookings.xhtml?faces-redirect=true" value="#{msgs.nav_show_bookings}"/></li>
+                                <li><h:link outcome="/guestbook.xhtml" value="#{msgs.view_guestbook}"/></li>
+                                <li><h:link outcome="/add_new_guest.xhtml" value="#{msgs.enter_guest_info}"/></li>
+                                <li><h:link outcome="/booking/bookings.xhtml" value="#{msgs.nav_show_bookings}"/></li>
                                 <li><h:link outcome="addnewreservationflow" value="#{msgs.nav_reservationwizard}"/></li>
                                 <li class="divider"></li>
                                 <li class="dropdown-header">#{msgs.other}</li>

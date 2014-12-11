@@ -68,7 +68,7 @@
                 <div class="btn-toolbar">
                     <input jsf:id="btn_discard_changes"
                            type="submit"
-                           jsf:action="guestbook.xhtml?faces-redirect=true"
+                           jsf:action="/guestbook.xhtml"
                            class="btn btn-sm btn-primary"
                            jsf:immediate="true"
                            value="#{msgs.btn_discard_changes}">
@@ -79,7 +79,7 @@
                            value="#{msgs.btn_new_reservation}"
                            class="btn btn-sm "
                            jsf:includeViewParameters="true"
-                           jsf:action="/booking/add_new_reservation.xhtml?faces-redirect=true">
+                           jsf:action="/booking/add_new_reservation.xhtml">
                         <f:param name="guestId"
                                  value="#{guest.id}"/>
                     </input>
@@ -88,7 +88,7 @@
                            jsf:id="btn_update_guest_info"
                            value="#{msgs.btn_update_guest_info}"
                            class="btn btn-sm "
-                           jsf:action="guestbook.xhtml?faces-redirect=true"
+                           jsf:action="/guestbook.xhtml"
                            jsf:actionListener="#{guestDetailsBean.saveChanges()}">
                     </input>
                 </div>

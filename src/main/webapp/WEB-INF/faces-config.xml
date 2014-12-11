@@ -10,8 +10,44 @@
         </resource-bundle>
     </application>
 
+
     <navigation-rule>
         <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>/index.xhtml</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+
+        <navigation-case>
+            <from-outcome>/booking/add_new_reservation.xhtml</from-outcome>
+            <to-view-id>/booking/add_new_reservation.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>/add_new_guest.xhtml</from-outcome>
+            <to-view-id>/add_new_guest.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>guestbook.xhtml</from-outcome>
+            <to-view-id>/guestbook.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>/booking/bookings.xhtml</from-outcome>
+            <to-view-id>/booking/bookings.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>/room/rooms.xhtml</from-outcome>
+            <to-view-id>/room/rooms.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
         <navigation-case>
             <from-outcome>addnewreservationflow</from-outcome>
             <to-view-id>/addnewreservationflow/addnewreservationflow.xhtml</to-view-id>
