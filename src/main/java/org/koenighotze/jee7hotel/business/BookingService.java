@@ -65,6 +65,7 @@ public class BookingService {
     }
 
     public void setReservationEvents(Event<NewReservationEvent> reservationEvents) {
+
         this.reservationEvents = reservationEvents;
     }
 

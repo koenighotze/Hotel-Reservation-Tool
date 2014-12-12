@@ -79,8 +79,8 @@
                 </div>
 
                 <div jsf:id="messagesPanel">
-                    <ui:fragment rendered="#{!empty(facesContext.messageList)}">
-                        <ui:repeat var="msg" value="#{facesContext.messageList}">
+                    <ui:fragment rendered="#{!empty(facesContext.getMessageList(null))}">
+                        <ui:repeat var="msg" value="#{facesContext.getMessageList(null)}">
                             <div class="alert #{facesMessageHelper.getStyleClassFor(msg)}" role="alert">
                                 #{msg.summary}
                             </div>

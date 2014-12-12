@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:kh="http://java.sun.com/jsf/composite/org/koenighotze">
+
+<cc:interface>
+    <cc:attribute name="label" required="true"/>
+    <cc:attribute name="val" required="true"/>
+    <cc:attribute name="placeholder" default=""/>
+
+    <cc:editableValueHolder name="input" targets="inputTextField"/>
+    <cc:attribute name="required" default="false" targets="inputTextField"/>
+    <cc:attribute name="requiredMessage" default="#{msgs.is_required}" targets="inputTextField"/>
+    <cc:attribute name="validatorMessage" default="#{msgs.is_invalid}" targets="inputTextField"/>
+
+    <cc:clientBehavior name="blur" event="blur" targets="inputTextField" default="true"/>
+</cc:interface>
+
+<cc:implementation>
+    <div class="form-group">
+        <h:outputLabel for="inputTextField">#{cc.attrs.label}</h:outputLabel>
+        <h:inputText id="inputTextField" styleClass="form-control #{component.valid ? '' : 'input-error'}"
+                     value="#{cc.attrs.val}" p:placeholder="#{cc.attrs.placeholder}"
+                     required="#{cc.attrs.rendered}"
+                     requiredMessage="#{cc.attrs.requiredMessage}"
+                     validatorMessage="#{cc.attrs.validatorMessage}">
+            <f:ajax event="blur" render="@this messageFor"/>
+        </h:inputText>
+        <h:panelGroup id="messageFor">
+            <h:message errorClass="errorMessage" for="inputTextField"/>
+        </h:panelGroup>
+    </div>
+</cc:implementation>
+</html>

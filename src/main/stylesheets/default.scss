@@ -1,5 +1,7 @@
 $error_border_color : #a94442;
 
+$error_message_color: #a94442;
+
 body {
   padding-top: 50px;
 }
@@ -25,6 +27,10 @@ table {
     }
 }
 
+
+.errorMessage {
+  color: $error_message_color;
+}
 
 div.error_box {
   div.exceptionErrorMessage {
