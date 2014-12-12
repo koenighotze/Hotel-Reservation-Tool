@@ -13,6 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+        <primefaces.version>5.1</primefaces.version>
         <glassfish.port>8080</glassfish.port>
 
         <application.contextRoot>/jee7hotel</application.contextRoot>
@@ -30,6 +31,13 @@
     </scm>
 
     <dependencies>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>${primefaces.version}</version>
+        </dependency>
+
+
 
         <dependency>
             <groupId>javax</groupId>

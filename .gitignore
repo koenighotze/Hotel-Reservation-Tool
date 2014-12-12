@@ -17,3 +17,4 @@ nb-configuration.xml
 .idea
 *.iml
 fragen.txt
+*.log
