@@ -1,82 +1,104 @@
-/*
-Error: Invalid CSS after "": expected selector, was ","
-        on line 34 of /Users/dschmitz/dev/java/jee7hotelreservationtool/src/main/stylesheets/default.scss
+body {
+  padding-top: 50px;
+}
 
-29: 
-30: 
-31: 
-32: div.btn-toolbar {
-33:   input[type="submit"] {
-34:     .btn & {},
-35:     .btn-sm & {} ,
-36:     .btn-primary & {}
-37:   }
-38: }
-39: 
+.starter-template {
+  padding: 40px 15px;
+}
 
-Backtrace:
-/Users/dschmitz/dev/java/jee7hotelreservationtool/src/main/stylesheets/default.scss:34
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/scss/parser.rb:1164:in `expected'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/scss/parser.rb:1099:in `expected'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/scss/parser.rb:1079:in `expr!'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/scss/static_parser.rb:20:in `parse_selector'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:414:in `visit_rule'
-org/jruby/RubyKernel.java:2109:in `send'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/stack.rb:79:in `with_base'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/stack.rb:115:in `with_frame'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/stack.rb:79:in `with_base'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:420:in `visit_rule'
-org/jruby/RubyArray.java:2339:in `collect'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:420:in `visit_rule'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:418:in `visit_rule'
-org/jruby/RubyKernel.java:2109:in `send'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/stack.rb:79:in `with_base'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/stack.rb:115:in `with_frame'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/stack.rb:79:in `with_base'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:420:in `visit_rule'
-org/jruby/RubyArray.java:2339:in `collect'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:420:in `visit_rule'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:418:in `visit_rule'
-org/jruby/RubyKernel.java:2109:in `send'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/stack.rb:79:in `with_base'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/stack.rb:115:in `with_frame'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/stack.rb:79:in `with_base'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-org/jruby/RubyArray.java:2339:in `collect'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:167:in `visit_children'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
-org/jruby/RubyKernel.java:2109:in `send'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:157:in `visit'
-org/jruby/RubyKernel.java:2109:in `send'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/visitors/perform.rb:8:in `visit'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/root_node.rb:36:in `css_tree'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/engine.rb:368:in `_render_with_sourcemap'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/engine.rb:285:in `render_with_sourcemap'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/plugin/compiler.rb:490:in `update_stylesheet'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/plugin/compiler.rb:215:in `update_stylesheets'
-org/jruby/RubyArray.java:1620:in `each'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-/Users/dschmitz/.rvm/gems/ruby-2.1.2/gems/sass-3.4.3/lib/sass/plugin.rb:82:in `update_stylesheets'
-<script>:15:in `(root)'
-*/
-body:before {
-  white-space: pre;
+label {
+  text-align: left;
+}
+
+input.input-error {
+  border-color: #a94442;
+}
+
+table tbody ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+div.btn-toolbar {
+  margin-bottom: 5px;
+}
+
+.errorMessage {
+  color: #a94442;
+}
+
+div.error_box div.exceptionErrorMessage div.stackTrace {
   font-family: monospace;
-  content: "Error: Invalid CSS after \"\": expected selector, was \",\"\A         on line 34 of /Users/dschmitz/dev/java/jee7hotelreservationtool/src/main/stylesheets/default.scss\A \A 29: \A 30: \A 31: \A 32: div.btn-toolbar {\A 33:   input[type=\"submit\"] {\A 34:     .btn & {},\A 35:     .btn-sm & {} ,\A 36:     .btn-primary & {}\A 37:   }\A 38: }\A 39: "; }
+}
+
+span.ui-state-default {
+  color: #337ab7 !important;
+  font-weight: normal !important;
+  border-color: #ccc !important;
+  background-image: none !important;
+}
+span.ui-state-default.ui-state-active {
+  color: #fff !important;
+  cursor: default !important;
+  background-color: #337ab7 !important;
+  border-color: #337ab7 !important;
+}
+
+span.ui-widget-header {
+  border: none !important;
+  background: none !important;
+}
+
+span.ui-paginator-page {
+  border: none !important;
+  color: #337ab7;
+}
+
+div.ui-paginator {
+  background: none !important;
+  border: none !important;
+}
+
+span.ui-button-text-only {
+  padding: 0px !important;
+}
+
+th[role='columnheader'].ui-state-default {
+  background-image: none !important;
+  background-color: white;
+  border: none !important;
+  border-bottom: 2px solid #ddd !important;
+  text-align: left !important;
+}
+
+tbody td .ui-datatable {
+  border: none !important;
+  border-top: 1px solid #ddd !important;
+}
+
+span.ui-column-title {
+  text-align: left !important;
+}
+
+tbody.ui-datatable-data.ui-widget-content {
+  border: none !important;
+}
+
+tr.ui-widget-content {
+  border: none !important;
+}
+
+td[role='gridcell'] {
+  border: none !important;
+  border-top: 1px solid #ddd !important;
+}
+
+ul.action_items li a {
+  color: #428bca;
+  text-decoration: none;
+}
+ul.action_items li a:hover {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=default.css.map */

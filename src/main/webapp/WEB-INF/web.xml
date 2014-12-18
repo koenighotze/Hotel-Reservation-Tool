@@ -37,7 +37,10 @@
         <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
         <param-value>true</param-value>
     </context-param>
-
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>bootstrap</param-value>
+    </context-param>
     <context-param>
         <param-name>
             javax.faces.VALIDATE_EMPTY_FIELDS
@@ -78,7 +81,7 @@
 
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/index.xhtml?view_expired=true</location>
+        <location>/index.html?reason=expired</location>
     </error-page>
     <error-page>
         <error-code>500</error-code>

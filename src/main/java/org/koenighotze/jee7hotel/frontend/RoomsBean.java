@@ -22,7 +22,17 @@ public class RoomsBean {
     @Inject
     private RoomService roomService;
     private List<Room> rooms;
-    
+
+    private Room selectedRoom;
+
+    public Room getSelectedRoom() {
+        return selectedRoom;
+    }
+
+    public void setSelectedRoom(Room selectedRoom) {
+        this.selectedRoom = selectedRoom;
+    }
+
     @PostConstruct
     public void init() {
         this.rooms = this.roomService.getAllRooms();
@@ -32,7 +42,16 @@ public class RoomsBean {
                         "No rooms found!");
         }
     }
-    
+
+
+    public String showRoomDetails() {
+        return null;
+    }
+
+    public String newReservation() {
+        return null;
+    }
+
     public List<Room> getRooms() {
         return this.rooms;
     }

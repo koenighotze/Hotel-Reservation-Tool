@@ -11,6 +11,7 @@
     <cc:attribute name="label" required="true"/>
     <cc:attribute name="val" required="true"/>
     <cc:attribute name="placeholder" default=""/>
+    <cc:attribute name="inputType" default="text"/>
 
     <cc:editableValueHolder name="input" targets="inputTextField"/>
     <cc:attribute name="required" default="false" targets="inputTextField"/>
@@ -27,6 +28,7 @@
                      value="#{cc.attrs.val}" p:placeholder="#{cc.attrs.placeholder}"
                      required="#{cc.attrs.rendered}"
                      requiredMessage="#{cc.attrs.requiredMessage}"
+                     p:type="#{cc.attrs.inputType}"
                      validatorMessage="#{cc.attrs.validatorMessage}">
             <f:ajax event="blur" render="@this messageFor"/>
         </h:inputText>

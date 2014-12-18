@@ -3,6 +3,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pf="http://primefaces.org/ui"
         >
 
 
@@ -18,29 +19,31 @@
     <ui:define name="content">
         <form jsf:id="room_detail_form">
             <div class="form-group">
-                <label for="room_id">#{msgs.id}</label>
-                <input type="text"
-                       jsf:id="room_id"
-                       value="#{roomDetailsBean.room.id}"
-                       readonly="true"
-                       class="form-control uneditable-input"/>
+                <pf:outputLabel for="room_id">#{msgs.id}</pf:outputLabel>
+                <pf:inputText id="room_id"
+                              styleClass="form-control"
+                              label="#{msgs.id}"
+                              value="#{roomDetailsBean.room.id}"
+                              readonly="true"/>
             </div>
             <div class="form-group">
-                <label for="room_number">#{msgs.room_number}</label>
-                <input type="text"
-                       jsf:id="room_number"
-                       value="#{roomDetailsBean.room.roomNumber}"
-                       readonly="true"
-                       class="form-control uneditable-input"/>
+                <pf:outputLabel for="room_number">#{msgs.room_number}</pf:outputLabel>
+                <pf:inputText
+                        id="room_number"
+                        styleClass="form-control"
+                        label="#{msgs.room_number}"
+                        value="#{roomDetailsBean.room.roomNumber}"
+                        readonly="true"/>
             </div>
 
             <div class="form-group">
-                <label for="room_equipment">#{msgs.room_equipment}</label>
-                <input type="text"
-                       jsf:id="room_equipment"
-                       value="#{msgs[roomDetailsBean.room.roomEquipment]}"
-                       readonly="true"
-                       class="form-control uneditable-input"/>
+                <pf:outputLabel for="room_equipment">#{msgs.room_equipment}</pf:outputLabel>
+                <pf:inputText
+                        id="room_equipment"
+                        styleClass="form-control"
+                        value="#{msgs[roomDetailsBean.room.roomEquipment]}"
+                        label="#{msgs.room_equipment}"
+                        readonly="true"/>
             </div>
         </form>
     </ui:define>
