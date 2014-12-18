@@ -1,5 +1,7 @@
 package org.koenighotze.jee7hotel.business.eventsource;
 
+import javax.annotation.Priority;
+import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;

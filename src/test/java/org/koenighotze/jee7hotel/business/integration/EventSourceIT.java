@@ -90,7 +90,6 @@ public class EventSourceIT extends BaseArquillianSetup {
         Reservation reservation = createReservation();
         assertThat(reservation, is(not(nullValue())));
 
-
         // we'll cancel the reservation
         this.bookingService.cancelReservation(reservation.getReservationNumber());
 

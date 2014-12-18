@@ -1,5 +1,6 @@
 package org.koenighotze.jee7hotel.business.json;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.koenighotze.jee7hotel.business.eventsource.Event;
 
 import javax.json.Json;
@@ -29,12 +30,14 @@ public class EventWriter implements MessageBodyWriter<Event> {
 
     @Override
     public void writeTo(Event event, Class<?> aClass, Type type, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> multivaluedMap, OutputStream outputStream) throws IOException, WebApplicationException {
-        JsonGenerator writer = Json.createGenerator(outputStream);
-        writer.writeStartObject()
-                .write("data", event.toJson())
-                .writeEnd();
-        writer.flush();
 
+        ObjectMapper mapper = new ObjectMapper();
 
+        mapper.writeValue(outputStream, event);
+//        JsonGenerator writer = Json.createGenerator(outputStream);
+//        writer.writeStartObject()
+//                .write("data", event.toJson())
+//                .writeEnd();
+//        writer.flush();
     }
 }

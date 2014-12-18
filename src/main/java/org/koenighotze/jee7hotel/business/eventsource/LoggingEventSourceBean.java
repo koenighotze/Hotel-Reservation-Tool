@@ -7,6 +7,7 @@ import javax.interceptor.Interceptor;
 import javax.validation.constraints.NotNull;
 import java.lang.reflect.Method;
 import java.time.Instant;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -16,17 +17,17 @@ import java.util.stream.Collectors;
 /**
  * Created by dschmitz on 28.11.14.
  */
-@Singleton
-@Alternative
-@Priority(Interceptor.Priority.APPLICATION + 1)
-public class LoggingEventSourceBean implements IEventSource {
+//@Singleton
+//@Alternative
+//@Priority(Interceptor.Priority.APPLICATION + 10)
+public class LoggingEventSourceBean implements IEventSource{
     private static final Logger LOGGER = Logger.getLogger(LoggingEventSourceBean.class.getName());
 
     private Queue<Event> queue = new LinkedBlockingQueue<>(200);
 
     @Override
-    public List<String> getAll() {
-        return this.queue.stream().map(e -> e.toString()).collect(Collectors.toList());
+    public List<Event> getAll() {
+        return new LinkedList<>(this.queue); // .stream().map(e -> e.toString()).collect(Collectors.toList());
     }
 
     @Override

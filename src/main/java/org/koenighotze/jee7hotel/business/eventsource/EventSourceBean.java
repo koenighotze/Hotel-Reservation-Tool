@@ -1,10 +1,14 @@
 package org.koenighotze.jee7hotel.business.eventsource;
 
 import com.mongodb.*;
+import org.mongojack.*;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Priority;
 import javax.ejb.Singleton;
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Alternative;
+import javax.interceptor.Interceptor;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -15,7 +19,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * This bean is an example of a naive implementation of event sourcing.
@@ -23,18 +26,24 @@ import java.util.stream.Collectors;
  * Basically what happens is: this bean observes all events and stores them in a
  * mongo db.
  *
- * Todo: replay ability; export via Atom or such
- *
  * Created by dschmitz on 26.11.14.
  */
 
-@Stateless
-//@Path("events")
+@Singleton
+@Path("events")
+@Alternative
+@Priority(Interceptor.Priority.APPLICATION + 9)
 public class EventSourceBean implements IEventSource {
 
     private static final Logger LOGGER = Logger.getLogger(EventSourceBean.class.getName());
 
     private MongoClient mongoClient;
+
+    private String dbName = "jee7hotel";
+
+    public void setDbName(String dbName) {
+        this.dbName = dbName;
+    }
 
     public void setMongoClient(MongoClient mongoClient) {
         this.mongoClient = mongoClient;
@@ -58,26 +67,40 @@ public class EventSourceBean implements IEventSource {
         this.mongoClient.close();
     }
 
-    // TODO: warum muss ich das so machen???
     @Override
     @GET
     @Produces({"application/xml", "application/json"})
-    public List<String> getAll() {
-        return fetchAllEvents().stream().map(e -> e.toString()).collect(Collectors.toList());
+    public List<Event> getAll() {
+        return fetchAllEvents();
+    }
+
+    @Override
+    public void clearAll() {
+        LOGGER.warning("Dropping collection events in database " + this.dbName);
+        DB db = mongoClient.getDB(this.dbName);
+        DBCollection coll = db.getCollection("events");
+        coll.drop();
     }
 
     @Override
     public List<Event> fetchAllEvents() {
-        DB db = mongoClient.getDB("jee7hotel");
+        DB db = mongoClient.getDB(this.dbName);
         DBCollection coll = db.getCollection("events");
+        JacksonDBCollection<Event, Object> wrap = JacksonDBCollection.wrap(coll, Event.class);
 
         List<Event> result = new ArrayList<>();
-
-        try (DBCursor cursor = coll.find()) {
+        org.mongojack.DBCursor<Event> cursor = null;
+        try {
+            cursor = wrap.find();
             while (cursor.hasNext()) {
-                DBObject next = cursor.next();
-                LOGGER.info("Parsing " + next);
-                result.add(Event.fromJson((String) next.get("event")));
+                Event next = cursor.next();
+                LOGGER.info("Found " + next);
+                result.add(next);
+            }
+        }
+        finally {
+            if (null != cursor) {
+                cursor.close();
             }
         }
 
@@ -85,20 +108,17 @@ public class EventSourceBean implements IEventSource {
         return result;
     }
 
-    // TODO Versioning, Typeinfo, id, synchronization
     @Override
     public Object storeEvent(@NotNull Class<?> clazz, @NotNull Method method, Object[] parameters) {
         LOGGER.fine(() -> "Storing event " + clazz.getName() + "#" + method.getName());
 
-        DB db = this.mongoClient.getDB("jee7hotel");
+        DB db = this.mongoClient.getDB(this.dbName);
         DBCollection coll = db.getCollection("events");
 
+        JacksonDBCollection<Event, Object> wrap = JacksonDBCollection.wrap(coll, Event.class);
         Event event = new Event(clazz.getName(), method.getName(), Instant.now().toEpochMilli(), parameters);
-        BasicDBObject obj = new BasicDBObject("event", event.toJson()); // TODO: introduce event description name
-
-        LOGGER.fine(() -> "Adding event" + obj);
-        WriteResult writeResult = coll.insert(obj);
-
-        return writeResult.getUpsertedId();
+        org.mongojack.WriteResult<Event, Object> result = wrap.insert(event);
+        LOGGER.info("Stored event under id " + result.getSavedId());
+        return result.getSavedId();
     }
 }

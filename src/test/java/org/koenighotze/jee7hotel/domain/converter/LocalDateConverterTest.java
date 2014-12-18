@@ -25,6 +25,7 @@ public class LocalDateConverterTest {
         assertThat(new LocalDateConverter().convertToEntityAttribute(date), is(not(nullValue())));
     }
     @Test
+    @SuppressWarnings("deprecation")
     public void testWithError() {
         Date date = new Date(Date.parse("1/1/13 12:00 AM"));
         new LocalDateConverter().convertToEntityAttribute(date);
