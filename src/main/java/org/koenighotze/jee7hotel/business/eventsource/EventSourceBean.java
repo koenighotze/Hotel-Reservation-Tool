@@ -1,12 +1,14 @@
 package org.koenighotze.jee7hotel.business.eventsource;
 
+import com.github.fakemongo.Fongo;
 import com.mongodb.*;
-import org.mongojack.*;
+import org.mongojack.JacksonDBCollection;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.annotation.Priority;
 import javax.ejb.Singleton;
-import javax.ejb.Stateless;
+import javax.ejb.Startup;
 import javax.enterprise.inject.Alternative;
 import javax.interceptor.Interceptor;
 import javax.validation.constraints.NotNull;
@@ -14,18 +16,19 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.lang.reflect.Method;
-import java.net.UnknownHostException;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * This bean is an example of a naive implementation of event sourcing.
- *
+ * <p>
  * Basically what happens is: this bean observes all events and stores them in a
  * mongo db.
- *
+ * <p>
  * Created by dschmitz on 26.11.14.
  */
 
@@ -33,6 +36,7 @@ import java.util.logging.Logger;
 @Path("events")
 @Alternative
 @Priority(Interceptor.Priority.APPLICATION + 9)
+@Startup
 public class EventSourceBean implements IEventSource {
 
     private static final Logger LOGGER = Logger.getLogger(EventSourceBean.class.getName());
@@ -40,6 +44,34 @@ public class EventSourceBean implements IEventSource {
     private MongoClient mongoClient;
 
     private String dbName = "jee7hotel";
+
+    private Fongo fongo;
+
+    @PostConstruct
+    public void init() {
+        try {
+
+            LOGGER.info("Creating mongo connection");
+            MongoClientOptions options = MongoClientOptions.builder().connectTimeout(1000).build();
+
+            String mongoHost = System.getProperty("mongo.host", "localhost");
+            String mongoPort = System.getProperty("mongo.port", "27017");
+
+            LOGGER.info(() -> "Connecting to " + mongoHost + ":" + mongoPort);
+
+            this.mongoClient = new MongoClient(
+                    Arrays.asList(
+                        new ServerAddress(mongoHost,
+                                          Integer.parseInt(mongoPort))),
+                    options);
+            this.mongoClient.getDatabaseNames(); // force init
+            LOGGER.info("Connected to " + this.mongoClient);
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, e, () -> "Cannot connect to MongoDB...starting internal fongo instance");
+            this.fongo = new Fongo("fongoServer1");
+            this.mongoClient = fongo.getMongo();
+        }
+    }
 
     public void setDbName(String dbName) {
         this.dbName = dbName;
@@ -49,22 +81,11 @@ public class EventSourceBean implements IEventSource {
         this.mongoClient = mongoClient;
     }
 
-    @PostConstruct
-    public void init() {
-        // TODO configure me
-        try {
-            LOGGER.info("Creating mongo connection");
-            this.mongoClient = new MongoClient();
-            LOGGER.info("Connected to " + this.mongoClient);
-        } catch (UnknownHostException e) {
-            // must not throw checked ex.
-            throw new ExceptionInInitializerError(e);
-        }
-    }
-
+    @PreDestroy
     public void close() {
         LOGGER.info("Closing mongo connection");
         this.mongoClient.close();
+        this.fongo = null;
     }
 
     @Override
@@ -97,8 +118,7 @@ public class EventSourceBean implements IEventSource {
                 LOGGER.info("Found " + next);
                 result.add(next);
             }
-        }
-        finally {
+        } finally {
             if (null != cursor) {
                 cursor.close();
             }

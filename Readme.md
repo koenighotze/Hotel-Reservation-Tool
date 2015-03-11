@@ -43,7 +43,7 @@ Key technologies include:
 The todo list includes (among other stuff):
 
 * Thymeleaf
-* Docker or such
+
 * AngularJS Demo
 * Generating reports/graphs using d3.js
 * load testing loader.io
@@ -66,7 +66,7 @@ How to build and run
 In short: 
 
 ```
-mvn clean package wildfly:run
+mvn -Pwildfly clean package wildfly:run
 ```
 
 Then open browser at http://localhost:8080/jee7hotel
@@ -83,6 +83,31 @@ mvn wildfly:run
 
 mvn wildfly:deploy -Dforce=true
 ```
+
+
+=== Long version
+
+* Start mongo docker
+
+* Start wildfly docker
+
+* determine host and port
+
+
+
+```
+docker ps
+CONTAINER ID        IMAGE                               COMMAND                CREATED             STATUS              PORTS                                                NAMES
+cb004f78965c        koenighotze/wildfly:latest          "bash"                 5 minutes ago       Up 4 minutes        0.0.0.0:49185->8080/tcp, 0.0.0.0:49186->9990/tcp     KoenighotzeWildfly  
+
+```
+
+
+```
+boot2docker ip -> 192.168.59.103
+```
+
+* open http://192.168.59.103:49185/jee7hotel/
 
 
 How to run integration tests
@@ -111,10 +136,95 @@ mvn clean integration-test verify -Pglassfish-integration-tests
 Introduction
 ------------
 
-###The use case: Guest Book
+###The use case: Booking Portal for Room Reservation
+
+* Application for receptionist
+* Mobile page for client-booking-checks
 
 
 ###Basic application architecture
+
+---------------------------------------------------------------------
+  digraph G { 
+      node [fontname=Verdana,fontsize=12];
+      node [style=filled];
+      node [fillcolor="#EEEEEE"];
+      node [color="#EEEEEE"];
+      edge [color="#31CEF0"]; 
+  
+      Web_Frontend -> Service_Layer -> MySqlDB;
+      ServiceLayer -> MongoDB;
+      Mobile_Frontend -> Service_Layer;
+  }
+  ----
+
+
+
+Docker
+------
+
+# Image Overview
+
+This section explains the structure and setup of the different docker images.
+
+The following images are used for operating the system:
+
+1. mongod (`docker/builds`)
+2. wildfly (``)
+3. mysql (``)
+
+
+The following figure illustrates the depencies between said containers.
+
+---------------------------------------------------------------------
+digraph G { 
+    node [fontname=Verdana,fontsize=12];
+    node [style=filled];
+    node [fillcolor="#EEEEEE"];
+    node [color="#EEEEEE"];
+    edge [color="#31CEF0"]; 
+
+    wildfly -> mongod[label="link"];
+    wildfly -> mysql[label="link"];
+
+    wildfly -> logs[label="volume"];
+    wildfly -> deployment[label="volume"];  
+}
+----
+
+## Building the images from scratch
+
+TODO
+
+
+## Wildfly
+ 
+## Mongo
+
+
+* start image using
+
+```
+docker run --rm -i -t -P  -v $LOG_VOLUME:/home/mongodb/logs/ --name KoenighotzeMongo koenighotze/jee7hotelmongo 
+```
+
+* determine port
+
+```
+docker ps
+CONTAINER ID        IMAGE                               COMMAND                CREATED             STATUS              PORTS                                                NAMES
+6884f24081b6        koenighotze/jee7hotelmongo:latest   "mongod --config /ho   46 seconds ago      Up 44 seconds       0.0.0.0:49169->27017/tcp, 0.0.0.0:49170->28017/tcp   KoenighotzeMongo  
+```
+
+* connect to mongo 
+
+```
+mongo $(docker-ip):49169
+```
+
+
+## MySql
+
 
 
 Presentation layer
@@ -149,11 +259,10 @@ Testing
 Things to do
 ------------
 
+* Arquillian UI
 * Security
 * IIOP
 * Stored Procedures
-* DeltaSpike
-* WeldSE, CDIUnit
 * Angular JS Frontend
 * JMS 2.0 
 * Role based security

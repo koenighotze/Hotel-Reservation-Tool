@@ -1,0 +1,1 @@
+docker run --rm -i -t -P --link KoenighotzeMongo:KoenighotzeMongo -v /Users/dschmitz/tmp/log:/home/wildfly/logs -v /Users/dschmitz/tmp/deployments:/home/wildfly/deployments --name KoenighotzeWildfly koenighotze/jee7hotelwildfly

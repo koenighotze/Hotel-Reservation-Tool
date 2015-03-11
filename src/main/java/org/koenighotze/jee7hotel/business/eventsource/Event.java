@@ -1,10 +1,6 @@
 package org.koenighotze.jee7hotel.business.eventsource;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import org.mongojack.Id;
 import org.mongojack.ObjectId;
 
@@ -39,10 +35,6 @@ public class Event implements Serializable {
         this.methodName = methodName;
         this.millis = millis;
         this.payload = payload;
-    }
-
-    public String toJson() {
-        return new Gson().toJson(this);
     }
 
 

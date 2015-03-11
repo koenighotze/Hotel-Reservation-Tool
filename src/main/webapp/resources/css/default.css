@@ -34,11 +34,11 @@ div.error_box div.exceptionErrorMessage div.stackTrace {
 span.ui-state-default {
   color: #337ab7 !important;
   font-weight: normal !important;
-  border-color: #ccc !important;
+  border-color: #cccccc !important;
   background-image: none !important;
 }
 span.ui-state-default.ui-state-active {
-  color: #fff !important;
+  color: white !important;
   cursor: default !important;
   background-color: #337ab7 !important;
   border-color: #337ab7 !important;
@@ -50,7 +50,6 @@ span.ui-widget-header {
 }
 
 span.ui-paginator-page {
-  border: none !important;
   color: #337ab7;
 }
 
@@ -59,21 +58,22 @@ div.ui-paginator {
   border: none !important;
 }
 
-span.ui-button-text-only {
+span.ui-button-text.ui-c {
   padding: 0px !important;
+  text-shadow: none !important;
 }
 
 th[role='columnheader'].ui-state-default {
   background-image: none !important;
   background-color: white;
   border: none !important;
-  border-bottom: 2px solid #ddd !important;
+  border-bottom: 2px solid #dddddd !important;
   text-align: left !important;
 }
 
 tbody td .ui-datatable {
   border: none !important;
-  border-top: 1px solid #ddd !important;
+  border-top: 1px solid #dddddd !important;
 }
 
 span.ui-column-title {
@@ -90,7 +90,7 @@ tr.ui-widget-content {
 
 td[role='gridcell'] {
   border: none !important;
-  border-top: 1px solid #ddd !important;
+  border-top: 1px solid #dddddd !important;
 }
 
 ul.action_items li a {
@@ -100,5 +100,3 @@ ul.action_items li a {
 ul.action_items li a:hover {
   text-decoration: underline;
 }
-
-/*# sourceMappingURL=default.css.map */

@@ -108,7 +108,7 @@ span.ui-widget-header {
 }
 
 span.ui-paginator-page {
-  border: none !important;
+//  border: none !important;
   color: #337ab7;
 }
 div.ui-paginator {
@@ -116,8 +116,9 @@ div.ui-paginator {
   border: none !important;
 }
 
-span.ui-button-text-only {
+span.ui-button-text.ui-c {
   padding: 0px !important;
+  text-shadow: none !important;
 }
 
 th[role='columnheader'].ui-state-default {
@@ -164,3 +165,4 @@ ul.action_items {
 
   }
 }
+
