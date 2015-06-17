@@ -72,16 +72,20 @@
                             </pf:column>
                         </pf:dataTable>
 
-                        <!--<pf:contextMenu id="tableCtxMenu">-->
-                            <!--<pf:menuitem value="#{msgs.details}"-->
-                                         <!--action="#{roomsBean.showRoomDetails}"-->
-                                         <!--disabled="#{empty(roomsBean.selectedRoom)}"-->
-                                         <!--ajax="false"/>-->
-                            <!--<pf:menuitem value="#{msgs.new_reservation}"-->
-                                         <!--action="#{roomsBean.newReservation}"-->
-                                         <!--disabled="#{empty(roomsBean.selectedRoom)}"-->
-                                         <!--ajax="false"/>-->
-                        <!--</pf:contextMenu>-->
+                    <h:form id="ctxMenuForm">
+                        <pf:contextMenu id="tableCtxMenu">
+                            <pf:menuitem value="#{msgs.details}"
+                                         action="#{roomsBean.showRoomDetails}"
+                                         disabled="#{empty(roomsBean.selectedRoom)}"
+                                         ajax="false"/>
+                            <pf:menuitem value="#{msgs.new_reservation}"
+                                         action="#{roomsBean.newReservation}"
+                                         disabled="#{empty(roomsBean.selectedRoom)}"
+                                         ajax="false"/>
+                        </pf:contextMenu>
+                    </h:form>
+
+                        Selected room is #{roomsBean.selectedRoom}
 
                     </div>
                 </ui:fragment>

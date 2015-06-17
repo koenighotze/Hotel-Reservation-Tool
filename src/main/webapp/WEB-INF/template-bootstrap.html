@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:jsf="http://xmlns.jcp.org/jsf">
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:pf="http://primefaces.org/ui">
+
     <h:head id="head">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
@@ -24,6 +26,7 @@
         <link href="#{facesContext.externalContext.requestContextPath}/resources/css/default.css" rel="stylesheet"/>
     </h:head>
     <body>
+        <pf:growl id="foo"/>
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">

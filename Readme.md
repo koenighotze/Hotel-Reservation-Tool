@@ -43,12 +43,12 @@ Key technologies include:
 The todo list includes (among other stuff):
 
 * Thymeleaf
-
 * AngularJS Demo
 * Generating reports/graphs using d3.js
 * load testing loader.io
-* Authentication using OAuth
+* Authentication using OAuth (google+ only)
 * REST Service for Url lookup
+* docker compose for setting up containers
 
 
 Pseudo use cases are chosen only to demonstrate certain technologies, obviously not all are implemented yet:

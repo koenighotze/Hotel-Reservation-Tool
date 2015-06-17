@@ -82,10 +82,10 @@
             <artifactId>mongo-java-driver</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.google.code.gson</groupId>-->
+            <!--<artifactId>gson</artifactId>-->
+        <!--</dependency>-->
 
         <!-- TEST DEPENDENCIES -->
 
@@ -396,7 +396,7 @@
                 <groupId>com.github.fakemongo</groupId>
                 <artifactId>fongo</artifactId>
                 <version>1.5.8</version>
-                <scope>test</scope>
+                <!--<scope>test</scope>-->
             </dependency>
 
             <dependency>
