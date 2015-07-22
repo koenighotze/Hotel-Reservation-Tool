@@ -5,51 +5,22 @@
     <artifactId>jee7hotel</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <primefaces.version>5.1</primefaces.version>
-        <glassfish.port>8080</glassfish.port>
-
         <application.contextRoot>/jee7hotel</application.contextRoot>
         <application.finalName>jee7hotel</application.finalName>
-
-
         <browser>phantomjs</browser>
-
     </properties>
-
     <scm>
         <url>https://github.com/koenighotze/jee7hotelreservationtool</url>
         <connection>scm:git:git@github.com:koenighotze/jee7hotelreservationtool.git</connection>
         <developerConnection>scm:git:git@github.com:koenighotze/jee7hotelreservationtool.git</developerConnection>
     </scm>
-
     <dependencies>
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>${primefaces.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.primefaces.themes</groupId>
-            <artifactId>cupertino</artifactId>
-            <version>1.0.10</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.primefaces.themes</groupId>
-            <artifactId>all-themes</artifactId>
-            <version>1.0.10</version>
-        </dependency>
-
-
         <dependency>
             <groupId>org.mongojack</groupId>
             <artifactId>mongojack</artifactId>
@@ -61,114 +32,77 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-
-
         <dependency>
             <groupId>org.glassfish.main.extras</groupId>
             <artifactId>glassfish-embedded-all</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.google.code.gson</groupId>-->
-            <!--<artifactId>gson</artifactId>-->
-        <!--</dependency>-->
-
         <!-- TEST DEPENDENCIES -->
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
             <type>jar</type>
         </dependency>
-
         <dependency>
             <groupId>org.jglue.cdi-unit</groupId>
             <artifactId>cdi-unit</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!-- Arquillian -->
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.jboss.shrinkwrap.resolver</groupId>
             <artifactId>shrinkwrap-resolver-api-maven</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.jboss.shrinkwrap.resolver</groupId>
             <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.jboss.weld</groupId>
             <artifactId>weld-core</artifactId>
-            <!--<version>1.1.5.Final</version>-->
             <scope>test</scope>
         </dependency>
-
-
-       <!--  <dependency>
-            <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>graphene-webdriver</artifactId> -->
-            <!--<version>2.0.3.Final</version>-->
-            <!-- <type>pom</type> -->
-            <!-- <scope>test</scope> -->
-        <!-- </dependency> --> 
-
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <!--<version>1.6.4</version>-->
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derbyclient</artifactId>
-            <!--<version>10.7.1.1</version>-->
             <scope>test</scope>
         </dependency>
-
-
         <dependency>
             <groupId>com.github.fakemongo</groupId>
             <artifactId>fongo</artifactId>
         </dependency>
-
     </dependencies>
-
     <build>
         <finalName>${application.finalName}</finalName>
-
         <resources>
             <resource>
                 <directory>src/main/stylesheets</directory>
@@ -177,15 +111,12 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
-
         <testResources>
             <testResource>
                 <directory>src/test/resources</directory>
                 <filtering>true</filtering>
             </testResource>
         </testResources>
-
-
         <plugins>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -197,7 +128,6 @@
                     </excludes>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -208,6 +138,7 @@
                             <include>**/*IT.java</include>
                         </includes>
                     </systemProperties>
+                    <skipTests>true</skipTests>
                 </configuration>
                 <executions>
                     <execution>
@@ -226,14 +157,13 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
                 <version>1.3</version>
                 <executions>
                     <execution>
-                        <phase>validate</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>create</goal>
                         </goals>
@@ -249,7 +179,6 @@
                     <revisionOnScmFailure/>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -266,7 +195,6 @@
                             <Version>${project.version}</Version>
                         </manifestEntries>
                     </archive>
-
                     <webResources>
                         <resource>
                             <filtering>true</filtering>
@@ -278,21 +206,11 @@
                     </webResources>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.jasig.maven</groupId>
                 <artifactId>sass-maven-plugin</artifactId>
                 <version>1.1.0</version>
-                <!-- Disabled for performance reasons -->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>package</id>-->
-                        <!--<phase>prepare-package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>update-stylesheets</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
+                <!-- Disabled for performance reasons, trigger manually -->
                 <configuration>
                     <resources>
                         <resource>
@@ -306,67 +224,54 @@
             </plugin>
         </plugins>
     </build>
-
-
     <dependencyManagement>
         <dependencies>
-
             <dependency>
                 <groupId>org.glassfish.main.extras</groupId>
                 <artifactId>glassfish-embedded-all</artifactId>
                 <version>4.1</version>
                 <scope>test</scope>
             </dependency>
-
             <!-- MongoDB Stuff -->
             <dependency>
                 <groupId>org.mongodb</groupId>
                 <artifactId>mongo-java-driver</artifactId>
-                <version>2.12.4</version>
+                <version>3.0.3</version>
             </dependency>
-
             <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
                 <version>2.3.1</version>
             </dependency>
-
             <dependency>
-                <groupId>de.flapdoodle.embed</groupId>
-                <artifactId>de.flapdoodle.embed.mongo</artifactId>
-                <version>1.46.4</version>
+                <groupId>de.svenkubiak</groupId>
+                <artifactId>embedded-mongodb</artifactId>
+                <version>4.1.1</version>
                 <scope>test</scope>
             </dependency>
-
             <!-- Oauth stuff -->
             <dependency>
                 <groupId>com.google.http-client</groupId>
                 <artifactId>google-http-client</artifactId>
-                <version>1.17.0-rc</version>
+                <version>1.20.0</version>
             </dependency>
             <dependency>
                 <groupId>com.google.http-client</groupId>
                 <artifactId>google-http-client-jackson</artifactId>
-                <version>1.17.0-rc</version>
+                <version>1.20.0</version>
             </dependency>
             <dependency>
                 <groupId>com.google.apis</groupId>
                 <artifactId>google-api-services-oauth2</artifactId>
                 <version>v2-rev69-1.18.0-rc</version>
             </dependency>
-
-
-
             <!-- TEST DEPENDENCIES -->
-
             <dependency>
                 <groupId>org.jboss.weld</groupId>
                 <artifactId>weld-core</artifactId>
                 <version>1.1.5.Final</version>
                 <scope>test</scope>
             </dependency>
-
-
             <dependency>
                 <groupId>org.jboss.arquillian.graphene</groupId>
                 <artifactId>graphene-webdriver</artifactId>
@@ -374,31 +279,24 @@
                 <type>pom</type>
                 <scope>test</scope>
             </dependency>
-
-
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-simple</artifactId>
                 <version>1.6.4</version>
                 <scope>test</scope>
             </dependency>
-
             <dependency>
                 <groupId>org.apache.derby</groupId>
                 <artifactId>derbyclient</artifactId>
                 <version>10.7.1.1</version>
                 <scope>test</scope>
             </dependency>
-
-
-
             <dependency>
                 <groupId>com.github.fakemongo</groupId>
                 <artifactId>fongo</artifactId>
                 <version>1.5.8</version>
                 <!--<scope>test</scope>-->
             </dependency>
-
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -406,37 +304,18 @@
                 <scope>test</scope>
                 <type>jar</type>
             </dependency>
-
             <dependency>
                 <groupId>org.jglue.cdi-unit</groupId>
                 <artifactId>cdi-unit</artifactId>
                 <version>3.1.1</version>
                 <scope>test</scope>
             </dependency>
-
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
                 <version>1.9.5</version>
                 <scope>test</scope>
             </dependency>
-
-            <!-- Arquillian -->
-            <!--<dependency>-->
-                <!--<groupId>org.jboss.arquillian.extension</groupId>-->
-                <!--<artifactId>arquillian-drone-bom</artifactId>-->
-                <!--<version>1.3.1.Final</version>-->
-                <!--<type>pom</type>-->
-                <!--<scope>import</scope>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.jboss.arquillian.selenium</groupId>-->
-                <!--<artifactId>selenium-bom</artifactId>-->
-                <!--<version>2.43.1</version>-->
-                <!--<type>pom</type>-->
-                <!--<scope>import</scope>-->
-            <!--</dependency>-->
-
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
@@ -444,35 +323,30 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-
+            <!--<dependency>-->
+                <!--<groupId>org.jboss.arquillian.container</groupId>-->
+                <!--<artifactId>arquillian-glassfish-remote-3.1</artifactId>-->
+                <!--<version>1.0.0.CR4</version>-->
+                <!--<scope>test</scope>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.jboss.arquillian.container</groupId>-->
+                <!--<artifactId>arquillian-glassfish-embedded-3.1</artifactId>-->
+                <!--<version>1.0.0.CR4</version>-->
+                <!--<scope>test</scope>-->
+            <!--</dependency>-->
             <dependency>
-                <groupId>org.jboss.arquillian.container</groupId>
-                <artifactId>arquillian-glassfish-remote-3.1</artifactId>
-                <version>1.0.0.CR4</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.jboss.arquillian.container</groupId>
-                <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
-                <version>1.0.0.CR4</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.wildfly.arquillian</groupId>
+                <groupId>org.wildfly</groupId>
                 <artifactId>wildfly-arquillian-container-managed</artifactId>
-                <version>1.0.0.Alpha2</version>
+                <version>8.2.0.Final</version>
                 <scope>test</scope>
             </dependency>
-
-            <dependency>
-                <groupId>org.jboss.arquillian.container</groupId>
-                <artifactId>arquillian-glassfish-managed-3.1</artifactId>
-                <version>1.0.0.CR4</version>
-                <scope>test</scope>
-            </dependency>
-
-
+            <!--<dependency>-->
+                <!--<groupId>org.jboss.arquillian.container</groupId>-->
+                <!--<artifactId>arquillian-glassfish-managed-3.1</artifactId>-->
+                <!--<version>1.0.0.CR4</version>-->
+                <!--<scope>test</scope>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>org.wildfly.arquillian</groupId>
                 <artifactId>wildfly-arquillian-container-remote</artifactId>
@@ -480,16 +354,11 @@
                 <scope>test</scope>
             </dependency>
         </dependencies>
-
     </dependencyManagement>
-
-
     <repositories>
         <repository>
-            <id>prime-repo</id>
-            <name>PrimeFaces Maven Repository</name>
-            <url>http://repository.primefaces.org</url>
-            <layout>default</layout>
+            <id>JBoss Repository</id>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -511,13 +380,10 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-
             <properties>
                 <ws.port>8080</ws.port>
             </properties>
         </profile>
-
-
         <profile>
             <id>wildfly</id>
             <build>
@@ -526,33 +392,34 @@
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-maven-plugin</artifactId>
                         <version>1.0.2.Final</version>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>glassfish</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.glassfish.embedded</groupId>
-                        <artifactId>maven-embedded-glassfish-plugin</artifactId>
-                        <version>4.0</version>
                         <configuration>
-                            <app>target/${application.finalName}</app>
-                            <port>${glassfish.port}</port>
-                            <contextRoot>${application.contextRoot}</contextRoot>
+                            <server-config>standalone-full.xml</server-config>
                         </configuration>
-                        <goals>
-                            <goal>run</goal>
-                            <goal>deploy</goal>
-                        </goals>
                     </plugin>
                 </plugins>
             </build>
         </profile>
-
+        <!--<profile>-->
+            <!--<id>glassfish</id>-->
+            <!--<build>-->
+                <!--<plugins>-->
+                    <!--<plugin>-->
+                        <!--<groupId>org.glassfish.embedded</groupId>-->
+                        <!--<artifactId>maven-embedded-glassfish-plugin</artifactId>-->
+                        <!--<version>4.0</version>-->
+                        <!--<configuration>-->
+                            <!--<app>target/${application.finalName}</app>-->
+                            <!--<port>${glassfish.port}</port>-->
+                            <!--<contextRoot>${application.contextRoot}</contextRoot>-->
+                        <!--</configuration>-->
+                        <!--<goals>-->
+                            <!--<goal>run</goal>-->
+                            <!--<goal>deploy</goal>-->
+                        <!--</goals>-->
+                    <!--</plugin>-->
+                <!--</plugins>-->
+            <!--</build>-->
+        <!--</profile>-->
         <!-- wildfly arquillian -->
         <profile>
             <id>wildfly-managed-integration-tests</id>
@@ -562,7 +429,6 @@
                     <artifactId>wildfly-arquillian-container-managed</artifactId>
                 </dependency>
             </dependencies>
-
             <build>
                 <plugins>
                     <plugin>
@@ -575,7 +441,6 @@
                                     <name>java.util.logging.manager</name>
                                     <value>org.jboss.logmanager.LogManager</value>
                                 </property>
-
                                 <property>
                                     <name>arquillian.launch</name>
                                     <value>wildfly</value>
@@ -586,8 +451,6 @@
                 </plugins>
             </build>
         </profile>
-
-
         <profile>
             <id>wildfly-remote-integration-tests</id>
             <dependencies>
@@ -597,7 +460,6 @@
                     <scope>test</scope>
                 </dependency>
             </dependencies>
-
             <build>
                 <plugins>
                     <plugin>
@@ -610,7 +472,6 @@
                                     <name>java.util.logging.manager</name>
                                     <value>org.jboss.logmanager.LogManager</value>
                                 </property>
-
                                 <property>
                                     <name>arquillian.launch</name>
                                     <value>wildfly-remote</value>
@@ -621,66 +482,60 @@
                 </plugins>
             </build>
         </profile>
-
         <!-- Glassfish -->
-        <profile>
-            <id>glassfish-managed-integration-tests</id>
-            <properties>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.arquillian.container</groupId>
-                    <artifactId>arquillian-glassfish-managed-3.1</artifactId>
-                </dependency>
-            </dependencies>
-
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <configuration>
-                            <systemProperties>
-                                <property>
-                                    <name>arquillian.launch</name>
-                                    <value>arquillian-glassfish-managed-3.1</value>
-                                </property>
-                            </systemProperties>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>glassfish-remote-integration-tests</id>
-            <properties>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.arquillian.container</groupId>
-                    <artifactId>arquillian-glassfish-remote-3.1</artifactId>
-                </dependency>
-            </dependencies>
-        </profile>
-
-
-        <profile>
-            <id>glassfish-embedded-integration-tests</id>
-            <properties>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.jboss.arquillian.container</groupId>
-                    <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>org.glassfish.main.extras</groupId>
-                    <artifactId>glassfish-embedded-all</artifactId>
-                </dependency>
-            </dependencies>
-        </profile>
-
+        <!--<profile>-->
+            <!--<id>glassfish-managed-integration-tests</id>-->
+            <!--<properties>-->
+            <!--</properties>-->
+            <!--<dependencies>-->
+                <!--<dependency>-->
+                    <!--<groupId>org.jboss.arquillian.container</groupId>-->
+                    <!--<artifactId>arquillian-glassfish-managed-3.1</artifactId>-->
+                <!--</dependency>-->
+            <!--</dependencies>-->
+            <!--<build>-->
+                <!--<plugins>-->
+                    <!--<plugin>-->
+                        <!--<groupId>org.apache.maven.plugins</groupId>-->
+                        <!--<artifactId>maven-failsafe-plugin</artifactId>-->
+                        <!--<configuration>-->
+                            <!--<systemProperties>-->
+                                <!--<property>-->
+                                    <!--<name>arquillian.launch</name>-->
+                                    <!--<value>arquillian-glassfish-managed-3.1</value>-->
+                                <!--</property>-->
+                            <!--</systemProperties>-->
+                        <!--</configuration>-->
+                    <!--</plugin>-->
+                <!--</plugins>-->
+            <!--</build>-->
+        <!--</profile>-->
+        <!--<profile>-->
+            <!--<id>glassfish-remote-integration-tests</id>-->
+            <!--<properties>-->
+            <!--</properties>-->
+            <!--<dependencies>-->
+                <!--<dependency>-->
+                    <!--<groupId>org.jboss.arquillian.container</groupId>-->
+                    <!--<artifactId>arquillian-glassfish-remote-3.1</artifactId>-->
+                <!--</dependency>-->
+            <!--</dependencies>-->
+        <!--</profile>-->
+        <!--<profile>-->
+        <!--<id>glassfish-embedded-integration-tests</id>-->
+        <!--<properties>-->
+        <!--</properties>-->
+        <!--<dependencies>-->
+        <!--<dependency>-->
+        <!--<groupId>org.jboss.arquillian.container</groupId>-->
+        <!--<artifactId>arquillian-glassfish-embedded-3.1</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>org.glassfish.main.extras</groupId>-->
+        <!--<artifactId>glassfish-embedded-all</artifactId>-->
+        <!--</dependency>-->
+        <!--</dependencies>-->
+        <!--</profile>-->
         <profile>
             <!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->
             <!-- Use this profile for any OpenShift specific customization your app will need. -->
@@ -702,13 +557,10 @@
                     </plugin>
                 </plugins>
             </build>
-
             <properties>
                 <ws.port>8000</ws.port>
             </properties>
         </profile>
-
-
         <profile>
             <id>firefox</id>
             <properties>

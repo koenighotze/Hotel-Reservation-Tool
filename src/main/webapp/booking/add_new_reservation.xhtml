@@ -3,8 +3,6 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:kh="http://xmlns.jcp.org/jsf/composite/org/koenighotze">
 
 <body>
@@ -28,21 +26,21 @@
                           required="true"
                           requiredMessage="#{msgs.guest_id_is_required}"
                           validatorMessage="#{msgs.provide_valid_id}">
-                    <f:validateLength for="input" maximum="20" />
+                    <f:validateLength for="input" maximum="20"/>
                 </kh:input>
 
                 <ui:remove>
-                <!--<label for="id">#{msgs.guest_id}</label>-->
-                <!--<h:inputText id="id"-->
-                             <!--value="#{newReservationBean.guestId}"-->
-                             <!--required="true"-->
-                             <!--requiredMessage="#{msgs.guest_id_is_required}"-->
-                             <!--p:placeholder="#{msgs.enter_guest_id}"-->
-                             <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
-                             <!--maxlength="20"-->
-                             <!--validatorMessage="#{msgs.provide_valid_id}">-->
+                    <!--<label for="id">#{msgs.guest_id}</label>-->
+                    <!--<h:inputText id="id"-->
+                    <!--value="#{newReservationBean.guestId}"-->
+                    <!--required="true"-->
+                    <!--requiredMessage="#{msgs.guest_id_is_required}"-->
+                    <!--p:placeholder="#{msgs.enter_guest_id}"-->
+                    <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
+                    <!--maxlength="20"-->
+                    <!--validatorMessage="#{msgs.provide_valid_id}">-->
                     <!--<f:ajax render="@this :messagesPanel"/>-->
-                <!--</h:inputText>-->
+                    <!--</h:inputText>-->
                 </ui:remove>
 
                 <kh:input id="room_number"
@@ -58,19 +56,19 @@
 
                 <ui:remove>
 
-                <!--<label for="roomid">#{msgs.room_number}</label>-->
-                <!--<h:inputText id="roomid"-->
-                             <!--value="#{newReservationBean.roomNumber}"-->
-                             <!--required="true"-->
-                             <!--requiredMessage="#{msgs.room_number_is_required}"-->
-                             <!--p:placeholder="#{msgs.enter_room_number}"-->
-                             <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
-                             <!--maxlength="20"-->
-                             <!--validatorMessage="#{msgs.provide_valid_room_number}">-->
+                    <!--<label for="roomid">#{msgs.room_number}</label>-->
+                    <!--<h:inputText id="roomid"-->
+                    <!--value="#{newReservationBean.roomNumber}"-->
+                    <!--required="true"-->
+                    <!--requiredMessage="#{msgs.room_number_is_required}"-->
+                    <!--p:placeholder="#{msgs.enter_room_number}"-->
+                    <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
+                    <!--maxlength="20"-->
+                    <!--validatorMessage="#{msgs.provide_valid_room_number}">-->
                     <!--<f:validateRegex pattern="^[0-9a-zA-Z]+$"/>-->
                     <!--<f:validateLength minimum="1"/>-->
                     <!--<f:ajax render="@this :messagesPanel"/>-->
-                <!--</h:inputText>-->
+                    <!--</h:inputText>-->
                 </ui:remove>
 
 
@@ -84,16 +82,16 @@
                 </kh:input>
 
                 <ui:remove>
-                <!--<label for="checkin">#{msgs.checkin_date}</label>-->
-                <!--<h:inputText id="checkin"-->
-                             <!--value="#{newReservationBean.booking.checkinDate}"-->
-                             <!--required="true"-->
-                             <!--p:type="date"-->
-                             <!--p:placeholder="#{msgs.checkin_date}"-->
-                             <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
-                        <!-->-->
+                    <!--<label for="checkin">#{msgs.checkin_date}</label>-->
+                    <!--<h:inputText id="checkin"-->
+                    <!--value="#{newReservationBean.booking.checkinDate}"-->
+                    <!--required="true"-->
+                    <!--p:type="date"-->
+                    <!--p:placeholder="#{msgs.checkin_date}"-->
+                    <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
+                    <!-->-->
                     <!--<f:ajax render="@this :messagesPanel"/>-->
-                <!--</h:inputText>-->
+                    <!--</h:inputText>-->
                 </ui:remove>
 
 
@@ -107,17 +105,17 @@
                 </kh:input>
 
                 <ui:remove>
-                <!--<label for="checkout">#{msgs.checkout_date}</label>-->
-                <!--<h:inputText id="checkout"-->
-                             <!--value="#{newReservationBean.booking.checkoutDate}"-->
-                             <!--required="true"-->
-                             <!--p:type="date"-->
-                             <!--p:placeholder="#{msgs.checkout_date}"-->
-                             <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
-                        <!-->-->
+                    <!--<label for="checkout">#{msgs.checkout_date}</label>-->
+                    <!--<h:inputText id="checkout"-->
+                    <!--value="#{newReservationBean.booking.checkoutDate}"-->
+                    <!--required="true"-->
+                    <!--p:type="date"-->
+                    <!--p:placeholder="#{msgs.checkout_date}"-->
+                    <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
+                    <!-->-->
                     <!--&lt;!&ndash; f:convertDateTime pattern="yyyy-MM-dd"/ &ndash;&gt;-->
                     <!--<f:ajax render="@this :messagesPanel"/>-->
-                <!--</h:inputText>-->
+                    <!--</h:inputText>-->
 
                 </ui:remove>
             </div>

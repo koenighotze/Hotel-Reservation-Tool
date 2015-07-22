@@ -3,6 +3,17 @@ JEE7 Demo and Quickstart
 
 This project shows some basic JEE7 technologies using a simple guestbook use case.
 
+Quick Start
+-----------
+
+```
+mvn -Pwildfly wildfly:run
+```
+
+Then open browser at http://localhost:8080/jee7hotel
+
+
+
 Open Shift
 ----------
 An open shift application hosts this tool: http://jee7hotel-koenighotze.rhcloud.com
@@ -66,16 +77,10 @@ How to build and run
 In short: 
 
 ```
-mvn -Pwildfly clean package wildfly:run
+mvn -Pwildfly wildfly:run
 ```
 
 Then open browser at http://localhost:8080/jee7hotel
-
-###Embedded Glassfish
-Some features may not work, unless the JSF lib contained in glassfish is overriden.
-```
-mvn embedded-glassfish:run
-```
 
 ###Embedded Wildfly
 ```

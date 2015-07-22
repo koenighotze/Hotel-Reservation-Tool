@@ -4,97 +4,98 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <body>
+<body>
 
-        <ui:composition template="/WEB-INF/template-bootstrap.html">
-            <ui:define name="page_header">
-                #{msgs.bookings}
-            </ui:define>
+<ui:composition template="/WEB-INF/template-bootstrap.html">
+    <ui:define name="page_header">
+        #{msgs.bookings}
+    </ui:define>
 
-            <ui:define name="content">
-                <!-- todo filter area -->
-                <ui:fragment rendered="#{empty(bookingsBean.bookings)}">
-                    <div class="alert alert-warning" role="alert">
-                        #{msgs.no_bookings_so_far}                    
-                    </div>
-                </ui:fragment>
-                <!-- todo hide columns on mobiles -->
-                <ui:fragment rendered="#{!empty(bookingsBean.bookings)}">
-                    <div class="bookings">                       
-                        <h:dataTable var="booking" 
-                                     id="bookingstable"
-                                     value="#{bookingsBean.bookings}" 
-                                     styleClass="table table-striped">
-                            <h:column>
-                                <f:facet name="header">#{msgs.actions}</f:facet>
-                                <ul class="action_items">
-                                    <li>                                    
-                                        <h:link outcome="/booking/booking.xhtml?faces-redirect=true" 
-                                                includeViewParams="true"
-                                                value="#{msgs.details}">
-                                            <f:param name="reservationNumber"
-                                                     value="#{booking.reservationNumber}" />
-                                        </h:link>
+    <ui:define name="content">
+        <!-- todo filter area -->
+        <ui:fragment rendered="#{empty(bookingsBean.bookings)}">
+            <div class="alert alert-warning" role="alert">
+                #{msgs.no_bookings_so_far}
+            </div>
+        </ui:fragment>
+        <!-- todo hide columns on mobiles -->
+        <ui:fragment rendered="#{!empty(bookingsBean.bookings)}">
+            <div class="bookings">
+                <h:dataTable var="booking"
+                             id="bookingstable"
+                             value="#{bookingsBean.bookings}"
+                             styleClass="table table-striped">
+                    <h:column>
+                        <f:facet name="header">#{msgs.actions}</f:facet>
+                        <ul class="action_items">
+                            <li>
+                                <h:link outcome="/booking/booking.xhtml?faces-redirect=true"
+                                        includeViewParams="true"
+                                        value="#{msgs.details}">
+                                    <f:param name="reservationNumber"
+                                             value="#{booking.reservationNumber}"/>
+                                </h:link>
 
-                                    </li>
-                                </ul>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">#{msgs.reservation_number}</f:facet>
-                                    #{booking.reservationNumber}                             
-                            </h:column>                            
-                            <h:column>
-                                <f:facet name="header">#{msgs.room_number}</f:facet>
-                                    #{booking.assignedRoom.roomNumber}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">#{msgs.guest_id}</f:facet>
-                                    #{booking.guest.id}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">#{msgs.guest_name}</f:facet>
-                                    #{booking.guest.name}
-                            </h:column>
-                             <h:column>
-                                <f:facet name="header">#{msgs.costs_in_euros}</f:facet>
-                                    <h:outputFormat value="#{booking.costsInEuro}">
-                                        <f:convertNumber currencyCode="EUR" type="currency"/>
-                                    </h:outputFormat>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">#{msgs.checkin_date}</f:facet>
-                                <h:outputFormat value="#{booking.checkinDate}">
-                                    <!-- f:convertDateTime pattern="dd.MM.yyyy"/ -->
-                                </h:outputFormat>
-                            </h:column>    
-                            <h:column>
-                                <f:facet name="header">#{msgs.checkout_date}</f:facet>
-                                <h:outputFormat value="#{booking.checkoutDate}">
-                                    <!-- f:convertDateTime pattern="dd.MM.yyyy"/ -->
-                                </h:outputFormat>
-                            </h:column>    
-                            <h:column>
-                                <f:facet name="header">#{msgs.status}</f:facet>
-                                <ui:remove>Provide id such that javascript can find this element</ui:remove>
-                                <span id="status_#{booking.reservationNumber}">#{msgs[booking.reservationStatus]}</span>
-                            </h:column>    
-                        </h:dataTable>
-                    </div>
-                </ui:fragment>
+                            </li>
+                        </ul>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.reservation_number}</f:facet>
+                        #{booking.reservationNumber}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.room_number}</f:facet>
+                        #{booking.assignedRoom.roomNumber}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.guest_id}</f:facet>
+                        #{booking.guest.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.guest_name}</f:facet>
+                        #{booking.guest.name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.costs_in_euros}</f:facet>
+                        <h:outputFormat value="#{booking.costsInEuro}">
+                            <f:convertNumber currencyCode="EUR" type="currency"/>
+                        </h:outputFormat>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.checkin_date}</f:facet>
+                        <h:outputFormat value="#{booking.checkinDate}">
+                            <!-- f:convertDateTime pattern="dd.MM.yyyy"/ -->
+                        </h:outputFormat>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.checkout_date}</f:facet>
+                        <h:outputFormat value="#{booking.checkoutDate}">
+                            <!-- f:convertDateTime pattern="dd.MM.yyyy"/ -->
+                        </h:outputFormat>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.status}</f:facet>
+                        <ui:remove>Provide id such that javascript can find this element</ui:remove>
+                        <span id="status_#{booking.reservationNumber}">#{msgs[booking.reservationStatus]}</span>
+                    </h:column>
+                </h:dataTable>
+            </div>
+        </ui:fragment>
 
 
-            </ui:define>
+    </ui:define>
 
-            <ui:define name="miscjavascript">
-                <script src="#{facesContext.externalContext.requestContextPath}/resources/js/update_bookings.js" type="text/javascript"></script>
+    <ui:define name="miscjavascript">
+        <script src="#{facesContext.externalContext.requestContextPath}/resources/js/update_bookings.js"
+                type="text/javascript"></script>
 
-                <script type="text/javascript">
-                    setupWs(jee7hotelconfig);
-                </script>
-            </ui:define>
+        <script type="text/javascript">
+            setupWs(jee7hotelconfig);
+        </script>
+    </ui:define>
 
-            
-        </ui:composition>
 
-    </body>
+</ui:composition>
+
+</body>
 </html>
