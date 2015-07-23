@@ -37,16 +37,19 @@
         <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
         <param-value>true</param-value>
     </context-param>
+
     <context-param>
         <param-name>
             javax.faces.VALIDATE_EMPTY_FIELDS
         </param-name>
         <param-value>true</param-value>
     </context-param>
+
     <context-param>
         <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
         <param-value>true</param-value>
     </context-param>
+
     <context-param>
         <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
         <param-value>true</param-value>
@@ -74,11 +77,11 @@
         <param-value>true</param-value>
     </context-param>
 
-
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/index.html?reason=expired</location>
     </error-page>
+
     <error-page>
         <error-code>500</error-code>
         <location>/error.html</location>
@@ -89,6 +92,7 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.html</url-pattern>
@@ -98,6 +102,7 @@
         <filter-name>Header Filter</filter-name>
         <filter-class>org.koenighotze.jee7hotel.frontend.HeaderFilter</filter-class>
     </filter>
+
     <filter-mapping>
         <filter-name>Header Filter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -108,81 +113,7 @@
             30
         </session-timeout>
     </session-config>
-    <!--    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Zugriff Organisator</web-resource-name>
-            <url-pattern>/organisator/*</url-pattern>
-        </web-resource-collection>
-        <web-resource-collection>
-            <web-resource-name>Zugriff Organisator über REST</web-resource-name>
-            <url-pattern>/rest/organisator/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>Organisator</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-    <login-config>
-        <auth-method>FORM</auth-method>
-        <realm-name>MyAktion - Basic Authentications</realm-name>
-        <form-login-config>
-            <form-login-page>/login.jsf</form-login-page>
-            <form-error-page>/loginError.jsf</form-error-page>
-        </form-login-config>
-    </login-config>
-    <security-role>
-        <role-name>Organisator</role-name>
-    </security-role>-->
     <welcome-file-list>
         <welcome-file>/index.html</welcome-file>
     </welcome-file-list>
-    <!-- <security-constraint>
-        <display-name>Admin only access to rest resources</display-name>
-        <web-resource-collection>
-            <web-resource-name>Rest Resources</web-resource-name>
-            <description>Rest resources</description>
-            <url-pattern>/rest/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>ADMIN</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <security-constraint>
-        <display-name>Guestbook Entry Restriction</display-name>
-        <web-resource-collection>
-            <web-resource-name>guestbook_entry</web-resource-name>
-            <description/>
-            <url-pattern>/faces/guestbook_entry.xhtml</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>ADMIN</role-name>
-            <role-name>CLERK</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <login-config>
-        <auth-method>FORM</auth-method>
-        <realm-name>Guestbookrealm</realm-name>
-        <form-login-config>
-            <form-login-page>/index.xhtml</form-login-page>
-            <form-error-page>/index.xhtml</form-error-page>
-        </form-login-config>
-    </login-config>
-    <security-role>
-        <description>The administrator of the guestbook
-</description>
-        <role-name>ADMIN</role-name>
-    </security-role>
-    <security-role>
-        <description>Any guest</description>
-        <role-name>GUEST</role-name>
-    </security-role>
-    <security-role>
-        <description>The clerk responsible for adding guests
-</description>
-        <role-name>CLERK</role-name>
-    </security-role> -->
 </web-app>

@@ -4,16 +4,17 @@
     <!--
    Deactivated:
 
-   Queues are created by using JMSDestinationDefinition!
+   Queues are created by using JMSDestinationDefinition automatically
    -->
 
-
-    <!--<admin-object-resource enabled="true"-->
-                           <!--jndi-name="java:app/jms/jee7hotel/reservation"-->
-                           <!--object-type="user"-->
-                           <!--res-adapter="jmsra"-->
-                           <!--res-type="javax.jms.Queue">-->
-        <!--<description/>-->
-        <!--<property name="Name" value="PhysicalQueue"/>-->
-    <!--</admin-object-resource>-->
+    <!--
+    <admin-object-resource enabled="true"
+                           jndi-name="java:app/jms/jee7hotel/reservation"
+                           object-type="user"
+                           res-adapter="jmsra"
+                           res-type="javax.jms.Queue">
+        <description/>
+        <property name="Name" value="PhysicalQueue"/>
+    </admin-object-resource>
+    -->
 </resources>

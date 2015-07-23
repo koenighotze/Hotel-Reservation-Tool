@@ -5,14 +5,17 @@
    Deactivated:
 
    Queues are created by using JMSDestinationDefinition!
+
+   If needed the queues could be created explicitly using:
+
+    <hornetq-server>
+        <jms-destinations>
+            <jms-queue name="reservation-integration-test">
+                <entry name="java:app/jms/jee7hotel/reservation"/>
+                <entry name="java:jboss/exported/jms/jee7hotel/reservation"/>
+            </jms-queue>
+        </jms-destinations>
+    </hornetq-server>
    -->
 
-    <!--<hornetq-server>-->
-        <!--<jms-destinations>-->
-            <!--<jms-queue name="reservation-integration-test">-->
-                <!--<entry name="java:app/jms/jee7hotel/reservation"/>-->
-                <!--<entry name="java:jboss/exported/jms/jee7hotel/reservation"/>-->
-            <!--</jms-queue>-->
-        <!--</jms-destinations>-->
-    <!--</hornetq-server>-->
 </messaging-deployment>
