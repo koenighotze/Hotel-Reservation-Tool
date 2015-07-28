@@ -21,6 +21,14 @@
         <developerConnection>scm:git:git@github.com:koenighotze/jee7hotelreservationtool.git</developerConnection>
     </scm>
     <dependencies>
+        <!-- the only dependency for development... -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- ...other than mongodb. -->
         <dependency>
             <groupId>org.mongojack</groupId>
             <artifactId>mongojack</artifactId>
@@ -33,22 +41,16 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.main.extras</groupId>
-            <artifactId>glassfish-embedded-all</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
         </dependency>
 
         <!-- TEST DEPENDENCIES -->
+        <dependency>
+            <groupId>org.glassfish.main.extras</groupId>
+            <artifactId>glassfish-embedded-all</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -65,7 +67,22 @@
             <artifactId>mockito-all</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.fakemongo</groupId>
+            <artifactId>fongo</artifactId>
+        </dependency>
 
+        <!-- Arquillian dependencies -->
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
@@ -86,21 +103,8 @@
             <artifactId>weld-core</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derbyclient</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.fakemongo</groupId>
-            <artifactId>fongo</artifactId>
-        </dependency>
     </dependencies>
+
     <build>
         <finalName>${application.finalName}</finalName>
         <resources>
@@ -138,6 +142,10 @@
                             <include>**/*IT.java</include>
                         </includes>
                     </systemProperties>
+                    <!--
+                    currently the Arquillian tests keep failing if run one after another.
+                    Execute tests using the scripts under src/test/scripts.
+                    -->
                     <skipTests>true</skipTests>
                 </configuration>
                 <executions>
@@ -196,6 +204,7 @@
                         </manifestEntries>
                     </archive>
                     <webResources>
+                        <!-- needed to add appropriate websocket port to config (Openshift!!!) -->
                         <resource>
                             <filtering>true</filtering>
                             <directory>src/main/webapp</directory>
@@ -286,9 +295,9 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.apache.derby</groupId>
-                <artifactId>derbyclient</artifactId>
-                <version>10.7.1.1</version>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>1.4.187</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -323,30 +332,12 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-            <!--<dependency>-->
-                <!--<groupId>org.jboss.arquillian.container</groupId>-->
-                <!--<artifactId>arquillian-glassfish-remote-3.1</artifactId>-->
-                <!--<version>1.0.0.CR4</version>-->
-                <!--<scope>test</scope>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.jboss.arquillian.container</groupId>-->
-                <!--<artifactId>arquillian-glassfish-embedded-3.1</artifactId>-->
-                <!--<version>1.0.0.CR4</version>-->
-                <!--<scope>test</scope>-->
-            <!--</dependency>-->
             <dependency>
                 <groupId>org.wildfly</groupId>
                 <artifactId>wildfly-arquillian-container-managed</artifactId>
                 <version>8.2.0.Final</version>
                 <scope>test</scope>
             </dependency>
-            <!--<dependency>-->
-                <!--<groupId>org.jboss.arquillian.container</groupId>-->
-                <!--<artifactId>arquillian-glassfish-managed-3.1</artifactId>-->
-                <!--<version>1.0.0.CR4</version>-->
-                <!--<scope>test</scope>-->
-            <!--</dependency>-->
             <dependency>
                 <groupId>org.wildfly.arquillian</groupId>
                 <artifactId>wildfly-arquillian-container-remote</artifactId>
@@ -364,12 +355,10 @@
     <pluginRepositories>
         <pluginRepository>
             <id>maven.java.net</id>
-            <name>Java.net Repository for Maven</name>
             <url>https://maven.java.net/content/groups/promoted/</url>
         </pluginRepository>
         <pluginRepository>
             <id>maven2-repository.dev.java.net</id>
-            <name>Java.net Repository for Maven</name>
             <url>http://download.java.net/maven/glassfish/</url>
         </pluginRepository>
     </pluginRepositories>
@@ -399,28 +388,6 @@
                 </plugins>
             </build>
         </profile>
-        <!--<profile>-->
-            <!--<id>glassfish</id>-->
-            <!--<build>-->
-                <!--<plugins>-->
-                    <!--<plugin>-->
-                        <!--<groupId>org.glassfish.embedded</groupId>-->
-                        <!--<artifactId>maven-embedded-glassfish-plugin</artifactId>-->
-                        <!--<version>4.0</version>-->
-                        <!--<configuration>-->
-                            <!--<app>target/${application.finalName}</app>-->
-                            <!--<port>${glassfish.port}</port>-->
-                            <!--<contextRoot>${application.contextRoot}</contextRoot>-->
-                        <!--</configuration>-->
-                        <!--<goals>-->
-                            <!--<goal>run</goal>-->
-                            <!--<goal>deploy</goal>-->
-                        <!--</goals>-->
-                    <!--</plugin>-->
-                <!--</plugins>-->
-            <!--</build>-->
-        <!--</profile>-->
-        <!-- wildfly arquillian -->
         <profile>
             <id>wildfly-managed-integration-tests</id>
             <dependencies>
@@ -482,60 +449,6 @@
                 </plugins>
             </build>
         </profile>
-        <!-- Glassfish -->
-        <!--<profile>-->
-            <!--<id>glassfish-managed-integration-tests</id>-->
-            <!--<properties>-->
-            <!--</properties>-->
-            <!--<dependencies>-->
-                <!--<dependency>-->
-                    <!--<groupId>org.jboss.arquillian.container</groupId>-->
-                    <!--<artifactId>arquillian-glassfish-managed-3.1</artifactId>-->
-                <!--</dependency>-->
-            <!--</dependencies>-->
-            <!--<build>-->
-                <!--<plugins>-->
-                    <!--<plugin>-->
-                        <!--<groupId>org.apache.maven.plugins</groupId>-->
-                        <!--<artifactId>maven-failsafe-plugin</artifactId>-->
-                        <!--<configuration>-->
-                            <!--<systemProperties>-->
-                                <!--<property>-->
-                                    <!--<name>arquillian.launch</name>-->
-                                    <!--<value>arquillian-glassfish-managed-3.1</value>-->
-                                <!--</property>-->
-                            <!--</systemProperties>-->
-                        <!--</configuration>-->
-                    <!--</plugin>-->
-                <!--</plugins>-->
-            <!--</build>-->
-        <!--</profile>-->
-        <!--<profile>-->
-            <!--<id>glassfish-remote-integration-tests</id>-->
-            <!--<properties>-->
-            <!--</properties>-->
-            <!--<dependencies>-->
-                <!--<dependency>-->
-                    <!--<groupId>org.jboss.arquillian.container</groupId>-->
-                    <!--<artifactId>arquillian-glassfish-remote-3.1</artifactId>-->
-                <!--</dependency>-->
-            <!--</dependencies>-->
-        <!--</profile>-->
-        <!--<profile>-->
-        <!--<id>glassfish-embedded-integration-tests</id>-->
-        <!--<properties>-->
-        <!--</properties>-->
-        <!--<dependencies>-->
-        <!--<dependency>-->
-        <!--<groupId>org.jboss.arquillian.container</groupId>-->
-        <!--<artifactId>arquillian-glassfish-embedded-3.1</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.glassfish.main.extras</groupId>-->
-        <!--<artifactId>glassfish-embedded-all</artifactId>-->
-        <!--</dependency>-->
-        <!--</dependencies>-->
-        <!--</profile>-->
         <profile>
             <!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->
             <!-- Use this profile for any OpenShift specific customization your app will need. -->
@@ -557,6 +470,7 @@
                     </plugin>
                 </plugins>
             </build>
+            <!-- Openshift uses port 8000 for websocket stuff -->
             <properties>
                 <ws.port>8000</ws.port>
             </properties>
