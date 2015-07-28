@@ -2,9 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:jsf="http://xmlns.jcp.org/jsf"
-        >
-
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
 <f:metadata>
     <f:viewParam name="guestId" value="#{guestDetailsBean.guestId}"/>
     <f:event type="preRenderView" listener="#{guestDetailsBean.loadGuest}"/>
@@ -29,17 +27,16 @@
                     <input type="text"
                            jsf:id="guest_id"
                            value="#{guestDetailsBean.guest.id}"
-                           readonly="true"
+                           readonly="readonly"
                            class="form-control uneditable-input"/>
                 </div>
 
                 <div class="form-group">
                     <label for="name">#{msgs.guest_name}</label>
-
                     <input type="text"
                            jsf:id="name"
                            value="#{guestDetailsBean.guest.name}"
-                           required="true"
+                           required="required"
                            jsf:requiredMessage="#{msgs.guest_name_is_required}"
                            placeholder="#{msgs.enter_guest_name}"
                            class="form-control #{component.valid ? '' : 'input-error'}"
@@ -81,7 +78,7 @@
                            jsf:includeViewParameters="true"
                            jsf:action="/booking/add_new_reservation.xhtml">
                         <f:param name="guestId"
-                                 value="#{guest.id}"/>
+                                 value="#{guestDetailsBean.guestId}"/>
                     </input>
 
                     <input type="submit"
