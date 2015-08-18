@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+this actually needed in jee7 if some features like i.e. programmatic flows
+and annotation based interceptor bindings should be used.
+
+
+- but note that unless flows are declared using XML a bean-discovery-mode="all" must be used
+-->
+
+<beans version="1.2"
+       bean-discovery-mode="all"
+       xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_2.xsd">
+
+    <!--
+           Declare two interceptor classes.
+
+           The annotations used on the interceptors determine if the interceptor will be applied.
+     -->
+    <interceptors>
+        <class>org.koenighotze.jee7hotel.business.logging.PerformanceLogger</class>
+        <!--<class>org.koenighotze.jee7hotel.business.eventsource.EventSourceInterceptor</class>-->
+    </interceptors>
+</beans>

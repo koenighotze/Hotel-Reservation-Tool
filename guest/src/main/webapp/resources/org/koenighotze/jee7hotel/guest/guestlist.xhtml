@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<cc:interface>
+    <cc:attribute name="guestList"
+                  required="true"
+                  shortDescription=""/>
+
+    <cc:facet name="actions"/>
+</cc:interface>
+
+<cc:implementation>
+
+    <div class="guestbook">
+        <h:dataTable var="guest"
+                     value="#{cc.attrs.guestList}"
+                     styleClass="table table-striped">
+            <h:column>
+                <f:facet name="header">#{msgs.actions}</f:facet>
+                <cc:renderFacet name="actions"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">#{msgs.id}</f:facet>
+                #{guest.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">#{msgs.guest_name}</f:facet>
+                #{guest.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header">#{msgs.email}</f:facet>
+                #{guest.email}
+            </h:column>
+        </h:dataTable>
+    </div>
+</cc:implementation>
+
+</html>

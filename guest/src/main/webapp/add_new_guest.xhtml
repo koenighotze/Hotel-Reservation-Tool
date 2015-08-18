@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:kh="http://xmlns.jcp.org/jsf/composite/org/koenighotze/jee7hotel/framework/frontend"
+        >
+<ui:composition template="/WEB-INF/template-bootstrap.html">
+    <ui:define name="page_header">
+        #{msgs.main_guestbook}
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="welcomeForm">
+            <kh:input id="guest_name"
+                      label="#{msgs.guest_name}"
+                      val="#{addNewGuestBean.guest.name}"
+                      placeholder="#{msgs.enter_guest_name}"
+                      required="true"
+                      requiredMessage="#{msgs.guest_name_is_required}"
+                      validatorMessage="#{msgs.provide_valid_name}">
+                <f:validateRequired for="input"/>
+                <f:validateRegex pattern="^[A-Za-z .\\-]{5,20}$" for="input"/>
+                <f:validateLength minimum="5" maximum="20" for="input"/>
+            </kh:input>
+
+
+            <kh:input id="guest_email"
+                      label="#{msgs.email}"
+                      val="#{addNewGuestBean.guest.email}"
+                      placeholder="#{msgs.spam_location}"
+                      validatorMessage="#{msgs.provide_valid_email}">
+                <f:validateRegex pattern="^[A-Za-z 0-9.@\\-_]*$"  for="input"/>
+            </kh:input>
+
+            <div class="btn-toolbar">
+                <input jsf:id="btn_discard_changes"
+                       type="submit"
+                       jsf:action="/guestbook.xhtml"
+                       class="btn btn-sm"
+                       jsf:immediate="true"
+                       value="#{msgs.btn_discard_changes}">
+                </input>
+                <input type="submit"
+                       jsf:id="save_guest_info"
+                       value="#{msgs.save_guest_info}"
+                       class="btn btn-sm btn-primary"
+                       jsf:actionListener="#{addNewGuestBean.saveGuest}"
+                       jsf:action="/guestbook.xhtml">
+                </input>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>
+
+
+

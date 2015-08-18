@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+<f:metadata>
+    <f:viewParam name="guestId" value="#{guestDetailsBean.guestId}"/>
+    <f:event type="preRenderView" listener="#{guestDetailsBean.loadGuest}"/>
+</f:metadata>
+
+<ui:composition template="/WEB-INF/template-bootstrap.html">
+    <ui:define name="page_header">
+        #{msgs.guest_details}
+    </ui:define>
+
+    <ui:define name="content">
+        <ui:fragment rendered="#{empty(guestDetailsBean.guest)}">
+            <div class="alert alert-warning" role="alert">
+                #{msgs.guest_not_found}
+            </div>
+        </ui:fragment>
+
+        <ui:fragment rendered="#{!empty(guestDetailsBean.guest)}">
+            <form jsf:id="guest_detail_form">
+                <div class="form-group">
+                    <label for="guest_id">#{msgs.id}</label>
+                    <input type="text"
+                           jsf:id="guest_id"
+                           value="#{guestDetailsBean.guest.id}"
+                           readonly="readonly"
+                           class="form-control uneditable-input"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">#{msgs.guest_name}</label>
+                    <input type="text"
+                           jsf:id="name"
+                           value="#{guestDetailsBean.guest.name}"
+                           required="required"
+                           jsf:requiredMessage="#{msgs.guest_name_is_required}"
+                           placeholder="#{msgs.enter_guest_name}"
+                           class="form-control #{component.valid ? '' : 'input-error'}"
+                           maxlength="20"
+                           jsf:validatorMessage="#{msgs.provide_valid_name}">
+                        <f:validateRegex pattern="^[A-Za-z .\\-]*$"/>
+                        <f:validateLength minimum="5"/>
+                        <f:ajax render="@this :messagesPanel"/>
+                    </input>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">#{msgs.email}</label>
+                    <input jsf:id="email"
+                           id="email"
+                           class="form-control #{component.valid ? '' : 'input-error'}"
+                           jsf:value="#{guestDetailsBean.guest.email}"
+                           type="email"
+                           placeholder="#{msgs.spam_location}"
+                           jsf:validatorMessage="#{msgs.provide_valid_email}">
+                        <f:validateRegex pattern="^[A-Za-z 0-9.@\\-_]*$"/>
+                        <f:ajax render="@this :messagesPanel"/>
+                    </input>
+                </div>
+
+                <div class="btn-toolbar">
+                    <input jsf:id="btn_discard_changes"
+                           type="submit"
+                           jsf:action="/guestbook.xhtml"
+                           class="btn btn-sm btn-primary"
+                           jsf:immediate="true"
+                           value="#{msgs.btn_discard_changes}">
+                    </input>
+
+                    <ui:remove>
+                    <!--<input jsf:id="btn_new_reservation"-->
+                           <!--type="submit"-->
+                           <!--value="#{msgs.btn_new_reservation}"-->
+                           <!--class="btn btn-sm "-->
+                           <!--jsf:includeViewParameters="true"-->
+                           <!--jsf:action="/booking/add_new_reservation.xhtml">-->
+                        <!--<f:param name="guestId"-->
+                                 <!--value="#{guestDetailsBean.guestId}"/>-->
+                    <!--</input>-->
+                    </ui:remove>
+
+                    <input type="submit"
+                           jsf:id="btn_update_guest_info"
+                           value="#{msgs.btn_update_guest_info}"
+                           class="btn btn-sm "
+                           jsf:action="/guestbook.xhtml"
+                           jsf:actionListener="#{guestDetailsBean.saveChanges()}">
+                    </input>
+                </div>
+            </form>
+        </ui:fragment>
+    </ui:define>
+</ui:composition>
+</html>

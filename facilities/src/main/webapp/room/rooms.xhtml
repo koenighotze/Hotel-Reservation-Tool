@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        >
+
+<body>
+
+<ui:composition template="/WEB-INF/template-bootstrap.html">
+
+    <ui:define name="page_header">
+        #{msgs.rooms}
+    </ui:define>
+
+    <ui:define name="content">
+        <ui:remove>
+        <!--<form jsf:id="new_reservation_form">-->
+            <!--<div class="btn-toolbar">-->
+                <!--<input type="submit"-->
+                       <!--jsf:id="newReservationButton"-->
+                       <!--jsf:action="addnewreservationflow"-->
+                       <!--class="btn btn-sm btn-primary"-->
+                       <!--value="#{msgs.btn_new_reservation}">-->
+                <!--</input>-->
+            <!--</div>-->
+        <!--</form>-->
+        </ui:remove>
+
+        <ui:fragment rendered="#{!empty(roomsBean.rooms)}">
+            <div class="rooms">
+                <h:dataTable var="room"
+                             value="#{roomsBean.rooms}"
+                             styleClass="table table-striped">
+                    <h:column>
+                        <f:facet name="header">#{msgs.actions}</f:facet>
+                        <ul class="action_items">
+                            <li>
+                                <h:link outcome="/room/room.xhtml?faces-redirect=true"
+                                        includeViewParams="true"
+                                        value="#{msgs.details}">
+                                    <f:param name="roomId"
+                                             value="#{room.id}"/>
+                                </h:link>
+
+                            </li>
+                            <ui:remove>
+                            <!--<li>-->
+                                <!--<h:link outcome="/booking/add_new_reservation.xhtml?faces-redirect=true"-->
+                                        <!--includeViewParams="true"-->
+                                        <!--value="#{msgs.new_reservation}">-->
+                                    <!--<f:param name="roomId"-->
+                                             <!--value="#{room.id}"/>-->
+                                <!--</h:link>-->
+                            <!--</li>-->
+                            </ui:remove>
+                        </ul>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.id}</f:facet>
+                        #{room.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.room_number}</f:facet>
+                        #{room.roomNumber}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.room_equipment}</f:facet>
+                        #{msgs[room.roomEquipment]}
+                    </h:column>
+                </h:dataTable>
+            </div>
+        </ui:fragment>
+    </ui:define>
+
+</ui:composition>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.koenighotze.jee7hotel</groupId>
+    <artifactId>booking</artifactId>
+    <!--<version>1.0-SNAPSHOT</version>-->
+
+    <parent>
+        <groupId>org.koenighotze</groupId>
+        <artifactId>jee7hotel</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <!--<relativePath/>-->
+    </parent>
+
+    <packaging>war</packaging>
+
+    <properties>
+        <application.contextRoot>/booking</application.contextRoot>
+        <application.finalName>booking</application.finalName>
+    </properties>
+
+    <dependencies>
+        <!-- ...other than mongodb. -->
+        <dependency>
+            <groupId>org.mongojack</groupId>
+            <artifactId>mongojack</artifactId>
+            <version>2.1.0</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>persistence-api</artifactId>
+                    <groupId>javax.persistence</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.koenighotze.jee7hotel.framework</groupId>
+            <artifactId>application</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- TEST DEPENDENCIES -->
+        <dependency>
+            <groupId>org.koenighotze.jee7hotel.framework</groupId>
+            <artifactId>test</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.main.extras</groupId>
+            <artifactId>glassfish-embedded-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.fakemongo</groupId>
+            <artifactId>fongo</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+    </build>
+</project>

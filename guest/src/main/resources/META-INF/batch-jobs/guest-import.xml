@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="guestImport" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+     version="1.0">
+
+    <step id="populateGuestDatabase">
+        <chunk item-count="3" skip-limit="5">
+            <!-- Can be refered to via @Named -->
+            <reader ref="guestDataReader">
+                <properties>
+                    <property name="resourceNameDefault" value="Snafu"/>
+                </properties>
+            </reader>
+
+            <processor ref="guestDataProcessor"/>
+            <writer ref="guestDataWriter"/>
+
+            <!--
+            Allows illegal characters in numbers to be considered as "Skips".
+            Otherwise the batch would stop
+            -->
+            <skippable-exception-classes>
+                <include class="java.lang.NumberFormatException"/>
+            </skippable-exception-classes>
+        </chunk>
+
+        <end on="COMPLETED"/>
+    </step>
+
+</job>

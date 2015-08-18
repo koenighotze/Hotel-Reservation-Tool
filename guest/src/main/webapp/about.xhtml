@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/WEB-INF/template-bootstrap.html">
+    <ui:define name="page_header">
+        #{msgs.about}
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="well">
+            #{msgs.about}
+        </div>
+    </ui:define>
+
+    <ui:define name="miscjavascript">
+        <ui:fragment rendered="#{initParam['javax.faces.PROJECT_STAGE'] == 'Development'}">
+            <script type="text/javascript">
+            </script>
+        </ui:fragment>
+    </ui:define>
+</ui:composition>
+</html>
+
+
+

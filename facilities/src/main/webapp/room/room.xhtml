@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        >
+
+
+<f:metadata>
+    <f:viewParam name="roomId" value="#{roomDetailsBean.roomId}"/>
+    <f:event type="preRenderView" listener="#{roomDetailsBean.loadRoom}"/>
+</f:metadata>
+
+<ui:composition template="/WEB-INF/template-bootstrap.html">
+    <ui:define name="page_header">
+        #{msgs.room_details}
+    </ui:define>
+    <ui:define name="content">
+        <form jsf:id="room_detail_form">
+            <div class="form-group">
+                <label for="room_id">#{msgs.id}</label>
+                <input type="text"
+                       jsf:id="room_id"
+                       value="#{roomDetailsBean.room.id}"
+                       readonly="readonly"
+                       class="form-control uneditable-input"/>
+            </div>
+            <div class="form-group">
+                <label for="room_number">#{msgs.room_number}</label>
+                <input type="text"
+                       jsf:id="room_number"
+                       value="#{roomDetailsBean.room.roomNumber}"
+                       readonly="readonly"
+                       class="form-control uneditable-input"/>
+            </div>
+
+            <div class="form-group">
+                <label for="room_equipment">#{msgs.room_equipment}</label>
+                <input type="text"
+                       jsf:id="room_equipment"
+                       value="#{msgs[roomDetailsBean.room.roomEquipment]}"
+                       readonly="readonly"
+                       class="form-control uneditable-input"/>
+            </div>
+
+            <div class="btn-toolbar">
+                <input jsf:id="btn_discard_changes"
+                       type="submit"
+                       jsf:action="rooms.xhtml"
+                       class="btn btn-sm btn-primary"
+                       jsf:immediate="true"
+                       value="#{msgs.nav_show_rooms}">
+                </input>
+            </div>
+        </form>
+    </ui:define>
+</ui:composition>
+</html>

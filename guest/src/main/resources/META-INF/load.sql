@@ -1,0 +1,10 @@
+INSERT INTO GUEST (ID, EMAIL, NAME, VERSION) VALUES (9999, 'david@zuhause.de', 'David Schmitz', 1)
+INSERT INTO GUEST (ID, EMAIL, NAME, VERSION) VALUES (9998, '', 'Dr. Insano', 1)
+INSERT INTO GUEST (ID, EMAIL, NAME, VERSION) VALUES (9997, 'kommander@bruka.se', 'Kommandante Brikka', 1)
+INSERT INTO GUEST (ID, EMAIL, NAME, VERSION) VALUES (9996, 'bratislaf@metulski.ru', 'Bratislaf Metulski', 1)
+INSERT INTO GUEST (ID, EMAIL, NAME, VERSION) VALUES (9995, 'rschmutschen@panama.de', 'Rutschen Schmutschen', 1)
+INSERT INTO GUEST (ID, EMAIL, NAME, VERSION) VALUES (9994, 'Onkel@Baer.de', 'Der Onkel Baer', 1)
+INSERT INTO GUEST (ID, EMAIL, NAME, VERSION) VALUES (9993, 'haggard@bavarian.de', 'Haggard Bavarian', 1)
+INSERT INTO GUEST (ID, EMAIL, NAME, VERSION) VALUES (9992, 'yellow@drop.de', 'Yel Lowd Rop', 1)
+INSERT INTO GUEST (ID, EMAIL, NAME, VERSION) VALUES (9991, 'lowkey@trondheim.com', 'Lowkey Demycod', 1)
+
