@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
- * Created by dschmitz on 11.12.14.
+ * @author koenighotze
  */
 @WebFilter()
 public class HeaderFilter implements Filter {

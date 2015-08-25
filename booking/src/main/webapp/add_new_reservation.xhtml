@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:kh="http://xmlns.jcp.org/jsf/composite/org/koenighotze/jee7hotel/framework/frontend">
+
+<body>
+<f:metadata>
+    <f:viewParam name="guestId" value="#{newReservationBean.guestId}"/>
+    <f:viewParam name="roomId" value="#{newReservationBean.roomId}"/>
+    <f:event type="preRenderView" listener="#{newReservationBean.init}"/>
+</f:metadata>
+<ui:composition template="/WEB-INF/template-bootstrap.html">
+    <ui:define name="page_header">
+        #{msgs.new_reservation}
+    </ui:define>
+
+    <ui:define name="content">
+        <form jsf:id="welcomeForm">
+            <div class="form-group">
+                <kh:input id="guest_id"
+                          val="#{newReservationBean.guestId}"
+                          label="#{msgs.guest_id}"
+                          placeholder="#{msgs.enter_guest_id}"
+                          required="true"
+                          requiredMessage="#{msgs.guest_id_is_required}"
+                          validatorMessage="#{msgs.provide_valid_id}">
+                    <f:validateLength for="input" maximum="20"/>
+                </kh:input>
+
+                <ui:remove>
+                    <!--<label for="id">#{msgs.guest_id}</label>-->
+                    <!--<h:inputText id="id"-->
+                    <!--value="#{newReservationBean.guestId}"-->
+                    <!--required="true"-->
+                    <!--requiredMessage="#{msgs.guest_id_is_required}"-->
+                    <!--p:placeholder="#{msgs.enter_guest_id}"-->
+                    <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
+                    <!--maxlength="20"-->
+                    <!--validatorMessage="#{msgs.provide_valid_id}">-->
+                    <!--<f:ajax render="@this :messagesPanel"/>-->
+                    <!--</h:inputText>-->
+                </ui:remove>
+
+                <kh:input id="room_number"
+                          val="#{newReservationBean.roomNumber}"
+                          label="#{msgs.room_number}"
+                          placeholder="#{msgs.enter_room_number}"
+                          required="true"
+                          requiredMessage="#{msgs.room_number_is_required}"
+                          validatorMessage="#{msgs.provide_valid_room_number}">
+                    <f:validateLength for="input" maximum="20"/>
+                    <f:validateRegex for="input" pattern="^[0-9a-zA-Z]+$"/>
+                </kh:input>
+
+                <ui:remove>
+
+                    <!--<label for="roomid">#{msgs.room_number}</label>-->
+                    <!--<h:inputText id="roomid"-->
+                    <!--value="#{newReservationBean.roomNumber}"-->
+                    <!--required="true"-->
+                    <!--requiredMessage="#{msgs.room_number_is_required}"-->
+                    <!--p:placeholder="#{msgs.enter_room_number}"-->
+                    <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
+                    <!--maxlength="20"-->
+                    <!--validatorMessage="#{msgs.provide_valid_room_number}">-->
+                    <!--<f:validateRegex pattern="^[0-9a-zA-Z]+$"/>-->
+                    <!--<f:validateLength minimum="1"/>-->
+                    <!--<f:ajax render="@this :messagesPanel"/>-->
+                    <!--</h:inputText>-->
+                </ui:remove>
+
+
+                <kh:input id="checkin_date"
+                          val="#{newReservationBean.booking.checkinDate}"
+                          label="#{msgs.checkin_date}"
+                          placeholder="#{msgs.checkin_date}"
+                          required="true"
+                          requiredMessage="#{msgs.checkin_date_is_required}"
+                          validatorMessage="#{msgs.provide_valid_date}">
+                </kh:input>
+
+                <ui:remove>
+                    <!--<label for="checkin">#{msgs.checkin_date}</label>-->
+                    <!--<h:inputText id="checkin"-->
+                    <!--value="#{newReservationBean.booking.checkinDate}"-->
+                    <!--required="true"-->
+                    <!--p:type="date"-->
+                    <!--p:placeholder="#{msgs.checkin_date}"-->
+                    <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
+                    <!-->-->
+                    <!--<f:ajax render="@this :messagesPanel"/>-->
+                    <!--</h:inputText>-->
+                </ui:remove>
+
+
+                <kh:input id="checkout_date"
+                          val="#{newReservationBean.booking.checkoutDate}"
+                          label="#{msgs.checkout_date}"
+                          placeholder="#{msgs.checkout_date}"
+                          required="true"
+                          requiredMessage="#{msgs.checkout_date_is_required}"
+                          validatorMessage="#{msgs.provide_valid_date}">
+                    <f:convertDateTime pattern="yyyy-MM-dd" for="inputTextField"/>
+                </kh:input>
+
+                <ui:remove>
+                    <!--<label for="checkout">#{msgs.checkout_date}</label>-->
+                    <!--<h:inputText id="checkout"-->
+                    <!--value="#{newReservationBean.booking.checkoutDate}"-->
+                    <!--required="true"-->
+                    <!--p:type="date"-->
+                    <!--p:placeholder="#{msgs.checkout_date}"-->
+                    <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
+                    <!-->-->
+                    <!--&lt;!&ndash; f:convertDateTime pattern="yyyy-MM-dd"/ &ndash;&gt;-->
+                    <!--<f:ajax render="@this :messagesPanel"/>-->
+                    <!--</h:inputText>-->
+
+                </ui:remove>
+            </div>
+
+            <div class="btn-toolbar">
+                <input type="submit"
+                       jsf:action="/booking/bookings.xhtml?faces-redirect=true"
+                       class="btn btn-sm"
+                       jsf:immediate="true"
+                       value="#{msgs.btn_discard_changes}">
+                </input>
+                <input type="submit"
+                       value="#{msgs.btn_book_room}"
+                       class="btn btn-sm btn-primary"
+                       jsf:action="#{newReservationBean.addReservation}">
+                </input>
+            </div>
+        </form>
+
+    </ui:define>
+
+</ui:composition>
+
+</body>
+</html>

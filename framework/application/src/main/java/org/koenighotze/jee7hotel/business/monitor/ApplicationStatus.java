@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 /**
- * Created by dschmitz on 18.11.14.
+ * @author koenighotze
  */
 @XmlRootElement
 public class ApplicationStatus implements Serializable {

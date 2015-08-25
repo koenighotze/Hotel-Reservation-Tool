@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 import java.lang.reflect.Method;
 
 /**
- * Created by dschmitz on 28.11.14.
+ * @author koenighotze
  */
 public interface IEventSource {
     // TODO Versioning, Typeinfo, id, synchronization

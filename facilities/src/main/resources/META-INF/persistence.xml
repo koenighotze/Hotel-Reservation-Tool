@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-  <persistence-unit name="Quickstart" transaction-type="JTA">
+  <persistence-unit name="Jee7Hotel-Facilities" transaction-type="JTA">
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
     <properties>
@@ -10,6 +10,5 @@
         <property name="javax.persistence.sql-load-script-source" value="META-INF/load.sql"/>
         <property name="eclipselink.logging.level" value="INFO"/>
      </properties>
-
   </persistence-unit>
 </persistence>

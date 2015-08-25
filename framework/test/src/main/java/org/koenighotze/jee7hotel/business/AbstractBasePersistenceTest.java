@@ -21,13 +21,17 @@ public class AbstractBasePersistenceTest {
     
     @Before
     public final void initializeDependencies(){
-        this.em = Persistence.createEntityManagerFactory("integration-test").createEntityManager();
+        this.em = Persistence.createEntityManagerFactory(getPersistenceUnitName()).createEntityManager();
         this.transaction = this.em.getTransaction();
         this.transaction.begin();
         
         initHook();
     }
-    
+
+    protected String getPersistenceUnitName() {
+        return "integration-test";
+    }
+
     @After
     public final void cleanup() {
         cleanupHook();        

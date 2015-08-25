@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 /**
- * Created by dschmitz on 14.11.14.
+ * @author koenighotze
  */
 
 

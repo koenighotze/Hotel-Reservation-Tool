@@ -6,7 +6,7 @@ import javax.interceptor.InvocationContext;
 import java.util.logging.Logger;
 
 /**
- * Created by dschmitz on 14.11.14.
+ * @author koenighotze
  */
 
 @Interceptor

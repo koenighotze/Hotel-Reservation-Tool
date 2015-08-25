@@ -6,7 +6,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by dschmitz on 20.11.14.
+ * @author koenighotze
  */
 @Named
 @ApplicationScoped

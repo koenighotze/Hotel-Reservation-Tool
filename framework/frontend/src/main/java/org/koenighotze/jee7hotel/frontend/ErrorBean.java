@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 /**
- * Created by dschmitz on 19.11.14.
+ * @author koenighotze
  */
 @Model
 public class ErrorBean {

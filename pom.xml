@@ -4,15 +4,15 @@
     <groupId>org.koenighotze</groupId>
     <artifactId>jee7hotel</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <application.contextRoot>/jee7hotel</application.contextRoot>
-        <application.finalName>jee7hotel</application.finalName>
+
         <browser>phantomjs</browser>
     </properties>
     <scm>
@@ -20,6 +20,18 @@
         <connection>scm:git:git@github.com:koenighotze/jee7hotelreservationtool.git</connection>
         <developerConnection>scm:git:git@github.com:koenighotze/jee7hotelreservationtool.git</developerConnection>
     </scm>
+
+    <modules>
+        <module>framework/frontend</module>
+        <module>framework/application</module>
+        <module>framework/eventing</module>
+        <module>framework/test</module>
+        <module>guest</module>
+        <module>booking</module>
+        <module>facilities</module>
+        <module>frontend</module>
+    </modules>
+
     <dependencies>
         <!-- the only dependency for development... -->
         <dependency>
@@ -28,27 +40,16 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-        <!-- ...other than mongodb. -->
-        <dependency>
-            <groupId>org.mongojack</groupId>
-            <artifactId>mongojack</artifactId>
-            <version>2.1.0</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>persistence-api</artifactId>
-                    <groupId>javax.persistence</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-        </dependency>
 
-        <!-- TEST DEPENDENCIES -->
+        <!-- Test -->
         <dependency>
             <groupId>org.glassfish.main.extras</groupId>
             <artifactId>glassfish-embedded-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -56,11 +57,6 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
             <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.jglue.cdi-unit</groupId>
-            <artifactId>cdi-unit</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
@@ -71,15 +67,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.fakemongo</groupId>
-            <artifactId>fongo</artifactId>
         </dependency>
 
         <!-- Arquillian dependencies -->
@@ -98,141 +85,129 @@
             <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.jboss.weld</groupId>
-            <artifactId>weld-core</artifactId>
-            <scope>test</scope>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.jboss.weld</groupId>-->
+        <!--<artifactId>weld-core</artifactId>-->
+        <!--<scope>test</scope>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
-        <finalName>${application.finalName}</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/stylesheets</directory>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-                <filtering>true</filtering>
-            </testResource>
-        </testResources>
-        <plugins>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.17</version>
-                <configuration>
-                    <excludes>
-                        <!-- exclude integration tests, these are picked up by failsafe  -->
-                        <exclude>**/*IT.java</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.7.1</version>
-                <configuration>
-                    <systemProperties>
-                        <includes>
-                            <include>**/*IT.java</include>
-                        </includes>
-                    </systemProperties>
-                    <!--
-                    currently the Arquillian tests keep failing if run one after another.
-                    Execute tests using the scripts under src/test/scripts.
-                    -->
-                    <skipTests>true</skipTests>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>integration-test</id>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>integration-test</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>verify</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>1.3</version>
-                <executions>
-                    <execution>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>create</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <format>{0,date,yyyy-MM-dd HH:mm:ss}</format>
-                    <items>
-                        <item>timestamp</item>
-                    </items>
-                    <doCheck>true</doCheck>
-                    <doUpdate>true</doUpdate>
-                    <revisionOnScmFailure/>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.3</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                        </manifest>
-                        <!-- Add buildnumber to manifest -->
-                        <manifestEntries>
-                            <Build-Time>${buildNumber}</Build-Time>
-                            <Build-Timestamp>${timestamp}</Build-Timestamp>
-                            <Version>${project.version}</Version>
-                        </manifestEntries>
-                    </archive>
-                    <webResources>
-                        <!-- needed to add appropriate websocket port to config (Openshift!!!) -->
-                        <resource>
-                            <filtering>true</filtering>
-                            <directory>src/main/webapp</directory>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.17</version>
+                    <configuration>
+                        <excludes>
+                            <!-- exclude integration tests, these are picked up by failsafe  -->
+                            <exclude>**/*IT.java</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>2.7.1</version>
+                    <configuration>
+                        <systemProperties>
                             <includes>
-                                <include>**/*.js</include>
+                                <include>**/*IT.java</include>
                             </includes>
-                        </resource>
-                    </webResources>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.jasig.maven</groupId>
-                <artifactId>sass-maven-plugin</artifactId>
-                <version>1.1.0</version>
-                <!-- Disabled for performance reasons, trigger manually -->
-                <configuration>
-                    <resources>
-                        <resource>
-                            <source>
-                                <directory>${basedir}/src/main/stylesheets</directory>
-                            </source>
-                            <destination>${project.basedir}/src/main/webapp/resources/css</destination>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
-        </plugins>
+                        </systemProperties>
+                        <!--
+                        currently the Arquillian tests keep failing if run one after another.
+                        Execute tests using the scripts under src/test/scripts.
+                        -->
+                        <skipTests>true</skipTests>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <phase>integration-test</phase>
+                            <goals>
+                                <goal>integration-test</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>verify</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>1.3</version>
+                    <executions>
+                        <execution>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>create</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <format>{0,date,yyyy-MM-dd HH:mm:ss}</format>
+                        <items>
+                            <item>timestamp</item>
+                        </items>
+                        <doCheck>true</doCheck>
+                        <doUpdate>true</doUpdate>
+                        <revisionOnScmFailure/>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.3</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            </manifest>
+                            <!-- Add buildnumber to manifest -->
+                            <manifestEntries>
+                                <Build-Time>${buildNumber}</Build-Time>
+                                <Build-Timestamp>${timestamp}</Build-Timestamp>
+                                <Version>${project.version}</Version>
+                            </manifestEntries>
+                        </archive>
+                        <webResources>
+                            <!-- needed to add appropriate websocket port to config (Openshift!!!) -->
+                            <resource>
+                                <filtering>true</filtering>
+                                <directory>src/main/webapp</directory>
+                                <includes>
+                                    <include>**/*.js</include>
+                                </includes>
+                            </resource>
+                        </webResources>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.jasig.maven</groupId>
+                    <artifactId>sass-maven-plugin</artifactId>
+                    <version>1.1.0</version>
+                    <!-- Disabled for performance reasons, trigger manually -->
+                    <configuration>
+                        <resources>
+                            <resource>
+                                <source>
+                                    <directory>${basedir}/src/main/stylesheets</directory>
+                                </source>
+                                <destination>${project.basedir}/src/main/webapp/resources/css</destination>
+                            </resource>
+                        </resources>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -375,6 +350,7 @@
         </profile>
         <profile>
             <id>wildfly</id>
+
             <build>
                 <plugins>
                     <plugin>

@@ -15,11 +15,11 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>persistence</module>
         <module>application</module>
         <module>test</module>
         <module>eventing</module>
         <module>integration-test</module>
         <module>frontend</module>
-
     </modules>
 </project>
