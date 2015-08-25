@@ -4,7 +4,7 @@ import javax.jms.JMSDestinationDefinition;
 import javax.jms.JMSDestinationDefinitions;
 
 /**
- * Created by dschmitz on 26.11.14.
+ * @author koenighotze
  */
 
 @JMSDestinationDefinitions({

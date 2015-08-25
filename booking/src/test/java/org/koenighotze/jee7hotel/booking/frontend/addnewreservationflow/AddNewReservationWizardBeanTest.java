@@ -1,7 +1,6 @@
 package org.koenighotze.jee7hotel.booking.frontend.addnewreservationflow;
 
 import org.junit.Test;
-import org.koenighotze.jee7hotel.booking.frontend.addnewreservationflow.AddNewReservationWizardBean;
 import org.koenighotze.jee7hotel.business.AbstractBasePersistenceTest;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -28,7 +27,10 @@ public class AddNewReservationWizardBeanTest extends AbstractBasePersistenceTest
 //        this.wizardBean.setGuestService(this.guestService);
 //        this.wizardBean.setRoomService(this.roomService);
     }
-
+    @Override
+    protected String getPersistenceUnitName() {
+        return "booking-integration-test";
+    }
     @Test
     public void testInit() throws Exception {
 

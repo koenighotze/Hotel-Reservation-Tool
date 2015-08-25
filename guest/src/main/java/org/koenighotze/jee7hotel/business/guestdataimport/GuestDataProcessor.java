@@ -10,7 +10,7 @@ import javax.inject.Named;
 import java.util.logging.Logger;
 
 /**
- * Created by dschmitz on 28.11.14.
+ * @author koenighotze
  */
 @Named
 @Dependent

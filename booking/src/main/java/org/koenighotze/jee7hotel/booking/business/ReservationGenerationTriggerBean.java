@@ -2,7 +2,7 @@ package org.koenighotze.jee7hotel.booking.business;
 
 import org.koenighotze.jee7hotel.booking.business.events.BookingMessageTO;
 import org.koenighotze.jee7hotel.booking.business.json.BookingMessageTOWriter;
-import org.koenighotze.jee7hotel.resources.MessagingDefinition;
+import org.koenighotze.jee7hotel.booking.business.resources.MessagingDefinition;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;

@@ -2,7 +2,7 @@
 
 package org.koenighotze.jee7hotel.booking.business.events;
 
-import org.koenighotze.jee7hotel.domain.ReservationStatus;
+import org.koenighotze.jee7hotel.booking.domain.ReservationStatus;
 
 import javax.validation.constraints.NotNull;
 

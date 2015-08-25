@@ -3,13 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.koenighotze.jee7hotel</groupId>
     <artifactId>eventdb</artifactId>
-    <!--<version>1.0-SNAPSHOT</version>-->
 
     <parent>
         <groupId>org.koenighotze</groupId>
         <artifactId>jee7hotel</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <!--<relativePath/>-->
+        <relativePath/>
     </parent>
 
     <packaging>war</packaging>
@@ -17,10 +16,10 @@
     <properties>
         <application.contextRoot>/eventdb</application.contextRoot>
         <application.finalName>eventdb</application.finalName>
+        <jboss.socket.binding.port.offset>1000</jboss.socket.binding.port.offset>
     </properties>
 
     <dependencies>
-        <!-- ...other than mongodb. -->
         <dependency>
             <groupId>org.mongojack</groupId>
             <artifactId>mongojack</artifactId>
@@ -52,11 +51,7 @@
             <version>1.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.glassfish.main.extras</groupId>
-            <artifactId>glassfish-embedded-all</artifactId>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>com.github.fakemongo</groupId>
             <artifactId>fongo</artifactId>
@@ -68,11 +63,11 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>1.0.2.Final</version>
+                <!--<version>1.0.2.Final</version>-->
                 <configuration>
                     <serverConfig>standalone-full.xml</serverConfig>
                     <!--<serverConfig>standalone.xml</serverConfig>-->
-                    <!--<jvmArgs>-Djboss.socket.binding.port-offset=3000</jvmArgs>-->
+                    <!--<jvmArgs>-Djboss.socket.binding.port-offset=2000</jvmArgs>-->
                 </configuration>
             </plugin>
         </plugins>

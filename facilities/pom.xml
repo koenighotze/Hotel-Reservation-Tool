@@ -17,6 +17,7 @@
     <properties>
         <application.contextRoot>/facilities</application.contextRoot>
         <application.finalName>facilities</application.finalName>
+        <jboss.socket.binding.port.offset>3000</jboss.socket.binding.port.offset>
     </properties>
 
     <dependencies>
@@ -39,20 +40,18 @@
             <version>1.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
-
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>1.0.2.Final</version>
-                <configuration>
-                    <serverConfig>standalone.xml</serverConfig>
-                    <jvmArgs>-Djboss.socket.binding.port-offset=1000</jvmArgs>
-                </configuration>
+                <!--<version>1.0.2.Final</version>-->
+                <!--<configuration>-->
+                    <!--<serverConfig>standalone.xml</serverConfig>-->
+                    <!--<jvmArgs>-Djboss.socket.binding.port-offset=3000</jvmArgs>-->
+                <!--</configuration>-->
             </plugin>
         </plugins>
     </build>

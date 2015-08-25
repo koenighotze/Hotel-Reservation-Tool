@@ -2,11 +2,11 @@ package org.koenighotze.jee7hotel.booking.business;
 
 import org.koenighotze.jee7hotel.booking.business.events.NewReservationEvent;
 import org.koenighotze.jee7hotel.booking.business.events.ReservationStatusChangeEvent;
+import org.koenighotze.jee7hotel.booking.domain.Reservation;
+import org.koenighotze.jee7hotel.booking.domain.ReservationStatus;
+import org.koenighotze.jee7hotel.booking.domain.RoomEquipment;
 import org.koenighotze.jee7hotel.business.eventsource.EventSource;
 import org.koenighotze.jee7hotel.business.logging.PerformanceLog;
-import org.koenighotze.jee7hotel.domain.Reservation;
-import org.koenighotze.jee7hotel.domain.ReservationStatus;
-import org.koenighotze.jee7hotel.domain.RoomEquipment;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;

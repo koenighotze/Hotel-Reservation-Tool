@@ -1,10 +1,9 @@
 package org.koenighotze.jee7hotel.booking.business.json;
 
-import org.koenighotze.jee7hotel.domain.Reservation;
+import org.koenighotze.jee7hotel.booking.domain.Reservation;
 
 import javax.json.Json;
 import javax.json.stream.JsonGenerator;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;

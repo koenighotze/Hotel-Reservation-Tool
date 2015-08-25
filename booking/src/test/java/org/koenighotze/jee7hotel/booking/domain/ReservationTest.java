@@ -5,7 +5,6 @@ import org.junit.runner.RunWith;
 import org.koenighotze.jee7hotel.booking.business.BookingService;
 import org.koenighotze.jee7hotel.booking.business.events.NewReservationEvent;
 import org.koenighotze.jee7hotel.booking.business.events.ReservationStatusChangeEvent;
-import org.koenighotze.jee7hotel.booking.domain.Reservation;
 import org.koenighotze.jee7hotel.business.AbstractBasePersistenceTest;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -29,6 +28,11 @@ public class ReservationTest extends AbstractBasePersistenceTest {
 
     @Mock
     private Event<ReservationStatusChangeEvent> mockResEvent;
+
+    @Override
+    protected String getPersistenceUnitName() {
+        return "booking-integration-test";
+    }
 
     @Override
     protected void initHook() {

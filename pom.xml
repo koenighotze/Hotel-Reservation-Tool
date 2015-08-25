@@ -12,7 +12,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
+        <jboss.socket.binding.port.offset>0</jboss.socket.binding.port.offset>
         <browser>phantomjs</browser>
     </properties>
     <scm>
@@ -42,6 +42,12 @@
         </dependency>
 
         <!-- Test -->
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+            <version>1.4</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.glassfish.main.extras</groupId>
             <artifactId>glassfish-embedded-all</artifactId>
@@ -204,6 +210,16 @@
                         </resources>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.wildfly.plugins</groupId>
+                    <artifactId>wildfly-maven-plugin</artifactId>
+                    <version>1.0.2.Final</version>
+                    <configuration>
+                        <serverConfig>standalone.xml</serverConfig>
+                        <jvmArgs>-Djboss.socket.binding.port-offset=${jboss.socket.binding.port.offset}</jvmArgs>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -348,22 +364,22 @@
                 <ws.port>8080</ws.port>
             </properties>
         </profile>
-        <profile>
-            <id>wildfly</id>
+        <!--<profile>-->
+            <!--<id>wildfly</id>-->
 
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.wildfly.plugins</groupId>
-                        <artifactId>wildfly-maven-plugin</artifactId>
-                        <version>1.0.2.Final</version>
-                        <configuration>
-                            <server-config>standalone-full.xml</server-config>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+            <!--<build>-->
+                <!--<plugins>-->
+                    <!--<plugin>-->
+                        <!--<groupId>org.wildfly.plugins</groupId>-->
+                        <!--<artifactId>wildfly-maven-plugin</artifactId>-->
+                        <!--<version>1.0.2.Final</version>-->
+                        <!--<configuration>-->
+                            <!--<server-config>standalone-full.xml</server-config>-->
+                        <!--</configuration>-->
+                    <!--</plugin>-->
+                <!--</plugins>-->
+            <!--</build>-->
+        <!--</profile>-->
         <profile>
             <id>wildfly-managed-integration-tests</id>
             <dependencies>

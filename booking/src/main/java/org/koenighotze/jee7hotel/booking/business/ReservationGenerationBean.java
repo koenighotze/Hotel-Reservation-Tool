@@ -1,9 +1,9 @@
 package org.koenighotze.jee7hotel.booking.business;
 
-import org.koenighotze.jee7hotel.booking.business.json.BookingMessageTOReader;
 import org.koenighotze.jee7hotel.booking.business.events.BookingMessageTO;
-import org.koenighotze.jee7hotel.domain.Reservation;
-import org.koenighotze.jee7hotel.resources.MessagingDefinition;
+import org.koenighotze.jee7hotel.booking.business.json.BookingMessageTOReader;
+import org.koenighotze.jee7hotel.booking.business.resources.MessagingDefinition;
+import org.koenighotze.jee7hotel.booking.domain.Reservation;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;

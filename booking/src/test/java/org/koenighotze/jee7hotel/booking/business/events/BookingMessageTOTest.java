@@ -1,7 +1,6 @@
 package org.koenighotze.jee7hotel.booking.business.events;
 
 import org.junit.Test;
-import org.koenighotze.jee7hotel.booking.business.events.BookingMessageTO;
 
 import java.time.LocalDate;
 import java.time.Month;

@@ -12,7 +12,7 @@ import org.koenighotze.jee7hotel.domain.Guest;
 import java.io.File;
 
 /**
- * Created by dschmitz on 24.11.14.
+ * @author koenighotze
  */
 // TODO: Oh ha...copy paste
 public class BaseArquillianSetup {

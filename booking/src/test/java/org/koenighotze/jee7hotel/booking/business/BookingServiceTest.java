@@ -4,7 +4,6 @@ package org.koenighotze.jee7hotel.booking.business;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.koenighotze.jee7hotel.booking.business.BookingService;
 import org.koenighotze.jee7hotel.booking.business.events.NewReservationEvent;
 import org.koenighotze.jee7hotel.booking.business.events.ReservationStatusChangeEvent;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;

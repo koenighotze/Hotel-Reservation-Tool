@@ -30,7 +30,7 @@ import static java.util.Collections.singletonList;
  * Basically what happens is: this bean observes all events and stores them in a
  * mongo db.
  * <p>
- * Created by dschmitz on 26.11.14.
+ * @author koenighotze
  */
 
 @Singleton

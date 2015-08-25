@@ -1,7 +1,6 @@
 package org.koenighotze.jee7hotel.booking.frontend;
 
 import org.junit.Test;
-import org.koenighotze.jee7hotel.booking.frontend.NewReservationBean;
 
 import static org.junit.Assert.assertNotNull;
 

@@ -36,13 +36,8 @@
         <from-view-id>*</from-view-id>
 
         <navigation-case>
-            <from-outcome>/booking/add_new_reservation.xhtml</from-outcome>
-            <to-view-id>/booking/add_new_reservation.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>/booking/bookings.xhtml</from-outcome>
-            <to-view-id>/booking/bookings.xhtml</to-view-id>
+            <from-outcome>bookings.xhtml</from-outcome>
+            <to-view-id>/bookings.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>

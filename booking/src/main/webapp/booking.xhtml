@@ -78,7 +78,7 @@
 
                 <div class="btn-toolbar">
                     <input type="submit"
-                           jsf:action="/booking/bookings.xhtml?faces-redirect=true"
+                           jsf:action="bookings.xhtml?faces-redirect=true"
                            class="btn btn-sm btn-primary"
                            jsf:immediate="true"
                            value="#{msgs.btn_discard_changes}">
@@ -87,7 +87,7 @@
                         <input type="submit"
                                value="#{msgs.btn_cancel_reservation}"
                                class="btn btn-sm"
-                               jsf:action="/booking/bookings.xhtml?faces-redirect=true"
+                               jsf:action="bookings.xhtml?faces-redirect=true"
                                jsf:actionListener="#{bookingDetailsBean.cancel()}"
                                 >
                         </input>
@@ -97,7 +97,7 @@
                         <input type="submit"
                                value="#{msgs.btn_reopen_reservation}"
                                class="btn btn-sm"
-                               jsf:action="/booking/bookings.xhtml?faces-redirect=true"
+                               jsf:action="bookings.xhtml?faces-redirect=true"
                                jsf:actionListener="#{bookingDetailsBean.reopen()}"
                                 >
                         </input>

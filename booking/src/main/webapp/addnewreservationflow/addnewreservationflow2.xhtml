@@ -2,40 +2,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
         >
 
-    <ui:composition template="/WEB-INF/template-bootstrap.html">
+<ui:composition template="/WEB-INF/template-bootstrap.html">
 
-        <ui:define name="page_header">
-            #{msgs.add_new_reservation_wizard_choose_guest}
-        </ui:define>
+    <ui:define name="page_header">
+        #{msgs.add_new_reservation_wizard_choose_guest}
+    </ui:define>
 
-        <ui:define name="content">
-            <h:form id="addNewReservationWizardForm">
+    <ui:define name="content">
+        <h:form id="addNewReservationWizardForm">
+            <div class="form-group">
+                <label for="guestSelection">#{msgs.select_a_guest}</label>
+                #{addNewReservationWizardBean}<br/>
+                <!--<h:selectOneMenu id="guestSelection"-->
+                                 <!--value="#{addNewReservationWizardBean.selectedGuest}"-->
+                                 <!--required="true"-->
+                                 <!--styleClass="form-control">-->
+                    <!--<f:selectItem itemLabel="#{msgs.please_choose}"/>-->
+                    <!--<f:selectItems-->
+                            <!--var="guest"-->
+                            <!--value="#{addNewReservationWizardBean.guestList}"/>-->
+                <!--</h:selectOneMenu>-->
+            </div>
 
-                <div class="form-group">
-                <label for="guestSelection" >#{msgs.select_a_guest}</label>
-                <h:selectOneMenu id="guestSelection"
-                                  value="#{addNewReservationWizardBean.selectedGuest}"
-                                  required="true"
-                                  styleClass="form-control">
-                    <f:selectItem itemLabel="#{msgs.please_choose}"/>
-                    <f:selectItems
-                            var="guest"
-                            itemLabel="#{guest.name}"
-                            itemValue="#{guest.id}"
-                            value="#{addNewReservationWizardBean.guestList}"/>
-                </h:selectOneMenu>
-                </div>
-
-                <div class="btn-toolbar">
-                    <h:commandButton styleClass="btn btn-sm btn-primary"
-                                     id="next"
-                                     value="#{msgs.btn_next_parameters}"
-                                     action="addnewreservationflow3" />
-                </div>
-            </h:form>
-        </ui:define>
-    </ui:composition>
+            <div class="btn-toolbar">
+                <h:commandButton styleClass="btn btn-sm btn-primary"
+                                 id="next"
+                                 value="#{msgs.btn_next_parameters}"
+                                 action="addnewreservationflow3"/>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
 </html>

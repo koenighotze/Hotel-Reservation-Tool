@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 
 /**
- * Created by dschmitz on 19.11.14.
+ * @author koenighotze
  */
 public class RoomCacheTest extends AbstractBasePersistenceTest {
     private static final Long WELL_KNOWN_ROOM_ID = 999L;

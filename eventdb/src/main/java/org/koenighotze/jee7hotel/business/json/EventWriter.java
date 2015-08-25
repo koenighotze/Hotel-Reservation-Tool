@@ -15,7 +15,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
 /**
- * Created by dschmitz on 27.11.14.
+ * @author koenighotze
  */
 public class EventWriter implements MessageBodyWriter<Event> {
     @Override

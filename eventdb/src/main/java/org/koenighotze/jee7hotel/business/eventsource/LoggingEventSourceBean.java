@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Created by dschmitz on 28.11.14.
+ * @author koenighotze
  */
 //@Singleton
 //@Alternative

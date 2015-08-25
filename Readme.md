@@ -1,41 +1,53 @@
-JEE7 Demo and Quickstart
-========================
+# JEE7 Demo and Quickstart
 
 This project shows some basic JEE7 technologies using a simple guestbook use case.
 
-Quick Start
------------
+
+## Quick Start
+
+This project consists of actual four applications:
+
+* eventdb
+* booking
+* guest
+* facilities
+
+In order to start each of these manually, just change into
+respecitve directory and run:
 
 ```
-mvn -Pwildfly wildfly:run
+mvn wildfly:run
 ```
 
-Then open browser at http://localhost:8080/jee7hotel
+This will startup the application using an embedded WildFly.
 
 
 
-Open Shift
-----------
-An open shift application hosts this tool: http://jee7hotel-koenighotze.rhcloud.com
 
-The respective jenkins is located at http://jenkins-koenighotze.rhcloud.com/job/jee7hotel-build/
+## Overview of the architecture
+TODO
 
 
-Preconditions
--------------
+This application demonstrates key JEE7 features and is used as the basis for a
+tutorial/course.
+
+The main fictional background is a pseudo Hotel Reservation Frontend used by receptionist.
+
+### Use cases and user stories
+Pseudo use cases are chosen only to demonstrate certain technologies, obviously not all are implemented yet:
+
+* CRUD Frontends for Reservations, Guests, Rooms (CLERK role only)
+* Import and export for administrators (via REST, ADMINISTRATOR role only)
+* CRUD for clerks for administrator (via REST, ADMINISTRATOR, role only)
+* Confirmation of reservation by backend service (JMS 2.0)
+* Daily report of bookings (via batch)
+* Auto-update frontends (via WebSocket)
+
+### Tech stack
 
 One goal was to demonstrate building an App using only JEE7 and JDK8 at runtime, no other external dependencies are used.
 
 Testing however uses based on Mockito and Arquillian.
-
-
-Overview
---------
-
-This application demonstrates key JEE7 features and is used as the basis for a 
-tutorial/course.
-
-The main fictional background is a pseudo Hotel Reservation Frontend used by receptionist.
 
 Key technologies include:
 
@@ -49,8 +61,10 @@ Key technologies include:
 * WebSockets
 * Bootstrap
 * Selenium for UI testing
-* SASS 
+* SASS
 
+
+## Todo list
 The todo list includes (among other stuff):
 
 * Thymeleaf
@@ -62,32 +76,12 @@ The todo list includes (among other stuff):
 * docker compose for setting up containers
 
 
-Pseudo use cases are chosen only to demonstrate certain technologies, obviously not all are implemented yet:
+# ye olde docs
 
-* CRUD Frontends for Reservations, Guests, Rooms (CLERK role only)
-* Import and export for administrators (via REST, ADMINISTRATOR role only)
-* CRUD for clerks for administrator (via REST, ADMINISTRATOR, role only)
-* Confirmation of reservation by backend service (JMS 2.0)
-* Daily report of bookings (via batch)
-* Auto-update frontends (via WebSocket)
+### Open Shift (Deprecated...for now)
+An open shift application hosts this tool: http://jee7hotel-koenighotze.rhcloud.com
 
-How to build and run
---------------------
-
-In short: 
-
-```
-mvn -Pwildfly wildfly:run
-```
-
-Then open browser at http://localhost:8080/jee7hotel
-
-###Embedded Wildfly
-```
-mvn wildfly:run
-
-mvn wildfly:deploy -Dforce=true
-```
+The respective jenkins is located at http://jenkins-koenighotze.rhcloud.com/job/jee7hotel-build/
 
 
 === Long version
@@ -127,7 +121,7 @@ Remember to set ```-Djboss.home``` or similar!
 mvn -o clean integration-test verify  -Djboss.home= -Pwildfly-managed-integration-tests
 ```
 
-or 
+or
 
 ```
 ./src/test/scripts/run_wildfly_test.sh
@@ -150,13 +144,13 @@ Introduction
 ###Basic application architecture
 
 ---------------------------------------------------------------------
-  digraph G { 
+  digraph G {
       node [fontname=Verdana,fontsize=12];
       node [style=filled];
       node [fillcolor="#EEEEEE"];
       node [color="#EEEEEE"];
-      edge [color="#31CEF0"]; 
-  
+      edge [color="#31CEF0"];
+
       Web_Frontend -> Service_Layer -> MySqlDB;
       ServiceLayer -> MongoDB;
       Mobile_Frontend -> Service_Layer;
@@ -182,12 +176,12 @@ The following images are used for operating the system:
 The following figure illustrates the depencies between said containers.
 
 ---------------------------------------------------------------------
-digraph G { 
+digraph G {
     node [fontname=Verdana,fontsize=12];
     node [style=filled];
     node [fillcolor="#EEEEEE"];
     node [color="#EEEEEE"];
-    edge [color="#31CEF0"]; 
+    edge [color="#31CEF0"];
 
     wildfly -> mongod[label="link"];
     wildfly -> mysql[label="link"];
@@ -203,14 +197,14 @@ TODO
 
 
 ## Wildfly
- 
+
 ## Mongo
 
 
 * start image using
 
 ```
-docker run --rm -i -t -P  -v $LOG_VOLUME:/home/mongodb/logs/ --name KoenighotzeMongo koenighotze/jee7hotelmongo 
+docker run --rm -i -t -P  -v $LOG_VOLUME:/home/mongodb/logs/ --name KoenighotzeMongo koenighotze/jee7hotelmongo
 ```
 
 * determine port
@@ -221,7 +215,7 @@ CONTAINER ID        IMAGE                               COMMAND                C
 6884f24081b6        koenighotze/jee7hotelmongo:latest   "mongod --config /ho   46 seconds ago      Up 44 seconds       0.0.0.0:49169->27017/tcp, 0.0.0.0:49170->28017/tcp   KoenighotzeMongo  
 ```
 
-* connect to mongo 
+* connect to mongo
 
 ```
 mongo $(docker-ip):49169
@@ -269,11 +263,12 @@ Things to do
 * IIOP
 * Stored Procedures
 * Angular JS Frontend
-* JMS 2.0 
+* JMS 2.0
 * Role based security
 * Role ```**```
 * ```@Delegate```
+* add HAL to rest services
 
 * Futures
 * Embedded container ```EJBContainer.createEJBContainer```
-
+* Check why wildfly 9 breaks flows

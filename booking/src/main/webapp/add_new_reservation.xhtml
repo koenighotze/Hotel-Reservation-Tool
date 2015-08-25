@@ -79,6 +79,7 @@
                           required="true"
                           requiredMessage="#{msgs.checkin_date_is_required}"
                           validatorMessage="#{msgs.provide_valid_date}">
+                    <f:convertDateTime pattern="yyyy-MM-dd" for="input"/>
                 </kh:input>
 
                 <ui:remove>
@@ -102,7 +103,7 @@
                           required="true"
                           requiredMessage="#{msgs.checkout_date_is_required}"
                           validatorMessage="#{msgs.provide_valid_date}">
-                    <f:convertDateTime pattern="yyyy-MM-dd" for="inputTextField"/>
+                    <f:convertDateTime pattern="yyyy-MM-dd" for="input"/>
                 </kh:input>
 
                 <ui:remove>
@@ -123,7 +124,7 @@
 
             <div class="btn-toolbar">
                 <input type="submit"
-                       jsf:action="/booking/bookings.xhtml?faces-redirect=true"
+                       jsf:action="/bookings.xhtml?faces-redirect=true"
                        class="btn btn-sm"
                        jsf:immediate="true"
                        value="#{msgs.btn_discard_changes}">

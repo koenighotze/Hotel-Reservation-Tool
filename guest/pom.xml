@@ -17,6 +17,7 @@
     <properties>
         <application.contextRoot>/guest</application.contextRoot>
         <application.finalName>guest</application.finalName>
+        <jboss.socket.binding.port.offset>4000</jboss.socket.binding.port.offset>
     </properties>
 
     <dependencies>
@@ -46,11 +47,11 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>1.0.2.Final</version>
-                <configuration>
-                    <serverConfig>standalone.xml</serverConfig>
-                    <jvmArgs>-Djboss.socket.binding.port-offset=2000</jvmArgs>
-                </configuration>
+                <!--<version>1.0.2.Final</version>-->
+                <!--<configuration>-->
+                    <!--<serverConfig>standalone.xml</serverConfig>-->
+                    <!--<jvmArgs>-Djboss.socket.binding.port-offset=2000</jvmArgs>-->
+                <!--</configuration>-->
             </plugin>
         </plugins>
     </build>

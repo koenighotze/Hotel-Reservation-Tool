@@ -4,7 +4,7 @@
     <!-- java se context still need explicit list of entities? -->
     <class>org.koenighotze.jee7hotel.domain.Room</class>
     <class>org.koenighotze.jee7hotel.domain.converter.RoomEquipmentConverter</class>
-    <class>org.koenighotze.jee7hotel.domain.converter.LocalDateConverter</class>
+    <class>koenighotze.jee7hotel.framework.persistence.converter.LocalDateConverter</class>
     <!-- actually this should gather all entities, but it does not? -->
     <!--    <exclude-unlisted-classes>false</exclude-unlisted-classes>-->
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
