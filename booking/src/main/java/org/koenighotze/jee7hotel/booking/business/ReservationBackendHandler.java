@@ -16,6 +16,8 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.util.logging.Level.INFO;
+
 /**
  * Async handler for reservations. 
  * Basically sets the state to confirmed after up to 10 sec.
@@ -40,15 +42,15 @@ public class ReservationBackendHandler {
     @Asynchronous
     public void handleNewReservations(@Observes NewReservationEvent newReservation) {
         int duration = rand.nextInt(6) + 5;
-        LOGGER.log(Level.INFO, "Incoming new reservation...{0}", newReservation); 
+        LOGGER.log(INFO, "Incoming new reservation...{0}", newReservation);
 
         try {
-            LOGGER.log(Level.INFO, "delaying {0} secs before accepting", duration);
+            LOGGER.log(INFO, "delaying {0} secs before accepting", duration);
             Thread.sleep(duration * 1000L);
 
             this.bookingService.confirmReservation(newReservation.getReservationNumber());
 
-            LOGGER.log(Level.INFO, "Sending Email to guest about confirmation for {0}",
+            LOGGER.log(INFO, "Sending Email to guest about confirmation for {0}",
                     newReservation.getReservationNumber());
         } catch (InterruptedException ex) {
             LOGGER.log(Level.SEVERE, "Cannot sleep", ex);

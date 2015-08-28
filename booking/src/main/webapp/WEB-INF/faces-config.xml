@@ -40,10 +40,11 @@
             <to-view-id>/bookings.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
-        <navigation-case>
-            <from-outcome>addnewreservationflow</from-outcome>
-            <to-view-id>/addnewreservationflow/addnewreservationflow.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
+        <!--<navigation-case>-->
+            <!--<from-outcome>addnewreservationflow</from-outcome>-->
+            <!--<to-view-id>/addnewreservationflow/addnewreservationflow.xhtml</to-view-id>-->
+            <!--<to-view-id>/addnewreservationflow/addnewreservationflow.xhtml</to-view-id>-->
+            <!--<redirect/>-->
+        <!--</navigation-case>-->
     </navigation-rule>
 </faces-config>

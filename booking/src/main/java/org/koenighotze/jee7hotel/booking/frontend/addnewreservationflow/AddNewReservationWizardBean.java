@@ -7,25 +7,34 @@ import org.koenighotze.jee7hotel.booking.domain.Reservation;
 import org.koenighotze.jee7hotel.booking.domain.RoomEquipment;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static java.lang.String.format;
+import static java.time.LocalDate.now;
+import static java.util.Arrays.asList;
+import static java.util.UUID.randomUUID;
+import static java.util.stream.IntStream.rangeClosed;
+import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
+import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addFlashMessage;
 import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
 
 /**
+ * Flow Bean for the booking wizard.
+ *
  * @author dschmitz
  */
-//@Named("addNewReservationWizardBean")
+@Named("addNewReservationWizardBean")
 //why the hell do I have to use the 'old Annotation'?
-@javax.faces.bean.ManagedBean(name = "addnewreservationflow")
+//@javax.faces.bean.ManagedBean(name = "addNewReservationWizardBean")
 @FlowScoped("addnewreservationflow")
 public class AddNewReservationWizardBean implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(AddNewReservationWizardBean.class.getName());
@@ -43,16 +52,21 @@ public class AddNewReservationWizardBean implements Serializable {
     private String room;
     private String guest;
 
-    private List<RoomEquipment> roomEquipments = Arrays.asList(RoomEquipment.values());
+    private List<RoomEquipment> roomEquipments = asList(RoomEquipment.values());
     private RoomEquipment selectedRoomEquipment;
 
     @PostConstruct
     public void init() {
-        this.guestList = Arrays.asList("a", "b", "c");
-        this.roomList = Arrays.asList("001", "002", "003");// this.roomService
+        LOGGER.info("Constructing initial data for wizard");
 
-        this.checkinDate = LocalDate.now().plusDays(1);
-        this.checkoutDate = LocalDate.now().plusDays(2);
+        this.guestList = new ArrayList<>();
+        rangeClosed(0, 10).forEach(i -> this.guestList.add(randomUUID().toString()));
+
+        this.roomList = new ArrayList<>();
+        rangeClosed(0, 10).forEach(i -> this.roomList.add(randomUUID().toString()));
+
+        this.checkinDate = now().plusDays(1);
+        this.checkoutDate = now().plusDays(2);
     }
 
     public List<String> getGuestList() {
@@ -61,35 +75,35 @@ public class AddNewReservationWizardBean implements Serializable {
 
     public String confirmBooking() {
         if (null == this.checkinDate) {
-            addMessage(FacesMessage.SEVERITY_ERROR, "Checkin date is mandatory");
+            addMessage(SEVERITY_ERROR, "Checkin date is mandatory");
             return null;
         }
 
         if (null == this.checkoutDate) {
-            addMessage(FacesMessage.SEVERITY_ERROR, "Checkout date is mandatory");
+            addMessage(SEVERITY_ERROR, "Checkout date is mandatory");
             return null;
         }
 
         if (null == this.guest) {
-            addMessage(FacesMessage.SEVERITY_ERROR, "Guest is mandatory");
+            addMessage(SEVERITY_ERROR, "Guest is mandatory");
             return null;
         }
 
         if (null == this.room) {
-            addMessage(FacesMessage.SEVERITY_ERROR, "Room is mandatory");
+            addMessage(SEVERITY_ERROR, "Room is mandatory");
             return null;
         }
 
         Reservation reservation = this.bookingService.bookRoom(this.guest, this.room, this.checkinDate, this.checkoutDate);
-        addFlashMessage(FacesMessage.SEVERITY_INFO, "Room "
-                + reservation.getAssignedRoom()//.getRoomNumber()
+        addFlashMessage(SEVERITY_INFO, "Room "
+                + reservation.getAssignedRoom()
                 + " booked for "
                 + reservation.getGuest()
                 + "; Reservation number "
                 + reservation.getReservationNumber()
                 + " Costs: "
                 + reservation.getCostsInEuro() + " EUR");
-        return String.format("/booking/booking.xhtml?reservationNumber=%s&faces-redirect=true", reservation.getReservationNumber());
+        return format("/booking/booking.xhtml?reservationNumber=%s&faces-redirect=true", reservation.getReservationNumber());
     }
 
     public LocalDate getCheckoutDate() {
@@ -111,10 +125,6 @@ public class AddNewReservationWizardBean implements Serializable {
     public void setSelectedGuest(@NotNull String selectedGuest) {
         LOGGER.info("Setting guest to " + selectedGuest);
         this.selectedGuest = selectedGuest;
-
-//        if (null != this.selectedGuest) {
-//            this.guest = this.guestService.findById(this.selectedGuest).orElse(new Guest("", ""));
-//        }
     }
 
     public List<RoomEquipment> getRoomEquipments() {
@@ -125,13 +135,8 @@ public class AddNewReservationWizardBean implements Serializable {
         return selectedGuest;
     }
 
-    public void setSelectedRoom(String selectedRoom) {
+    public void setSelectedRoom(@NotNull String selectedRoom) {
         this.selectedRoom = selectedRoom;
-//        if (null != this.selectedRoom) {
-//            this.room = this.roomService
-//                    .findRoomById(this.selectedRoom)
-//                    .orElse(new Room("", RoomEquipment.BUDGET));
-//        }
     }
 
     public String getSelectedRoom() {

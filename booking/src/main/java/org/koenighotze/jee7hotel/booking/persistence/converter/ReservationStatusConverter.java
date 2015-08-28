@@ -18,11 +18,18 @@ public class ReservationStatusConverter implements AttributeConverter<Reservatio
 
     @Override
     public String convertToDatabaseColumn(ReservationStatus x) {
+        if (null == x) {
+            return "";
+        }
         return x.name();
     }
 
     @Override
     public ReservationStatus convertToEntityAttribute(String y) {
+        if (null == y) {
+            return null;
+        }
+
         for (ReservationStatus elem : ReservationStatus.values()) {
             if (elem.name().equalsIgnoreCase(y)) {
                 return elem;

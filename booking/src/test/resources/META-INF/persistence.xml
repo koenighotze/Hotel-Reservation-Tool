@@ -5,8 +5,7 @@
     <class>org.koenighotze.jee7hotel.booking.domain.Reservation</class>
     <class>org.koenighotze.jee7hotel.booking.persistence.converter.ReservationStatusConverter</class>
     <class>org.koenighotze.jee7hotel.framework.persistence.converter.LocalDateConverter</class>
-    <jar-file></jar-file>
-    <!-- actually this should gather all entities, but it does not? -->
+    <!-- actually this should gather all entities, but it does not in a jse context? -->
     <!--    <exclude-unlisted-classes>false</exclude-unlisted-classes>-->
     <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
     <properties>

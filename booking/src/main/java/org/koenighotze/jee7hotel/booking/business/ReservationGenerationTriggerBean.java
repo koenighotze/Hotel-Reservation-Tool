@@ -2,7 +2,6 @@ package org.koenighotze.jee7hotel.booking.business;
 
 import org.koenighotze.jee7hotel.booking.business.events.BookingMessageTO;
 import org.koenighotze.jee7hotel.booking.business.json.BookingMessageTOWriter;
-import org.koenighotze.jee7hotel.booking.business.resources.MessagingDefinition;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -15,44 +14,57 @@ import javax.jms.TextMessage;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
+import static org.koenighotze.jee7hotel.booking.business.resources.MessagingDefinition.RESERVATION_QUEUE;
 
 /**
  * Sample bean for sending messages to a MDB.
- *
  *
  * @author koenighotze
  */
 @Named
 @Stateless
-@Path("bookingstrigger")
+@Path("trigger")
 public class ReservationGenerationTriggerBean {
 
     private static final Logger LOGGER = Logger.getLogger(ReservationGenerationBean.class.getName());
 
-    @Inject
     private JMSContext jmsContext;
 
-    @Resource(lookup = MessagingDefinition.RESERVATION_QUEUE)
     private Queue queue;
 
+    public ReservationGenerationTriggerBean() {
+    }
+
+    @Inject
+    public ReservationGenerationTriggerBean(JMSContext jmsContext) {
+        this.jmsContext = jmsContext;
+    }
+
+    // cannot be applied to constructor
+    @Resource(lookup = RESERVATION_QUEUE)
+    public void setReservationQueue(Queue queue) {
+        this.queue = queue;
+    }
 
     private String bookingMessageTOToJson(BookingMessageTO messageTO) throws IOException {
         try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-            new BookingMessageTOWriter().writeTo(messageTO, null, null, null, MediaType.APPLICATION_JSON_TYPE, null, bos);
+            new BookingMessageTOWriter().writeTo(messageTO, null, null, null, APPLICATION_JSON_TYPE, null, bos);
             bos.flush();
-            return bos.toString(StandardCharsets.UTF_8.name());
+            return bos.toString(UTF_8.name());
         }
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(APPLICATION_JSON)
     public Response triggerReservation(BookingMessageTO messageTO) {
         try {
             LOGGER.fine(() -> "Sending " + messageTO + " to " + this.queue);

@@ -18,10 +18,10 @@
         <ui:define name="content">
             <h:form id="addNewReservationWizardForm">
                 <div class="form-group">
-                    <label for="guest_name">#{msgs.guest_name}</label>
+                    <label for="guest_name">#{msgs.guest_id}</label>
 
                     <h:inputText id="guest_name"
-                                 value="#{addNewReservationWizardBean.guest.name}"
+                                 value="#{addNewReservationWizardBean.guest}"
                                  readonly="true"
                                  class="form-control uneditable-input"/>
                 </div>
@@ -50,7 +50,7 @@
                     <label for="roomNumber">#{msgs.room_number}</label>
 
                     <h:inputText id="roomNumber"
-                                 value="#{addNewReservationWizardBean.room.roomNumber}"
+                                 value="#{addNewReservationWizardBean.room}"
                                  readonly="true"
                                  class="form-control uneditable-input">
                     </h:inputText>
@@ -60,7 +60,7 @@
                     <label for="roomEquipment">#{msgs.room_equipment}</label>
 
                     <h:inputText id="roomEquipment"
-                                 value="#{msgs[addNewReservationWizardBean.room.roomEquipment]}"
+                                 value="#{msgs[addNewReservationWizardBean.selectedRoomEquipment]}"
                                  readonly="true"
                                  class="form-control uneditable-input">
                     </h:inputText>

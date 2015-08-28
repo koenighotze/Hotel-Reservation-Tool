@@ -3,7 +3,6 @@ package org.koenighotze.jee7hotel.booking.business;
 import org.koenighotze.jee7hotel.booking.business.events.NewReservationEvent;
 import org.koenighotze.jee7hotel.booking.business.events.ReservationStatusChangeEvent;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
-import org.koenighotze.jee7hotel.booking.domain.ReservationStatus;
 import org.koenighotze.jee7hotel.booking.domain.RoomEquipment;
 import org.koenighotze.jee7hotel.business.eventsource.EventSource;
 import org.koenighotze.jee7hotel.business.logging.PerformanceLog;
@@ -22,16 +21,17 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+import static java.util.logging.Level.WARNING;
+import static org.koenighotze.jee7hotel.booking.domain.ReservationStatus.*;
+
 /**
- *
  * @author dschmitz
  */
 @Named
@@ -40,31 +40,34 @@ import java.util.logging.Logger;
 // declare interceptor w/o using a stereotype (annotation based) binding
 // this way the interceptor will work w/o beans.xml
 //@Interceptors({
-//        PerformanceLogger.class
-//        //,
-//        //EventSourceInterceptor.class
+//        PerformanceLogger.class,
+//        EventSourceInterceptor.class
 //})
 @EventSource
 @PerformanceLog
 public class BookingService {
+    private static final Logger LOGGER = Logger.getLogger(BookingService.class.getName());
 
-    @PersistenceContext
     private EntityManager em;
 
-    @Inject
     private Event<NewReservationEvent> reservationEvents;
 
-    @Inject
     private Event<ReservationStatusChangeEvent> reservationStateChangeEvents;
-    
-    private static final Logger LOGGER = Logger.getLogger(BookingService.class.getName());
+
+    public BookingService() {
+    }
+
+    @Inject
+    public BookingService(Event<NewReservationEvent> reservationEvents, Event<ReservationStatusChangeEvent> reservationStateChangeEvents) {
+        this.reservationEvents = reservationEvents;
+        this.reservationStateChangeEvents = reservationStateChangeEvents;
+    }
 
     public void setReservationStateChangeEvents(Event<ReservationStatusChangeEvent> reservationStateChangeEvents) {
         this.reservationStateChangeEvents = reservationStateChangeEvents;
     }
 
     public void setReservationEvents(Event<NewReservationEvent> reservationEvents) {
-
         this.reservationEvents = reservationEvents;
     }
 
@@ -72,15 +75,15 @@ public class BookingService {
     public void cancelReservation(String reservationNumber) {
         Optional<Reservation> reservation = findReservationByNumber(reservationNumber);
         reservation.ifPresent(r -> {
-            r.setReservationStatus(ReservationStatus.CANCELED);
-            this.reservationStateChangeEvents.fire(new ReservationStatusChangeEvent(r.getReservationNumber(), null, ReservationStatus.CONFIRMED));
+            r.setReservationStatus(CANCELED);
+            this.reservationStateChangeEvents.fire(new ReservationStatusChangeEvent(r.getReservationNumber(), null, CONFIRMED));
         });
     }
 
     // TODO: extract to calculation strategy or similar
     public BigDecimal calculateRateFor(RoomEquipment roomEquipment, LocalDate checkin, LocalDate checkout) {
         // rather simple...
-        long days = checkin.until(checkout, ChronoUnit.DAYS);
+        long days = checkin.until(checkout, DAYS);
 
         BigDecimal rate = null;
 
@@ -112,14 +115,12 @@ public class BookingService {
         return query.getResultList();
     }
 
-    
-    // TODO: protect using basic auth
     @GET
     @Produces({"application/xml", "application/json"})
     public List<Reservation> getAllReservations() {
         CriteriaQuery<Reservation> cq = this.em.getCriteriaBuilder().createQuery(Reservation.class);
         cq.select(cq.from(Reservation.class));
-        return new ArrayList(this.em.createQuery(cq).getResultList());
+        return new ArrayList<>(this.em.createQuery(cq).getResultList());
     }
 
     @GET
@@ -129,10 +130,8 @@ public class BookingService {
         return this.em.find(Reservation.class, id);
     }
 
-
     public Reservation bookRoom(String guestId, String roomId, LocalDate checkin, LocalDate checkout) {
-        // TODO: Temp fix
-        Reservation reservation = 
+        Reservation reservation =
                 new Reservation(guestId, newReservationNumber(), roomId,
                         checkin, checkout, calculateRateFor(RoomEquipment.BUDGET, checkin, checkout));
 
@@ -145,6 +144,7 @@ public class BookingService {
         return reservation;
     }
 
+    @PersistenceContext
     public void setEntityManager(EntityManager entityManager) {
         this.em = entityManager;
     }
@@ -153,7 +153,7 @@ public class BookingService {
         TypedQuery<Reservation> query = this.em.createNamedQuery("Reservation.findByReservationNumber", Reservation.class);
         query.setParameter("number", reservationNumber);
         if (query.getResultList().size() == 0) {
-            LOGGER.log(Level.WARNING, "Cannot find reservation {0}", reservationNumber);
+            LOGGER.log(WARNING, "Cannot find reservation {0}", reservationNumber);
             return Optional.empty();
         }
 
@@ -163,22 +163,21 @@ public class BookingService {
     public void reopenReservation(String reservationNumber) {
         Optional<Reservation> reservation = findReservationByNumber(reservationNumber);
         reservation.ifPresent(r -> {
-            r.setReservationStatus(ReservationStatus.OPEN);
-            this.reservationStateChangeEvents.fire(new ReservationStatusChangeEvent(reservationNumber, null, ReservationStatus.OPEN));
+            r.setReservationStatus(OPEN);
+            this.reservationStateChangeEvents.fire(new ReservationStatusChangeEvent(reservationNumber, null, OPEN));
         });
     }
 
     public void confirmReservation(String reservationNumber) {
         Optional<Reservation> reservation = findReservationByNumber(reservationNumber);
-        
+
         reservation.ifPresent(r -> {
-            r.setReservationStatus(ReservationStatus.CONFIRMED);
-            this.reservationStateChangeEvents.fire(new ReservationStatusChangeEvent(reservationNumber, null, ReservationStatus.CONFIRMED));
-        } );
-        
+            r.setReservationStatus(CONFIRMED);
+            this.reservationStateChangeEvents.fire(new ReservationStatusChangeEvent(reservationNumber, null, CONFIRMED));
+        });
 
         if (!reservation.isPresent()) {
-            LOGGER.log(Level.WARNING, "Cannot find reservation {0}", reservationNumber);
+            LOGGER.log(WARNING, "Cannot find reservation {0}", reservationNumber);
         }
     }
 }

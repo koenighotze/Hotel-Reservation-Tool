@@ -11,10 +11,15 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDate;
+
+import static java.lang.String.format;
+import static java.time.LocalDate.now;
 
 /**
+ * Handles the creation of new reservations.
+ *
  * @author dschmitz
  */
 @Named
@@ -37,66 +42,29 @@ public class NewReservationBean implements Serializable {
         return guestId;
     }
 
-    public void setGuestId(String guestId) {
+    public void setGuestId(@NotNull String guestId) {
         this.guestId = guestId;
-//        if (null != this.guestId) {
-//            Optional<Guest> guest = this.guestService.findById(this.guestId);
-//
-//            this.booking.setGuest(guest.orElseGet(() -> {
-//                FacesMessageHelper.addMessage("welcomeForm:guest_id:inputTextField", FacesMessage.SEVERITY_ERROR,
-//                        "Cannot find guest " + this.guestId, "");
-//                return null;
-//            }));
-//        }
     }
 
     public String getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(String roomId) {
+    public void setRoomId(@NotNull String roomId) {
         this.roomId = roomId;
     }
 
     public void init(ComponentSystemEvent evt) {
-//        Room room = new Room("", RoomEquipment.BUDGET);
-//        if (null != this.roomId) {
-//            room = this.roomService.findRoomById(this.roomId)
-//                    .orElseGet(() -> {
-//                        FacesMessageHelper.addMessage("welcomeForm:room_number:inputTextField",
-//                                FacesMessage.SEVERITY_ERROR,
-//                                "Cannot find room " + this.roomId, "");
-//                        return new Room("", RoomEquipment.BUDGET);
-//                    });
-//        }
-
-//        Guest guest = new Guest("", "");
-//        if (null != this.guestId) {
-//            guest = this.guestService.findById(this.guestId)
-//                    .orElseGet(() -> {
-//                        FacesMessageHelper.addMessage("welcomeForm:guest_id:inputTextField", FacesMessage.SEVERITY_ERROR,
-//                                "Cannot find guest " + this.guestId, "");
-//                        return new Guest("", "");
-//                    });
-//        }
-
         this.booking = new Booking();
-        this.booking.setGuest(guestId + "");
+        this.booking.setGuest(guestId);
         this.booking.setRoom(roomId);
-        this.booking.setCheckinDate(LocalDate.now().plusDays(1));
-        this.booking.setCheckoutDate(LocalDate.now().plusDays(2));
+        this.booking.setCheckinDate(now().plusDays(1));
+        this.booking.setCheckoutDate(now().plusDays(2));
     }
 
-    public void setRoomNumber(String number) {
-//        Optional<Room> room = this.roomService.findRoomByNumber(number);
-
-//        if (!room.isPresent()) {
-//            FacesMessageHelper.addMessage("welcomeForm:room_number:inputTextField",
-//                    FacesMessage.SEVERITY_ERROR, "Cannot find room with number " + number, "");
-//            return;
-//        }
-        this.roomId = number; //room.get().getId();
-        this.booking.setRoom(number); //room.get());
+    public void setRoomNumber(@NotNull String number) {
+        this.roomId = number;
+        this.booking.setRoom(number);
     }
 
     public String getRoomNumber() {
@@ -104,7 +72,7 @@ public class NewReservationBean implements Serializable {
             return null;
         }
 
-        return this.booking.getRoom();//.getRoomNumber();
+        return this.booking.getRoom();
     }
 
     public String addReservation() {
@@ -116,7 +84,7 @@ public class NewReservationBean implements Serializable {
         flash.setKeepMessages(true);
 
         FacesMessage message = new FacesMessage("Room "
-                + this.booking.getRoom()//.getRoomNumber()
+                + this.booking.getRoom()
                 + " booked for "
                 + this.booking.getGuest()
                 + "; Reservation number "
@@ -126,6 +94,6 @@ public class NewReservationBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
         this.booking = null;
 
-        return String.format("/booking/booking.xhtml?reservationNumber=%s&faces-redirect=true", realReservation.getReservationNumber());
+        return format("/booking/booking.xhtml?reservationNumber=%s&faces-redirect=true", realReservation.getReservationNumber());
     }
 }

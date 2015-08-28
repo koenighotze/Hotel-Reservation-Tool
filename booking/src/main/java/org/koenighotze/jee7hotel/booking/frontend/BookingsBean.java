@@ -12,6 +12,7 @@ import javax.inject.Named;
 import java.util.List;
 
 /**
+ * Shows all bookings.
  *
  * @author dschmitz
  */

@@ -4,16 +4,19 @@ package org.koenighotze.jee7hotel.booking.frontend;
 
 import org.koenighotze.jee7hotel.booking.business.BookingService;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
-import org.koenighotze.jee7hotel.frontend.FacesMessageHelper;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+import static javax.faces.application.FacesMessage.SEVERITY_INFO;
+import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
+
 /**
+ * Handles showing details of a booking.
  *
  * @author dschmitz
  */
@@ -42,7 +45,7 @@ public class BookingDetailsBean implements Serializable {
         return reservationNumber;
     }
 
-    public void setReservationNumber(String reservationNumber) {
+    public void setReservationNumber(@NotNull String reservationNumber) {
         this.reservationNumber = reservationNumber;
     }
 
@@ -57,7 +60,7 @@ public class BookingDetailsBean implements Serializable {
     public void reopen() {
         this.bookingService.reopenReservation(this.reservation.getReservationNumber());
         
-        FacesMessageHelper.addMessage(null, FacesMessage.SEVERITY_INFO,
+        addMessage(null, SEVERITY_INFO,
                 "Reservation " + this.reservationNumber + " is reopened!", "");
     }
     
@@ -65,7 +68,7 @@ public class BookingDetailsBean implements Serializable {
     public void cancel() {
         this.bookingService.cancelReservation(this.reservation.getReservationNumber());
         
-        FacesMessageHelper.addMessage(null, FacesMessage.SEVERITY_INFO, 
-                    "Reservation " + this.reservationNumber + " is canceled!", "");
+        addMessage(null, SEVERITY_INFO,
+                "Reservation " + this.reservationNumber + " is canceled!", "");
     }
 }

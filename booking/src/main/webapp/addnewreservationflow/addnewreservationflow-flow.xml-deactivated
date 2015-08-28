@@ -7,9 +7,9 @@
     note that you either must set the discovery mode in beans.xml to "all" or 
     define the flow using xml
     -->
-    <flow-definition id="addnewreservationflow">
-        <flow-return id="returnFromAddnewreservationflow">
-            <from-outcome>#{addNewReservationWizardBean.confirmBooking()}</from-outcome>
-        </flow-return>
-    </flow-definition>
+    <!--<flow-definition id="addnewreservationflow">-->
+        <!--<flow-return id="returnFromAddnewreservationflow">-->
+            <!--<from-outcome>#{addNewReservationWizardBean.confirmBooking()}</from-outcome>-->
+        <!--</flow-return>-->
+    <!--</flow-definition>-->
 </faces-config>

@@ -27,8 +27,7 @@ public class BookingServiceTest extends AbstractBasePersistenceTest {
     private static final Long WELL_KNOWN_ID = 9999L;
     private static final String WELL_KNOWN_ROOM_NUMBER = "001";
     
-//    private RoomService roomService = new RoomService();
-    private BookingService bookingService = new BookingService();
+    private BookingService bookingService;
 //    private GuestService guestService = new GuestService();
 
     @Mock
@@ -40,12 +39,9 @@ public class BookingServiceTest extends AbstractBasePersistenceTest {
 
     @Override
     protected void initHook() {
-        this.bookingService.setEntityManager(super.getEntityManager());
-        this.bookingService.setReservationEvents(this.mockEvent);
-        this.bookingService.setReservationStateChangeEvents(this.mockResEvent);
+        this.bookingService = new BookingService(this.mockEvent, this.mockResEvent);
 
-//        this.guestService.setEntityManager(super.getEntityManager());
-//        this.roomService.setEntityManager(super.getEntityManager());
+        this.bookingService.setEntityManager(super.getEntityManager());
     }
 
     @Override

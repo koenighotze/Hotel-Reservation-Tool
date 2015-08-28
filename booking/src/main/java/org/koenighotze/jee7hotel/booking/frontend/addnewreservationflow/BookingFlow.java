@@ -2,40 +2,39 @@
 
 package org.koenighotze.jee7hotel.booking.frontend.addnewreservationflow;
 
+import javax.enterprise.inject.Produces;
 import javax.faces.flow.Flow;
 import javax.faces.flow.builder.FlowBuilder;
 import javax.faces.flow.builder.FlowBuilderParameter;
+import javax.faces.flow.builder.FlowDefinition;
 import java.io.Serializable;
 import java.util.logging.Logger;
 
 /**
- *
+ * Example definition of a Java-Style flow.
  * @author dschmitz
  */
-
 public class BookingFlow implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(BookingFlow.class.getName());
-    
-//    @Produces
-//    @FlowDefinition
+
+    // Deactivated as the flow is defined in XML
+    @Produces
+    @FlowDefinition
     public Flow defineBookingFlow(@FlowBuilderParameter FlowBuilder builder) {
-        new RuntimeException().printStackTrace();
-        
-        LOGGER.info("Initializing flow");
-        
+        LOGGER.info("Initializing flow for reservation creation");
+
         String flowId = "addnewreservationflow";
         builder.id("", flowId);
 
         // define start page
-        builder.viewNode(flowId, 
+        builder.viewNode(flowId,
                 "/addnewreservationflow/addnewreservationflow.xhtml")
                 .markAsStartNode();
-        
-        
+
         // set the return value
         builder.returnNode("return_from_add_new_reservation_wizard")
                 .fromOutcome("#{addNewReservationWizardBean.returnValue}");
-        
+
         return builder.getFlow();
     }
 }

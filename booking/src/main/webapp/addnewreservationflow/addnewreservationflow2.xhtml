@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
         >
 
 <ui:composition template="/WEB-INF/template-bootstrap.html">
@@ -14,16 +14,15 @@
         <h:form id="addNewReservationWizardForm">
             <div class="form-group">
                 <label for="guestSelection">#{msgs.select_a_guest}</label>
-                #{addNewReservationWizardBean}<br/>
-                <!--<h:selectOneMenu id="guestSelection"-->
-                                 <!--value="#{addNewReservationWizardBean.selectedGuest}"-->
-                                 <!--required="true"-->
-                                 <!--styleClass="form-control">-->
-                    <!--<f:selectItem itemLabel="#{msgs.please_choose}"/>-->
-                    <!--<f:selectItems-->
-                            <!--var="guest"-->
-                            <!--value="#{addNewReservationWizardBean.guestList}"/>-->
-                <!--</h:selectOneMenu>-->
+                <h:selectOneMenu id="guestSelection"
+                                 value="#{addNewReservationWizardBean.selectedGuest}"
+                                 required="true"
+                                 styleClass="form-control">
+                    <f:selectItem itemLabel="#{msgs.please_choose}"/>
+                    <f:selectItems
+                            var="guest"
+                            value="#{addNewReservationWizardBean.guestList}"/>
+                </h:selectOneMenu>
             </div>
 
             <div class="btn-toolbar">

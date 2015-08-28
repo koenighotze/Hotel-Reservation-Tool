@@ -2,8 +2,6 @@ package org.koenighotze.jee7hotel.booking.business;
 
 import org.koenighotze.jee7hotel.booking.business.events.BookingMessageTO;
 import org.koenighotze.jee7hotel.booking.business.json.BookingMessageTOReader;
-import org.koenighotze.jee7hotel.booking.business.resources.MessagingDefinition;
-import org.koenighotze.jee7hotel.booking.domain.Reservation;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
@@ -14,9 +12,11 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.logging.Level.SEVERE;
+import static org.koenighotze.jee7hotel.booking.business.resources.MessagingDefinition.RESERVATION_QUEUE;
 
 /**
  * Message driven generator of reservations.
@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  * @author koenighotze
  */
 @JMSDestinationDefinition(
-        name = MessagingDefinition.RESERVATION_QUEUE,
+        name = RESERVATION_QUEUE,
         resourceAdapter = "jmsra",
         interfaceName = "javax.jms.Queue",
         destinationName = "reservationQueue",
@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 @MessageDriven(
         activationConfig = {
                 @ActivationConfigProperty(propertyName = "destinationLookup",
-                        propertyValue = MessagingDefinition.RESERVATION_QUEUE),
+                        propertyValue = RESERVATION_QUEUE),
                 @ActivationConfigProperty(propertyName = "destinationType",
                         propertyValue = "javax.jms.Queue")
         }
@@ -63,19 +63,19 @@ public class ReservationGenerationBean implements MessageListener {
             try {
                 return "Payload " + message.getBody(String.class);
             } catch (JMSException e) {
-                LOGGER.log(Level.SEVERE, "Cannot handle message " + message, e);
+                LOGGER.log(SEVERE, "Cannot handle message " + message, e);
                 return "";
             }
         });
         try {
             bookRoom(message);
         } catch (IOException | JMSException e) {
-            LOGGER.log(Level.SEVERE, "Cannot process message " + message, e);
+            LOGGER.log(SEVERE, "Cannot process message " + message, e);
         }
     }
 
     protected BookingMessageTO messageToBookingMessageTO(Message message) throws IOException, JMSException {
-        try (ByteArrayInputStream bos = new ByteArrayInputStream(message.getBody(String.class).getBytes(StandardCharsets.UTF_8))) {
+        try (ByteArrayInputStream bos = new ByteArrayInputStream(message.getBody(String.class).getBytes(UTF_8))) {
             return new BookingMessageTOReader().readFrom(null, null, null, null, null, bos);
         }
     }
@@ -84,7 +84,7 @@ public class ReservationGenerationBean implements MessageListener {
         BookingMessageTO messageTO = messageToBookingMessageTO(message);
 
         LOGGER.info(() -> "Booking room " + messageTO.getRoom() + " for guest " + messageTO.getGuest());
-        Reservation reservation = this.bookingService.bookRoom("" + messageTO.getGuest(), messageTO.getRoom(), messageTO.getCheckin(), messageTO.getCheckout());
+        this.bookingService.bookRoom("" + messageTO.getGuest(), messageTO.getRoom(), messageTO.getCheckin(), messageTO.getCheckout());
         LOGGER.info(() -> "Booked room " + messageTO.getRoom() + " for guest " + messageTO.getGuest());
     }
 }
