@@ -57,6 +57,15 @@
                 <div class="form-group">
                     <label for="checkoutDate">#{msgs.checkout_date}</label>
 
+                    <h:inputText id="checkout"
+                                 value="#{addNewReservationWizardBean.checkoutDate}"
+                                 required="true"
+                                 p:type="date"
+                                 p:placeholder="#{msgs.checkout_date}"
+                                 styleClass="form-control #{component.valid ? '' : 'input-error'}"
+                            >
+                    </h:inputText>
+
                     <h:inputText id="checkoutDate"
                                  value="#{bookingDetailsBean.reservation.checkoutDate}"
                                  readonly="true"

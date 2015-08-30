@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static java.lang.String.format;
 import static java.time.LocalDate.now;
 import static java.util.Arrays.asList;
 import static java.util.UUID.randomUUID;
@@ -49,8 +48,6 @@ public class AddNewReservationWizardBean implements Serializable {
 
     private String selectedGuest;
     private String selectedRoom;
-    private String room;
-    private String guest;
 
     private List<RoomEquipment> roomEquipments = asList(RoomEquipment.values());
     private RoomEquipment selectedRoomEquipment;
@@ -84,17 +81,17 @@ public class AddNewReservationWizardBean implements Serializable {
             return null;
         }
 
-        if (null == this.guest) {
+        if (null == this.selectedGuest) {
             addMessage(SEVERITY_ERROR, "Guest is mandatory");
             return null;
         }
 
-        if (null == this.room) {
+        if (null == this.selectedRoom) {
             addMessage(SEVERITY_ERROR, "Room is mandatory");
             return null;
         }
 
-        Reservation reservation = this.bookingService.bookRoom(this.guest, this.room, this.checkinDate, this.checkoutDate);
+        Reservation reservation = this.bookingService.bookRoom(this.selectedGuest, this.selectedRoom, this.checkinDate, this.checkoutDate);
         addFlashMessage(SEVERITY_INFO, "Room "
                 + reservation.getAssignedRoom()
                 + " booked for "
@@ -103,7 +100,7 @@ public class AddNewReservationWizardBean implements Serializable {
                 + reservation.getReservationNumber()
                 + " Costs: "
                 + reservation.getCostsInEuro() + " EUR");
-        return format("/booking/booking.xhtml?reservationNumber=%s&faces-redirect=true", reservation.getReservationNumber());
+        return  "/bookings.xhtml";//format("/booking.xhtml?reservationNumber=%s&faces-redirect=true", reservation.getReservationNumber());
     }
 
     public LocalDate getCheckoutDate() {
@@ -111,10 +108,13 @@ public class AddNewReservationWizardBean implements Serializable {
     }
 
     public void setCheckinDate(@NotNull LocalDate checkinDate) {
+        LOGGER.info("Setting checkin to " + checkinDate);
+
         this.checkinDate = checkinDate;
     }
 
     public void setCheckoutDate(@NotNull LocalDate checkoutDate) {
+        LOGGER.info("Setting checkout to " + checkoutDate);
         this.checkoutDate = checkoutDate;
     }
 
@@ -136,6 +136,7 @@ public class AddNewReservationWizardBean implements Serializable {
     }
 
     public void setSelectedRoom(@NotNull String selectedRoom) {
+        LOGGER.info("Setting room to " + selectedRoom);
         this.selectedRoom = selectedRoom;
     }
 
@@ -147,23 +148,9 @@ public class AddNewReservationWizardBean implements Serializable {
         return this.roomList; // TODO filter based on criteria
     }
 
-    public String getRoom() {
-        return room;
-    }
-
-    public void setRoom(@NotNull String room) {
-        this.room = room;
-    }
-
-    public String getGuest() {
-        return guest;
-    }
-
-    public void setGuest(@NotNull String guest) {
-        this.guest = guest;
-    }
 
     public void setSelectedRoomEquipment(@NotNull RoomEquipment roomEquipment) {
+        LOGGER.info("Setting roomequipment to " + roomEquipment);
         this.selectedRoomEquipment = roomEquipment;
     }
 

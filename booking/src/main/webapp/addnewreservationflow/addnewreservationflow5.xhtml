@@ -21,7 +21,7 @@
                     <label for="guest_name">#{msgs.guest_id}</label>
 
                     <h:inputText id="guest_name"
-                                 value="#{addNewReservationWizardBean.guest}"
+                                 value="#{addNewReservationWizardBean.selectedGuest}"
                                  readonly="true"
                                  class="form-control uneditable-input"/>
                 </div>
@@ -50,7 +50,7 @@
                     <label for="roomNumber">#{msgs.room_number}</label>
 
                     <h:inputText id="roomNumber"
-                                 value="#{addNewReservationWizardBean.room}"
+                                 value="#{addNewReservationWizardBean.selectedRoom}"
                                  readonly="true"
                                  class="form-control uneditable-input">
                     </h:inputText>
