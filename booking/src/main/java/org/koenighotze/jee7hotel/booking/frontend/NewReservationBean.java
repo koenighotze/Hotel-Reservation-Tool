@@ -94,6 +94,6 @@ public class NewReservationBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
         this.booking = null;
 
-        return format("/booking/booking.xhtml?reservationNumber=%s&faces-redirect=true", realReservation.getReservationNumber());
+        return format("/booking.xhtml?reservationNumber=%s&faces-redirect=true", realReservation.getReservationNumber());
     }
 }

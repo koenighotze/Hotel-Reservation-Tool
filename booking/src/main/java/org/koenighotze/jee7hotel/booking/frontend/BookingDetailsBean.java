@@ -4,6 +4,7 @@ package org.koenighotze.jee7hotel.booking.frontend;
 
 import org.koenighotze.jee7hotel.booking.business.BookingService;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
+import org.koenighotze.jee7hotel.booking.frontend.addnewreservationflow.AddNewReservationWizardBean;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -11,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.logging.Logger;
 
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
@@ -23,20 +25,24 @@ import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
 @Named
 @ViewScoped
 public class BookingDetailsBean implements Serializable {
+    private static final Logger LOGGER = Logger.getLogger(AddNewReservationWizardBean.class.getName());
+
     private String reservationNumber;
-        
+
     private Reservation reservation;
-    
+
     @Inject
     private BookingService bookingService;
-    
+
     @PostConstruct
     public void init() {
         this.reservation = null;
         if (this.reservationNumber == null) {
             return;
         }
-        
+
+        LOGGER.info(() -> "Loading reservation " + reservationNumber);
+
         this.bookingService.findReservationByNumber(this.reservationNumber)
                 .ifPresent(r -> this.reservation = r);
     }
@@ -56,18 +62,17 @@ public class BookingDetailsBean implements Serializable {
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
     }
-    
+
     public void reopen() {
         this.bookingService.reopenReservation(this.reservation.getReservationNumber());
-        
+
         addMessage(null, SEVERITY_INFO,
                 "Reservation " + this.reservationNumber + " is reopened!", "");
     }
-    
-    
+
     public void cancel() {
         this.bookingService.cancelReservation(this.reservation.getReservationNumber());
-        
+
         addMessage(null, SEVERITY_INFO,
                 "Reservation " + this.reservationNumber + " is canceled!", "");
     }

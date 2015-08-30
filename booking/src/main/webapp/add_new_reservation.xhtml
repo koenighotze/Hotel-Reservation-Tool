@@ -3,7 +3,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:kh="http://xmlns.jcp.org/jsf/composite/org/koenighotze/jee7hotel/framework/frontend">
+      xmlns:kh="http://xmlns.jcp.org/jsf/composite/org/koenighotze/jee7hotel/framework/frontend"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
 
 <body>
 <f:metadata>
@@ -29,20 +30,6 @@
                     <f:validateLength for="input" maximum="20"/>
                 </kh:input>
 
-                <ui:remove>
-                    <!--<label for="id">#{msgs.guest_id}</label>-->
-                    <!--<h:inputText id="id"-->
-                    <!--value="#{newReservationBean.guestId}"-->
-                    <!--required="true"-->
-                    <!--requiredMessage="#{msgs.guest_id_is_required}"-->
-                    <!--p:placeholder="#{msgs.enter_guest_id}"-->
-                    <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
-                    <!--maxlength="20"-->
-                    <!--validatorMessage="#{msgs.provide_valid_id}">-->
-                    <!--<f:ajax render="@this :messagesPanel"/>-->
-                    <!--</h:inputText>-->
-                </ui:remove>
-
                 <kh:input id="room_number"
                           val="#{newReservationBean.roomNumber}"
                           label="#{msgs.room_number}"
@@ -54,72 +41,29 @@
                     <f:validateRegex for="input" pattern="^[0-9a-zA-Z]+$"/>
                 </kh:input>
 
-                <ui:remove>
+                <div class="form-group">
+                    <label for="checkin_date">#{msgs.checkout_date}</label>
+                    <h:inputText id="checkin_date"
+                                 value="#{newReservationBean.booking.checkinDate}"
+                                 required="true"
+                                 p:type="date"
+                                 p:placeholder="#{msgs.checkout_date}"
+                                 styleClass="form-control #{component.valid ? '' : 'input-error'}"
+                            >
+                    </h:inputText>
+                </div>
 
-                    <!--<label for="roomid">#{msgs.room_number}</label>-->
-                    <!--<h:inputText id="roomid"-->
-                    <!--value="#{newReservationBean.roomNumber}"-->
-                    <!--required="true"-->
-                    <!--requiredMessage="#{msgs.room_number_is_required}"-->
-                    <!--p:placeholder="#{msgs.enter_room_number}"-->
-                    <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
-                    <!--maxlength="20"-->
-                    <!--validatorMessage="#{msgs.provide_valid_room_number}">-->
-                    <!--<f:validateRegex pattern="^[0-9a-zA-Z]+$"/>-->
-                    <!--<f:validateLength minimum="1"/>-->
-                    <!--<f:ajax render="@this :messagesPanel"/>-->
-                    <!--</h:inputText>-->
-                </ui:remove>
-
-
-                <kh:input id="checkin_date"
-                          val="#{newReservationBean.booking.checkinDate}"
-                          label="#{msgs.checkin_date}"
-                          placeholder="#{msgs.checkin_date}"
-                          required="true"
-                          requiredMessage="#{msgs.checkin_date_is_required}"
-                          validatorMessage="#{msgs.provide_valid_date}">
-                    <f:convertDateTime pattern="yyyy-MM-dd" for="input"/>
-                </kh:input>
-
-                <ui:remove>
-                    <!--<label for="checkin">#{msgs.checkin_date}</label>-->
-                    <!--<h:inputText id="checkin"-->
-                    <!--value="#{newReservationBean.booking.checkinDate}"-->
-                    <!--required="true"-->
-                    <!--p:type="date"-->
-                    <!--p:placeholder="#{msgs.checkin_date}"-->
-                    <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
-                    <!-->-->
-                    <!--<f:ajax render="@this :messagesPanel"/>-->
-                    <!--</h:inputText>-->
-                </ui:remove>
-
-
-                <kh:input id="checkout_date"
-                          val="#{newReservationBean.booking.checkoutDate}"
-                          label="#{msgs.checkout_date}"
-                          placeholder="#{msgs.checkout_date}"
-                          required="true"
-                          requiredMessage="#{msgs.checkout_date_is_required}"
-                          validatorMessage="#{msgs.provide_valid_date}">
-                    <f:convertDateTime pattern="yyyy-MM-dd" for="input"/>
-                </kh:input>
-
-                <ui:remove>
-                    <!--<label for="checkout">#{msgs.checkout_date}</label>-->
-                    <!--<h:inputText id="checkout"-->
-                    <!--value="#{newReservationBean.booking.checkoutDate}"-->
-                    <!--required="true"-->
-                    <!--p:type="date"-->
-                    <!--p:placeholder="#{msgs.checkout_date}"-->
-                    <!--styleClass="form-control #{component.valid ? '' : 'input-error'}"-->
-                    <!-->-->
-                    <!--&lt;!&ndash; f:convertDateTime pattern="yyyy-MM-dd"/ &ndash;&gt;-->
-                    <!--<f:ajax render="@this :messagesPanel"/>-->
-                    <!--</h:inputText>-->
-
-                </ui:remove>
+                <div class="form-group">
+                    <label for="checkout_date">#{msgs.checkout_date}</label>
+                    <h:inputText id="checkout_date"
+                                 value="#{newReservationBean.booking.checkoutDate}"
+                                 required="true"
+                                 p:type="date"
+                                 p:placeholder="#{msgs.checkout_date}"
+                                 styleClass="form-control #{component.valid ? '' : 'input-error'}"
+                            >
+                    </h:inputText>
+                </div>
             </div>
 
             <div class="btn-toolbar">

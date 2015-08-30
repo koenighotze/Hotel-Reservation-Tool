@@ -6,15 +6,14 @@
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
         >
 
-    <ui:composition template="/WEB-INF/template-bootstrap.html">
-        <ui:define name="page_header">
-            #{msgs.add_new_reservation_wizard_choose_params}
-        </ui:define>
+<ui:composition template="/WEB-INF/template-bootstrap.html">
+    <ui:define name="page_header">
+        #{msgs.add_new_reservation_wizard_choose_params}
+    </ui:define>
 
-
-        <ui:define name="content">
-            <h:form id="addNewReservationWizardForm">
-                <div class="form-group">
+    <ui:define name="content">
+        <h:form id="addNewReservationWizardForm">
+            <div class="form-group">
                 <label for="checkin">#{msgs.checkin_date}</label>
                 <h:inputText id="checkin"
                              value="#{addNewReservationWizardBean.checkinDate}"
@@ -23,9 +22,9 @@
                              p:placeholder="#{msgs.checkin_date}"
                              styleClass="form-control #{component.valid ? '' : 'input-error'}">
                 </h:inputText>
-                </div>
+            </div>
 
-                <div class="form-group">
+            <div class="form-group">
                 <label for="checkout">#{msgs.checkout_date}</label>
                 <h:inputText id="checkout"
                              value="#{addNewReservationWizardBean.checkoutDate}"
@@ -35,33 +34,33 @@
                              styleClass="form-control #{component.valid ? '' : 'input-error'}"
                         >
                 </h:inputText>
-                </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="roomEquipment" >#{msgs.room_equipment}</label>
-                    <h:selectOneMenu id="roomEquipment"
-                                     value="#{addNewReservationWizardBean.selectedRoomEquipment}"
-                                     required="true"
-                                     styleClass="form-control">
-                        <f:selectItem itemLabel="#{msgs.please_choose}"/>
-                        <f:selectItems
-                                value="#{addNewReservationWizardBean.roomEquipments}"/>
-                    </h:selectOneMenu>
-                </div>
+            <div class="form-group">
+                <label for="roomEquipment">#{msgs.room_equipment}</label>
+                <h:selectOneMenu id="roomEquipment"
+                                 value="#{addNewReservationWizardBean.selectedRoomEquipment}"
+                                 required="true"
+                                 styleClass="form-control">
+                    <f:selectItem itemLabel="#{msgs.please_choose}"/>
+                    <f:selectItems
+                            value="#{addNewReservationWizardBean.roomEquipments}"/>
+                </h:selectOneMenu>
+            </div>
 
-                <div class="btn-toolbar">
-                    <h:commandButton styleClass="btn btn-sm"
-                                     id="prev"
-                                     immediate="true"
-                                     value="#{msgs.btn_prev_choose_guest}"
-                                     action="addnewreservationflow2" />
+            <div class="btn-toolbar">
+                <h:commandButton styleClass="btn btn-sm"
+                                 id="prev"
+                                 immediate="true"
+                                 value="#{msgs.btn_prev_choose_guest}"
+                                 action="addnewreservationflow2"/>
 
-                    <h:commandButton styleClass="btn btn-primary btn-sm"
-                                     id="next"
-                                     value="#{msgs.btn_next_choose_room}"
-                                     action="addnewreservationflow4" />
-                </div>
-            </h:form>
-        </ui:define>
-    </ui:composition>
+                <h:commandButton styleClass="btn btn-primary btn-sm"
+                                 id="next"
+                                 value="#{msgs.btn_next_choose_room}"
+                                 action="addnewreservationflow4"/>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
 </html>
