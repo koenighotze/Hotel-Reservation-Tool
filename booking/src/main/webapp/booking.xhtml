@@ -92,7 +92,7 @@
                     </input>
                     <ui:fragment rendered="#{bookingDetailsBean.reservation.isOpen()}">
                         <input type="submit"
-                               value="#{msgs.btn_back}"
+                               value="#{msgs.btn_cancel_reservation}"
                                class="btn btn-sm"
                                jsf:action="bookings.xhtml?faces-redirect=true"
                                jsf:actionListener="#{bookingDetailsBean.cancel()}">

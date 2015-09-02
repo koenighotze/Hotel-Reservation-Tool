@@ -6,6 +6,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static javax.persistence.GenerationType.IDENTITY;
+import static org.koenighotze.jee7hotel.booking.domain.ReservationStatus.CANCELED;
+import static org.koenighotze.jee7hotel.booking.domain.ReservationStatus.OPEN;
+
 /**
  * Represents a simple reservation.
  * <p>
@@ -29,7 +33,7 @@ import java.time.LocalDate;
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @NotNull
@@ -45,11 +49,11 @@ public class Reservation {
     @NotNull
     private LocalDate checkoutDate;
 
-    // TODO
+    @NotNull
     private String assignedRoomId;
 
     @NotNull
-    private ReservationStatus reservationStatus = ReservationStatus.OPEN;
+    private ReservationStatus reservationStatus = OPEN;
 
     @NotNull
     private BigDecimal costsInEuro;
@@ -118,11 +122,11 @@ public class Reservation {
     }
 
     public boolean isOpen() {
-        return ReservationStatus.OPEN == this.reservationStatus;
+        return OPEN == this.reservationStatus;
     }
 
     public boolean isCanceled() {
-        return ReservationStatus.CANCELED == this.reservationStatus;
+        return CANCELED == this.reservationStatus;
     }
 
     @Override

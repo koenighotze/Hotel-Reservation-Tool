@@ -4,7 +4,6 @@ import org.koenighotze.jee7hotel.booking.business.events.NewReservationEvent;
 import org.koenighotze.jee7hotel.booking.business.events.ReservationStatusChangeEvent;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
 import org.koenighotze.jee7hotel.booking.domain.RoomEquipment;
-import org.koenighotze.jee7hotel.business.eventsource.EventSource;
 import org.koenighotze.jee7hotel.business.logging.PerformanceLog;
 
 import javax.ejb.Stateless;
@@ -43,7 +42,7 @@ import static org.koenighotze.jee7hotel.booking.domain.ReservationStatus.*;
 //        PerformanceLogger.class,
 //        EventSourceInterceptor.class
 //})
-@EventSource
+//@EventSource
 @PerformanceLog
 public class BookingService {
     private static final Logger LOGGER = Logger.getLogger(BookingService.class.getName());
@@ -71,13 +70,20 @@ public class BookingService {
         this.reservationEvents = reservationEvents;
     }
 
-    // TODO refactor to reservation number
-    public void cancelReservation(String reservationNumber) {
+    public boolean cancelReservation(String reservationNumber) {
+        LOGGER.info(() -> "Cancelling " + reservationNumber);
         Optional<Reservation> reservation = findReservationByNumber(reservationNumber);
+
+//        if (!reservation.isPresent()) {
+//            return false;
+//        }
+
         reservation.ifPresent(r -> {
             r.setReservationStatus(CANCELED);
             this.reservationStateChangeEvents.fire(new ReservationStatusChangeEvent(r.getReservationNumber(), null, CONFIRMED));
         });
+
+        return false;
     }
 
     // TODO: extract to calculation strategy or similar
@@ -104,7 +110,6 @@ public class BookingService {
         return rate.multiply(BigDecimal.valueOf(days));
     }
 
-    // TODO: extract to real number producer bean
     public String newReservationNumber() {
         return UUID.randomUUID().toString();
     }
@@ -161,6 +166,7 @@ public class BookingService {
     }
 
     public void reopenReservation(String reservationNumber) {
+        LOGGER.info(() -> "Reopening " + reservationNumber);
         Optional<Reservation> reservation = findReservationByNumber(reservationNumber);
         reservation.ifPresent(r -> {
             r.setReservationStatus(OPEN);
@@ -169,6 +175,8 @@ public class BookingService {
     }
 
     public void confirmReservation(String reservationNumber) {
+        LOGGER.info(() -> "Confirming " + reservationNumber);
+
         Optional<Reservation> reservation = findReservationByNumber(reservationNumber);
 
         reservation.ifPresent(r -> {

@@ -10,10 +10,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.enterprise.event.Event;
-import java.time.LocalDate;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
+import static java.math.BigDecimal.ONE;
+import static java.time.LocalDate.now;
+import static org.fest.assertions.Assertions.assertThat;
+import static org.koenighotze.jee7hotel.booking.domain.ReservationStatus.OPEN;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReservationTest extends AbstractBasePersistenceTest {
@@ -37,13 +38,20 @@ public class ReservationTest extends AbstractBasePersistenceTest {
         super.initHook();
         this.bookingService = new BookingService(this.mockEvent, this.mockResEvent);
 
-        this.bookingService.setEntityManager(super.getEntityManager());
+        this.bookingService.setEntityManager(getEntityManager());
     }
 
     @Test
-    public void testSave() {
-        Reservation reservation = this.bookingService.bookRoom(WELL_KNOWN_ID, WELL_KNOWN_ROOM_NUMBER, LocalDate.now(), LocalDate.now());
-        assertThat(reservation, is(not(nullValue())));
+    public void a_reservation_can_be_saved() {
+        Reservation reservation = this.bookingService.bookRoom(WELL_KNOWN_ID, WELL_KNOWN_ROOM_NUMBER, now(), now());
+        assertThat(reservation).isNotNull();
         getEntityManager().flush();
+    }
+
+    @Test
+    public void an_open_reservation_is_reported_as_being_open() {
+        Reservation reservation = new Reservation("guest", "res", "room", now(), now(), ONE);
+        assertThat(reservation.getReservationStatus()).isEqualTo(OPEN);
+        assertThat(reservation.isOpen()).isTrue();
     }
 }

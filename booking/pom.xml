@@ -17,6 +17,7 @@
     <properties>
         <application.contextRoot>/booking</application.contextRoot>
         <application.finalName>booking</application.finalName>
+        <jee7hotel.version>1.0-SNAPSHOT</jee7hotel.version>
         <!--<jboss.socket.binding.port.offset>1000</jboss.socket.binding.port.offset>-->
     </properties>
 
@@ -24,29 +25,29 @@
         <dependency>
             <groupId>org.koenighotze.jee7hotel.framework</groupId>
             <artifactId>persistence</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${jee7hotel.version}</version>
         </dependency>
         <dependency>
             <groupId>org.koenighotze.jee7hotel.framework</groupId>
             <artifactId>application</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${jee7hotel.version}</version>
         </dependency>
         <dependency>
             <groupId>org.koenighotze.jee7hotel.framework</groupId>
             <artifactId>eventing</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${jee7hotel.version}</version>
         </dependency>
         <dependency>
             <groupId>org.koenighotze.jee7hotel.framework</groupId>
             <artifactId>frontend</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${jee7hotel.version}</version>
         </dependency>
 
         <!-- TEST DEPENDENCIES -->
         <dependency>
             <groupId>org.koenighotze.jee7hotel.framework</groupId>
             <artifactId>test</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${jee7hotel.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

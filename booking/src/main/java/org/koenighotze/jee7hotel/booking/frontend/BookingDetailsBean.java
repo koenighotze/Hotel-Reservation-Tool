@@ -4,7 +4,6 @@ package org.koenighotze.jee7hotel.booking.frontend;
 
 import org.koenighotze.jee7hotel.booking.business.BookingService;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
-import org.koenighotze.jee7hotel.booking.frontend.addnewreservationflow.AddNewReservationWizardBean;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -25,14 +24,21 @@ import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
 @Named
 @ViewScoped
 public class BookingDetailsBean implements Serializable {
-    private static final Logger LOGGER = Logger.getLogger(AddNewReservationWizardBean.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(BookingDetailsBean.class.getName());
 
     private String reservationNumber;
 
     private Reservation reservation;
 
-    @Inject
     private BookingService bookingService;
+
+    public BookingDetailsBean() {
+    }
+
+    @Inject
+    public BookingDetailsBean(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
 
     @PostConstruct
     public void init() {
