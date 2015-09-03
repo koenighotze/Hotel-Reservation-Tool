@@ -16,39 +16,31 @@
     <properties>
         <application.contextRoot>/eventdb</application.contextRoot>
         <application.finalName>eventdb</application.finalName>
-        <jboss.socket.binding.port.offset>1000</jboss.socket.binding.port.offset>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.mongojack</groupId>
             <artifactId>mongojack</artifactId>
-            <version>2.1.0</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>persistence-api</artifactId>
-                    <groupId>javax.persistence</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.koenighotze.jee7hotel.framework</groupId>
             <artifactId>application</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${jee7hotel.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.koenighotze.jee7hotel.framework</groupId>
             <artifactId>eventing</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${jee7hotel.version}</version>
         </dependency>
 
         <!-- TEST DEPENDENCIES -->
         <dependency>
             <groupId>org.koenighotze.jee7hotel.framework</groupId>
             <artifactId>test</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${jee7hotel.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -63,12 +55,10 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <!--<version>1.0.2.Final</version>-->
                 <configuration>
                     <serverConfig>standalone-full.xml</serverConfig>
-                    <!--<serverConfig>standalone.xml</serverConfig>-->
-                    <!--<jvmArgs>-Djboss.socket.binding.port-offset=2000</jvmArgs>-->
                 </configuration>
             </plugin>
         </plugins>
-    </build></project>
+    </build>
+</project>

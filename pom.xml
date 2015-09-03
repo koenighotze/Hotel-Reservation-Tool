@@ -15,6 +15,7 @@
         <jboss.socket.binding.port.offset>0</jboss.socket.binding.port.offset>
         <browser>phantomjs</browser>
         <powermock.version>1.6.2</powermock.version>
+        <jee7hotel.version>1.0-SNAPSHOT</jee7hotel.version>
     </properties>
     <scm>
         <url>https://github.com/koenighotze/jee7hotelreservationtool</url>
@@ -23,10 +24,7 @@
     </scm>
 
     <modules>
-        <module>framework/frontend</module>
-        <module>framework/application</module>
-        <module>framework/eventing</module>
-        <module>framework/test</module>
+        <module>framework</module>
         <module>guest</module>
         <module>booking</module>
         <module>facilities</module>
@@ -99,6 +97,15 @@
             <groupId>org.jboss.shrinkwrap.resolver</groupId>
             <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
         <!--<dependency>-->
         <!--<groupId>org.jboss.weld</groupId>-->
@@ -235,6 +242,29 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.mongojack</groupId>
+                <artifactId>mongojack</artifactId>
+                <version>2.1.0</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>persistence-api</artifactId>
+                        <groupId>javax.persistence</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.easytesting</groupId>
+                <artifactId>fest-assert</artifactId>
+                <version>1.4</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.0</version>
+            </dependency>
             <dependency>
                 <groupId>org.glassfish.main.extras</groupId>
                 <artifactId>glassfish-embedded-all</artifactId>
@@ -387,20 +417,20 @@
             </properties>
         </profile>
         <!--<profile>-->
-            <!--<id>wildfly</id>-->
+        <!--<id>wildfly</id>-->
 
-            <!--<build>-->
-                <!--<plugins>-->
-                    <!--<plugin>-->
-                        <!--<groupId>org.wildfly.plugins</groupId>-->
-                        <!--<artifactId>wildfly-maven-plugin</artifactId>-->
-                        <!--<version>1.0.2.Final</version>-->
-                        <!--<configuration>-->
-                            <!--<server-config>standalone-full.xml</server-config>-->
-                        <!--</configuration>-->
-                    <!--</plugin>-->
-                <!--</plugins>-->
-            <!--</build>-->
+        <!--<build>-->
+        <!--<plugins>-->
+        <!--<plugin>-->
+        <!--<groupId>org.wildfly.plugins</groupId>-->
+        <!--<artifactId>wildfly-maven-plugin</artifactId>-->
+        <!--<version>1.0.2.Final</version>-->
+        <!--<configuration>-->
+        <!--<server-config>standalone-full.xml</server-config>-->
+        <!--</configuration>-->
+        <!--</plugin>-->
+        <!--</plugins>-->
+        <!--</build>-->
         <!--</profile>-->
         <profile>
             <id>wildfly-managed-integration-tests</id>

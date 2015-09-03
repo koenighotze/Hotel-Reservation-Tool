@@ -17,7 +17,7 @@
     <properties>
         <application.contextRoot>/booking</application.contextRoot>
         <application.finalName>booking</application.finalName>
-        <jee7hotel.version>1.0-SNAPSHOT</jee7hotel.version>
+
         <!--<jboss.socket.binding.port.offset>1000</jboss.socket.binding.port.offset>-->
     </properties>
 
