@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.logging.Logger;
 
+import static java.lang.Thread.currentThread;
+
 /**
  * @author koenighotze
  */
@@ -20,19 +22,25 @@ import java.util.logging.Logger;
 public class GuestDataReader extends AbstractItemReader {
 
     private static final Logger LOGGER = Logger.getLogger(GuestDataProcessor.class.getName());
-    @Inject
+
     private JobContext jobCtx;
 
+    private String resourceNameDefault;
+
     private BufferedReader reader;
+
+    public GuestDataReader() {
+    }
+
+    @Inject
+    public GuestDataReader(JobContext jobCtx, @BatchProperty(name = "resourceNameDefault") String resourceNameDefault) {
+        this.jobCtx = jobCtx;
+        this.resourceNameDefault = resourceNameDefault;
+    }
 
     void setReader(BufferedReader reader) {
         this.reader = reader;
     }
-
-
-    @Inject
-    @BatchProperty(name = "resourceNameDefault")
-    private String resourceNameDefault;
 
     @Override
     public void close() throws Exception {
@@ -58,7 +66,7 @@ public class GuestDataReader extends AbstractItemReader {
 
         this.reader = new BufferedReader(
                 new InputStreamReader(
-                        Thread.currentThread()
+                        currentThread()
                                 .getContextClassLoader()
                                 .getResourceAsStream("META-INF/" + resourceName)));
     }

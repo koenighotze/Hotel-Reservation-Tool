@@ -26,13 +26,12 @@
                 <f:validateLength minimum="5" maximum="20" for="input"/>
             </kh:input>
 
-
             <kh:input id="guest_email"
                       label="#{msgs.email}"
                       val="#{addNewGuestBean.guest.email}"
                       placeholder="#{msgs.spam_location}"
                       validatorMessage="#{msgs.provide_valid_email}">
-                <f:validateRegex pattern="^[A-Za-z 0-9.@\\-_]*$"  for="input"/>
+                <f:validateRegex pattern="^[A-Za-z 0-9.@\\-_]*$" for="input"/>
             </kh:input>
 
             <div class="btn-toolbar">

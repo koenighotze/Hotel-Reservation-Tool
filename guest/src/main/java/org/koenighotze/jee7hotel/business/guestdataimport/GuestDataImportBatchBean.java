@@ -1,6 +1,5 @@
 package org.koenighotze.jee7hotel.business.guestdataimport;
 
-
 import javax.batch.operations.JobOperator;
 import javax.batch.runtime.BatchRuntime;
 import javax.enterprise.context.RequestScoped;
@@ -15,7 +14,6 @@ import java.util.logging.Logger;
 @Named
 @RequestScoped
 public class GuestDataImportBatchBean {
-
     private static final Logger LOGGER = Logger.getLogger(GuestDataImportBatchBean.class.getName());
 
     @SuppressWarnings("unused")

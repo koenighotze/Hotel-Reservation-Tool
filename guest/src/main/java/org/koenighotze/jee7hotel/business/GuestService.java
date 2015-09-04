@@ -1,5 +1,6 @@
 package org.koenighotze.jee7hotel.business;
 
+import org.koenighotze.jee7hotel.business.eventsource.EventSourceInterceptor;
 import org.koenighotze.jee7hotel.business.logging.PerformanceLogger;
 import org.koenighotze.jee7hotel.domain.Guest;
 
@@ -16,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import static java.util.Optional.*;
+
 /**
  * Sample for a REST-based bean, that can also be used locally.
  *
@@ -24,12 +27,9 @@ import java.util.logging.Logger;
 @Named
 @Stateless
 @Path("guest")
-// @RolesAllowed({ "ADMIN" })
-
-// Example for annotation based interceptor binding; needs a real beans.xml!
 @Interceptors({
-        PerformanceLogger.class//,
-//        EventSourceInterceptor.class
+        PerformanceLogger.class,
+        EventSourceInterceptor.class
 })
 public class GuestService {
     private static final Logger LOGGER = Logger.getLogger(GuestService.class.getName());
@@ -43,11 +43,10 @@ public class GuestService {
 
     public void saveGuest(Guest guest) {
         LOGGER.info(() -> "Saving guest " + guest);
+
         this.em.persist(guest);
     }
 
-
-    // TODO: protect using basic auth!
     @GET
     @Produces({"application/xml", "application/json"})
     public List<Guest> getAllGuests() {
@@ -58,13 +57,13 @@ public class GuestService {
 
     public Optional<Guest> findById(Long guestId) {
         Guest guest = this.em.find(Guest.class, guestId);
-        return Optional.ofNullable(guest);
+        return ofNullable(guest);
     }
 
     public Optional<Guest> updateGuestDetails(Guest guest) {
         if (null == guest || null == guest.getId()) {
-            return Optional.empty();
+            return empty();
         }
-        return Optional.of(this.em.merge(guest));
+        return of(this.em.merge(guest));
     }
 }

@@ -30,6 +30,11 @@
             <artifactId>frontend</artifactId>
             <version>${jee7hotel.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.koenighotze.jee7hotel.framework</groupId>
+            <artifactId>eventing</artifactId>
+            <version>${jee7hotel.version}</version>
+        </dependency>
         <!-- TEST DEPENDENCIES -->
         <dependency>
             <groupId>org.koenighotze.jee7hotel.framework</groupId>

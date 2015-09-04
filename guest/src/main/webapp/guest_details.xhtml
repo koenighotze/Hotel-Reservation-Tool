@@ -34,13 +34,13 @@
                 <div class="form-group">
                     <label for="name">#{msgs.guest_name}</label>
                     <input type="text"
-                           jsf:id="name"
                            value="#{guestDetailsBean.guest.name}"
                            required="required"
-                           jsf:requiredMessage="#{msgs.guest_name_is_required}"
                            placeholder="#{msgs.enter_guest_name}"
                            class="form-control #{component.valid ? '' : 'input-error'}"
                            maxlength="20"
+                           jsf:id="name"
+                           jsf:requiredMessage="#{msgs.guest_name_is_required}"
                            jsf:validatorMessage="#{msgs.provide_valid_name}">
                         <f:validateRegex pattern="^[A-Za-z .\\-]*$"/>
                         <f:validateLength minimum="5"/>
@@ -70,18 +70,6 @@
                            jsf:immediate="true"
                            value="#{msgs.btn_discard_changes}">
                     </input>
-
-                    <ui:remove>
-                    <!--<input jsf:id="btn_new_reservation"-->
-                           <!--type="submit"-->
-                           <!--value="#{msgs.btn_new_reservation}"-->
-                           <!--class="btn btn-sm "-->
-                           <!--jsf:includeViewParameters="true"-->
-                           <!--jsf:action="/booking/add_new_reservation.xhtml">-->
-                        <!--<f:param name="guestId"-->
-                                 <!--value="#{guestDetailsBean.guestId}"/>-->
-                    <!--</input>-->
-                    </ui:remove>
 
                     <input type="submit"
                            jsf:id="btn_update_guest_info"

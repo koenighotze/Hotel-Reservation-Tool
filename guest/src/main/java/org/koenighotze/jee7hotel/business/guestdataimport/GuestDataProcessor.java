@@ -15,12 +15,17 @@ import java.util.logging.Logger;
 @Named
 @Dependent
 public class GuestDataProcessor implements ItemProcessor {
-
-
     private static final Logger LOGGER = Logger.getLogger(GuestDataProcessor.class.getName());
 
-    @Inject
     private JobContext jobCtx;
+
+    public GuestDataProcessor() {
+    }
+
+    @Inject
+    public GuestDataProcessor(JobContext jobContext) {
+        this.jobCtx = jobContext;
+    }
 
     @Override
     public Object processItem(Object o) throws Exception {
@@ -39,7 +44,6 @@ public class GuestDataProcessor implements ItemProcessor {
             throw new IllegalArgumentException("Unexpected email '" + email + "'");
         }
 
-        Guest guest = new Guest(name, email);
-        return guest;
+        return new Guest(name, email);
     }
 }

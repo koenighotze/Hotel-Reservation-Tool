@@ -4,7 +4,7 @@
 
     <step id="populateGuestDatabase">
         <chunk item-count="3" skip-limit="5">
-            <!-- Can be refered to via @Named -->
+            <!-- Can be referred to via @Named -->
             <reader ref="guestDataReader">
                 <properties>
                     <property name="resourceNameDefault" value="Snafu"/>

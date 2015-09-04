@@ -22,4 +22,6 @@ and annotation based interceptor bindings should be used.
         <!--<class>org.koenighotze.jee7hotel.business.logging.PerformanceLogger</class>-->
         <!--<class>org.koenighotze.jee7hotel.business.eventsource.EventSourceInterceptor</class>-->
     </interceptors>
+
+
 </beans>

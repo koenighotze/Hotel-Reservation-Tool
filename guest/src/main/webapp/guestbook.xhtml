@@ -28,21 +28,12 @@
                        value="#{msgs.save_guest_info}">
                 </input>
 
-
                 <input type="submit"
                        jsf:id="fill_initial_guestbook_btn"
                        value="#{msgs.fill_initial_guestbook}"
                        class="btn btn-sm btn-default"
                        jsf:action="#{guestbookBean.fillInitialGuestBook()}">
                 </input>
-
-                <ui:remove>
-                    <!--<input type="submit"-->
-                           <!--jsf:action="addnewreservationflow"-->
-                           <!--jsf:id="new_reservation_wizard_btn"-->
-                           <!--class="btn btn-sm btn-primary"-->
-                           <!--value="#{msgs.btn_new_reservation_wizard}"/>-->
-                </ui:remove>
             </div>
         </form>
 
@@ -64,17 +55,6 @@
                                              value="#{guest.id}"/>
                                 </h:link>
                             </li>
-                            <ui:remove>
-                                <!--<li>-->
-                                    <!--<h:link id="addNewReservationLink"-->
-                                            <!--outcome="/booking/add_new_reservation.xhtml?faces-redirect=true"-->
-                                            <!--includeViewParams="true"-->
-                                            <!--value="#{msgs.new_reservation}">-->
-                                        <!--<f:param name="guestId"-->
-                                                 <!--value="#{guest.id}"/>-->
-                                    <!--</h:link>-->
-                                <!--</li>-->
-                            </ui:remove>
                         </ul>
                     </f:facet>
                 </kh:guestlist>

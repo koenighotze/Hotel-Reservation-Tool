@@ -19,13 +19,14 @@ import java.util.logging.Logger;
 @Dependent
 public class GuestDataWriter extends AbstractItemWriter {
     private static final Logger LOGGER = Logger.getLogger(GuestDataWriter.class.getName());
+    @PersistenceContext
+    private EntityManager em;
+
+    private GuestService guestService = new GuestService();
 
     public void setEntityManager(EntityManager em) {
         this.em = em;
     }
-
-    @PersistenceContext
-    private EntityManager em;
 
     public GuestService getGuestService() {
         return guestService;
@@ -34,8 +35,6 @@ public class GuestDataWriter extends AbstractItemWriter {
     public void setGuestService(GuestService guestService) {
         this.guestService = guestService;
     }
-
-    private GuestService guestService = new GuestService();
 
     @Override
     @Transactional
@@ -49,5 +48,4 @@ public class GuestDataWriter extends AbstractItemWriter {
                 .peek(e -> LOGGER.info("Writing " + e))
                 .forEach(e -> this.guestService.saveGuest((Guest) e));
     }
-
 }
