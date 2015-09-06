@@ -8,7 +8,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 /**
- *
  * @author dschmitz
  */
 @XmlRootElement
@@ -23,13 +22,13 @@ public class Guest implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Version
     private Long version;
-    
+
     @NotNull
     private String name;
-       
+
     private String email;
 
     public String getName() {
@@ -66,16 +65,14 @@ public class Guest implements Serializable {
 
     Guest() {
     }
-    
+
     public Guest(@NotNull String name, String email) {
         this.name = name;
         this.email = email;
     }
-    
+
     @Override
     public String toString() {
         return "Guest{" + "id=" + id + ", version=" + version + ", name=" + name + ", email=" + email + '}';
     }
-    
-    
 }

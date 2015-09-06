@@ -4,22 +4,21 @@ import org.koenighotze.jee7hotel.business.GuestService;
 import org.koenighotze.jee7hotel.domain.Guest;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-// DO NOT USE: import javax.faces.bean.ViewScoped;
+import static javax.faces.application.FacesMessage.SEVERITY_INFO;
+import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
 
 /**
  * @author dschmitz
  */
 @Named
+// DO NOT USE: import javax.faces.bean.ViewScoped;
 @ViewScoped
-// @RolesAllowed({ "ADMIN", "CLERK" })
 public class AddNewGuestBean implements Serializable {
     @NotNull
     private Guest guest;
@@ -38,8 +37,8 @@ public class AddNewGuestBean implements Serializable {
 
     public void saveGuest() {
         this.guestService.saveGuest(this.guest);
-        FacesMessage message = new FacesMessage("Guest saved: " + this.guest, "Guest saved:" + this.guest);
-        FacesContext.getCurrentInstance().addMessage(null, message);
+        addMessage(SEVERITY_INFO, "Guest saved: " + this.guest);
+
         this.guest = new Guest("", "");
     }
 }

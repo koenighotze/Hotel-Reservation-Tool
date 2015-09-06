@@ -100,7 +100,7 @@ public class AddNewReservationWizardBean implements Serializable {
                 + reservation.getReservationNumber()
                 + " Costs: "
                 + reservation.getCostsInEuro() + " EUR");
-        return  "/bookings.xhtml";//format("/booking.xhtml?reservationNumber=%s&faces-redirect=true", reservation.getReservationNumber());
+        return  "/bookings.xhtml";
     }
 
     public LocalDate getCheckoutDate() {

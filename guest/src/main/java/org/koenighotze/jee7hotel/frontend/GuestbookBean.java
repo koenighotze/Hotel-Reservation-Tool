@@ -8,6 +8,9 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.util.List;
 
+import static javax.faces.application.FacesMessage.SEVERITY_WARN;
+import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addFlashMessage;
+
 /**
  *
  * @author dschmitz
@@ -20,6 +23,7 @@ public class GuestbookBean {
 
     public void fillInitialGuestBook() {
         // TODO trigger batch via JMS?
+        addFlashMessage(SEVERITY_WARN, "Guest import via Batch is still work in progress...");
     }
     
     public List<Guest> getGuestList() {
