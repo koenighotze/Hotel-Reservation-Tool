@@ -7,11 +7,13 @@ import org.koenighotze.jee7hotel.domain.Room;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
-import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import java.util.List;
+
+import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
+import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
+
 /**
- *
  * @author dschmitz
  */
 // stereotype example -> effectively RequestScope and Named
@@ -34,13 +36,12 @@ public class RoomsBean {
     @PostConstruct
     public void init() {
         this.rooms = this.roomService.getAllRooms();
-        
+
         if (this.rooms.isEmpty()) {
-            FacesMessageHelper.addMessage(FacesMessage.SEVERITY_ERROR,
+            addMessage(SEVERITY_ERROR,
                     "No rooms found!");
         }
     }
-
 
     public String showRoomDetails() {
         return null;

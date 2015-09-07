@@ -36,8 +36,8 @@
         <from-view-id>*</from-view-id>
 
         <navigation-case>
-            <from-outcome>/room/rooms.xhtml</from-outcome>
-            <to-view-id>/room/rooms.xhtml</to-view-id>
+            <from-outcome>/rooms.xhtml</from-outcome>
+            <to-view-id>/rooms.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>

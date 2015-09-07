@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 /**
  * Represents a single room.
+ *
  * @author dschmitz
  */
 @Entity
@@ -28,22 +29,21 @@ import java.io.Serializable;
 public class Room implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;    
+    private Long id;
 
     @Version
     private Long version;
-    
+
     @NotNull
     private String roomNumber;
-    
+
     @NotNull
     @Convert(converter = RoomEquipmentConverter.class)
     private RoomEquipment roomEquipment;
-    
-    
+
     Room() {
     }
-    
+
     public Room(String roomNumber, RoomEquipment roomEquipment) {
         this.roomNumber = roomNumber;
         this.roomEquipment = roomEquipment;
@@ -69,7 +69,4 @@ public class Room implements Serializable {
     public String toString() {
         return "Room{" + "id=" + id + ", version=" + version + ", roomNumber=" + roomNumber + ", roomEquipment=" + roomEquipment + '}';
     }
-    
-    
-    
 }

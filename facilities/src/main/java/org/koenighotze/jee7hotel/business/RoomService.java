@@ -2,6 +2,7 @@
 
 package org.koenighotze.jee7hotel.business;
 
+import org.koenighotze.jee7hotel.business.eventsource.EventSourceInterceptor;
 import org.koenighotze.jee7hotel.business.logging.PerformanceLogger;
 import org.koenighotze.jee7hotel.domain.Room;
 import org.koenighotze.jee7hotel.domain.RoomEquipment;
@@ -16,23 +17,24 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.util.Optional.*;
+import static java.util.logging.Level.WARNING;
+import static java.util.logging.Logger.getLogger;
+
 /**
- *
  * @author dschmitz
- *
  */
 @Named
 @Stateless
 @Interceptors({
-        PerformanceLogger.class//,
-//        EventSourceInterceptor.class
+        PerformanceLogger.class,
+        EventSourceInterceptor.class
 })
 public class RoomService {
+    private static final Logger LOGGER = getLogger(RoomService.class.getName());
 
-    private static final Logger LOGGER = Logger.getLogger(RoomService.class.getName());
     @PersistenceContext
     private EntityManager em;
 
@@ -56,14 +58,13 @@ public class RoomService {
         query.setParameter("number", roomNumber);
         List<Room> resultList = query.getResultList();
         if (resultList.size() == 0) {
-            LOGGER.log(Level.WARNING, "Cannot find room {0}", roomNumber);
-            return Optional.empty();
+            LOGGER.log(WARNING, "Cannot find room {0}", roomNumber);
+            return empty();
         }
-        return Optional.of(resultList.get(0));
+        return of(resultList.get(0));
     }
 
     public Optional<Room> findRoomById(Long roomId) {
-        return Optional.ofNullable(this.em.find(Room.class, roomId));
+        return ofNullable(this.em.find(Room.class, roomId));
     }
-
 }

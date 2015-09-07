@@ -22,13 +22,17 @@
     <dependencies>
         <dependency>
             <groupId>org.koenighotze.jee7hotel.framework</groupId>
+            <artifactId>application</artifactId>
+            <version>${jee7hotel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.koenighotze.jee7hotel.framework</groupId>
             <artifactId>frontend</artifactId>
             <version>${jee7hotel.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.koenighotze.jee7hotel.framework</groupId>
-            <artifactId>application</artifactId>
+            <artifactId>eventing</artifactId>
             <version>${jee7hotel.version}</version>
         </dependency>
 
