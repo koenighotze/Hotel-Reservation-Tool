@@ -13,6 +13,8 @@ import java.util.List;
 @FacesComponent("org.koenighotze.jee7hotel.frontend.component.BootstrappedMessages")
 public class BootstrappedMessages extends UINamingContainer {
 
+
+
     public List<FacesMessage> getFacesMessages() {
         List<FacesMessage> messageList = new ArrayList<>();
 

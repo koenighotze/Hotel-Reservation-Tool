@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:jsf="http://xmlns.jcp.org/jsf" >
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:fw="http://java.sun.com/jsf/composite/org/koenighotze/jee7hotel/framework/frontend">
 
 <!--
  Base template for all pages.
@@ -77,15 +78,9 @@
             </h1 >
         </div >
 
-        <div jsf:id="messagesPanel" >
-            <ui:fragment rendered="#{!empty(facesContext.getMessageList(null))}" >
-                <ui:repeat var="msg" value="#{facesContext.getMessageList(null)}" >
-                    <div class="alert #{facesMessageHelper.getStyleClassFor(msg)}" role="alert" >
-                        #{msg.summary}
-                    </div >
-                </ui:repeat >
-            </ui:fragment >
-        </div >
+        <div jsf:id="messagesPanel">
+            <fw:bootstrappedMessages/>
+        </div>
 
         <ui:insert name="content" >[Content]</ui:insert >
     </div >
