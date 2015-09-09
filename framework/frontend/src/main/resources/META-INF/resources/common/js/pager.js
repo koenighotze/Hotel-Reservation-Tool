@@ -47,6 +47,8 @@ Imtech.Pager = function () {
 
         pagingControls += '</ul>';
 
+        // todo: extract reference to pager from onclick: better register callback
+
         $(container).html(pagingControls);
     }
 }

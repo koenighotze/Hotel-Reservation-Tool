@@ -31,13 +31,13 @@
     </title>
 
     <!-- Bootstrap core CSS -->
-    <link href="#{facesContext.externalContext.requestContextPath}/resources/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="#{facesContext.externalContext.requestContextPath}/resources/css/font-awesome.css" rel="stylesheet"/>
-    <link href="#{facesContext.externalContext.requestContextPath}/resources/css/bootstrap-social.css"
-          rel="stylesheet"/>
+    <!--<link href="#{facesContext.externalContext.requestContextPath}/resources/css/bootstrap.min.css" rel="stylesheet"/>-->
+    <!--<link href="#{facesContext.externalContext.requestContextPath}/resources/css/font-awesome.css" rel="stylesheet"/>-->
+    <!--<link href="#{facesContext.externalContext.requestContextPath}/resources/css/bootstrap-social.css"-->
+          <!--rel="stylesheet"/>-->
 
-    <!-- Custom styles for this template -->
-    <link href="#{facesContext.externalContext.requestContextPath}/resources/css/default.css" rel="stylesheet"/>
+    <!--&lt;!&ndash; Custom styles for this template &ndash;&gt;-->
+    <!--<link href="#{facesContext.externalContext.requestContextPath}/resources/css/default.css" rel="stylesheet"/>-->
 </h:head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -89,12 +89,19 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="#{facesContext.externalContext.requestContextPath}/resources/js/jquery-1.11.3.js"
-        type="text/javascript"></script>
-<script src="#{facesContext.externalContext.requestContextPath}/resources/js/bootstrap.min.js"
-        type="text/javascript"></script>
-<script src="#{facesContext.externalContext.requestContextPath}/resources/js/jee7hotelconfig.js"
-        type="text/javascript"></script>
+
+<h:outputStylesheet library="common" name="css/bootstrap.min.css" rel="stylesheet"/>
+<h:outputStylesheet library="common" name="css/font-awesome.css" rel="stylesheet"/>
+<h:outputStylesheet library="common" name="css/bootstrap-social.css" rel="stylesheet"/>
+
+<!-- Custom styles for this template -->
+<h:outputStylesheet library="common" name="css/default.css"  rel="stylesheet"/>
+
+<h:outputScript library="common" name="js/jquery-1.11.3.js" />
+<h:outputScript library="common" name="js/bootstrap.min.js" />
+<h:outputScript library="common" name="js/jee7hotelconfig.js" />
+
+
 
 <script type="text/javascript">
     // setup internal context path info for javascript
