@@ -19,7 +19,8 @@
     <div class="guestbook">
         <h:dataTable var="guest"
                      value="#{cc.attrs.guestList}"
-                     styleClass="table table-striped">
+                     styleClass="table table-striped"
+                     rowClasses="row">
             <h:column>
                 <f:facet name="header">#{msgs.actions}</f:facet>
                 <cc:renderFacet name="actions"/>

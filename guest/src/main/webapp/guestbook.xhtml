@@ -39,7 +39,7 @@
 
         <ui:fragment rendered="#{!empty(guestbookBean.guestList)}">
             <form jsf:id="guestbook_form">
-
+                <div id="pagingControls"/>
                 <kh:guestlist id="guestList" guestList="#{guestbookBean.guestList}">
                     <f:facet name="actions">
                         <ul class="action_items">
@@ -60,6 +60,26 @@
                 </kh:guestlist>
             </form>
         </ui:fragment>
+    </ui:define>
+
+
+    <ui:define name="miscjavascript">
+        <h:outputScript library="common" name="js/pager.js"/>
+
+        <script>
+            // note: currently this must be visible globally....this sucks and I will
+            // fix the js-library. Scouts promise!
+            var pager = new Imtech.Pager();
+            (function () {
+                $(document).ready(function () {
+                    pager.pagingContainerPath = $('tbody'); // set of main container
+                    pager.paragraphs = $('tr.row', pager.pagingContainer); // set of required containers
+                    pager.elemTagName = 'tr';
+                    pager.showPage(1);
+                });
+            })();
+        </script>
+
     </ui:define>
 </ui:composition>
 </html>
