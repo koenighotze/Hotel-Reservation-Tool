@@ -8,6 +8,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+import static javax.persistence.GenerationType.IDENTITY;
+import static org.koenighotze.jee7hotel.domain.RoomEquipment.BUDGET;
+
 /**
  * Represents a single room.
  *
@@ -27,8 +30,10 @@ import java.io.Serializable;
 })
 @Cacheable
 public class Room implements Serializable {
+    private static final Room NULL_VALUE = new Room("", BUDGET);
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Version
@@ -68,5 +73,9 @@ public class Room implements Serializable {
     @Override
     public String toString() {
         return "Room{" + "id=" + id + ", version=" + version + ", roomNumber=" + roomNumber + ", roomEquipment=" + roomEquipment + '}';
+    }
+
+    public static Room nullValue() {
+        return NULL_VALUE;
     }
 }

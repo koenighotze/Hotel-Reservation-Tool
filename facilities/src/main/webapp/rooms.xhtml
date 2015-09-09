@@ -13,10 +13,13 @@
 
     <ui:define name="content">
         <ui:fragment rendered="#{!empty(roomsBean.rooms)}">
+            <div id="pagingControls"/>
+
             <div class="rooms">
                 <h:dataTable var="room"
                              value="#{roomsBean.rooms}"
-                             styleClass="table table-striped">
+                             styleClass="table table-striped"
+                             rowClasses="row">
                     <h:column>
                         <f:facet name="header">#{msgs.actions}</f:facet>
                         <ul class="action_items">
@@ -24,8 +27,7 @@
                                 <h:link outcome="room.xhtml?faces-redirect=true"
                                         includeViewParams="true"
                                         value="#{msgs.details}">
-                                    <f:param name="roomId"
-                                             value="#{room.id}"/>
+                                    <f:param name="roomId" value="#{room.id}"/>
                                 </h:link>
 
                             </li>
@@ -48,6 +50,20 @@
         </ui:fragment>
     </ui:define>
 
+    <ui:define name="miscjavascript">
+        <script src="#{facesContext.externalContext.requestContextPath}/resources/js/pager.js"
+                type="text/javascript"></script>
+        <script>
+            var pager = new Imtech.Pager();
+            $(document).ready(function () {
+                pager.pagingContainerPath = $('tbody'); // set of main container
+                pager.paragraphs = $('tr.row', pager.pagingContainer); // set of required containers
+                pager.elemTagName = 'tr';
+                pager.showPage(1);
+            });
+        </script>
+
+    </ui:define>
 </ui:composition>
 
 </body>

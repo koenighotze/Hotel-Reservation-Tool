@@ -8,8 +8,7 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
-import static org.koenighotze.jee7hotel.domain.RoomEquipment.BUDGET;
+import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
 
 /**
@@ -26,17 +25,16 @@ public class RoomDetailsBean {
 
     public void loadRoom(ComponentSystemEvent evt) {
         if (null == this.roomId) {
-            this.room = new Room("", BUDGET);
-            addMessage(SEVERITY_ERROR,
-                    "No room id provided!");
+            this.room = Room.nullValue();
+            addMessage(SEVERITY_WARN, "No room id provided!");
             return;
         }
+
         if (null == this.room) {
             this.room = this.service.findRoomById(this.roomId)
                     .orElseGet(() -> {
-                        addMessage(SEVERITY_ERROR,
-                                "Cannot find room " + this.roomId);
-                        return new Room("", BUDGET);
+                        addMessage(SEVERITY_WARN, "Cannot find room " + this.roomId);
+                        return Room.nullValue();
                     });
         }
     }

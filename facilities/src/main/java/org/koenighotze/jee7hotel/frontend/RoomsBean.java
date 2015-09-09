@@ -10,7 +10,7 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.util.List;
 
-import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
+import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
 
 /**
@@ -21,34 +21,17 @@ import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
 public class RoomsBean {
     @Inject
     private RoomService roomService;
+
     private List<Room> rooms;
-
     private Room selectedRoom;
-
-    public Room getSelectedRoom() {
-        return selectedRoom;
-    }
-
-    public void setSelectedRoom(Room selectedRoom) {
-        this.selectedRoom = selectedRoom;
-    }
 
     @PostConstruct
     public void init() {
         this.rooms = this.roomService.getAllRooms();
 
         if (this.rooms.isEmpty()) {
-            addMessage(SEVERITY_ERROR,
-                    "No rooms found!");
+            addMessage(SEVERITY_WARN, "No rooms found!");
         }
-    }
-
-    public String showRoomDetails() {
-        return null;
-    }
-
-    public String newReservation() {
-        return null;
     }
 
     public List<Room> getRooms() {
