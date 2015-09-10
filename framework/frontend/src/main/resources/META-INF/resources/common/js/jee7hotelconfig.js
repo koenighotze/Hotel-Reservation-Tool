@@ -6,11 +6,10 @@
   "use strict";
 
   var config =  {
-
     settings : {
       href: window.location.href,
       hostname: window.location.hostname,
-      wsPort: "${ws.port}"
+      wsPort: 8080
     },
 
     webSocketBaseUrl : function() {

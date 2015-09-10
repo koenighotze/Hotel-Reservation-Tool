@@ -62,17 +62,17 @@ public class NewReservationBean implements Serializable {
         this.booking.setCheckoutDate(now().plusDays(2));
     }
 
-    public void setRoomNumber(@NotNull String number) {
-        this.roomId = number;
-        this.booking.setRoom(number);
-    }
-
     public String getRoomNumber() {
         if (null == this.booking.getRoom()) {
             return null;
         }
 
         return this.booking.getRoom();
+    }
+
+    public void setRoomNumber(@NotNull String number) {
+        this.roomId = number;
+        this.booking.setRoom(number);
     }
 
     public String addReservation() {
