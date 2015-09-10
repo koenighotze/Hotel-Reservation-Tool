@@ -263,8 +263,9 @@ th {
 @font-face {
   font-family: 'Glyphicons Halflings';
 
-  src: url('../../../../../../framework/frontend/src/main/resources/META-INF/resources/org/koenighotze/jee7hotel/framework/frontend/font/glyphicons-halflings-regular.eot');
-  src: url('../../../../../../framework/frontend/src/main/resources/META-INF/resources/org/koenighotze/jee7hotel/framework/frontend/font/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../../../../framework/frontend/src/main/resources/META-INF/resources/org/koenighotze/jee7hotel/framework/frontend/font/glyphicons-halflings-regular.woff') format('woff'), url('../../../../../../framework/frontend/src/main/resources/META-INF/resources/org/koenighotze/jee7hotel/framework/frontend/font/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../../../../framework/frontend/src/main/resources/META-INF/resources/org/koenighotze/jee7hotel/framework/frontend/font/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url("#{resource['common/fonts/glyphicons-halflings-regular.eot']}");
+  src: url("#{resource['common/fonts/glyphicons-halflings-regular.eot']}?#iefix") format('embedded-opentype'), url("#{resource['/common/fonts/glyphicons-halflings-regular.woff']}") format('woff'), url("#{resource['/common/fonts/glyphicons-halflings-regular.ttf']}") format('truetype'), url("#{resource['/common/fonts/glyphicons-halflings-regular.svg']}#glyphicons_halflingsregular") format('svg');
+}
 }
 .glyphicon {
   position: relative;

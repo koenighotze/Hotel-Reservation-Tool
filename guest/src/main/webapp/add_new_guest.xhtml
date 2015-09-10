@@ -37,7 +37,7 @@
             <div class="btn-toolbar">
                 <input jsf:id="btn_discard_changes"
                        type="submit"
-                       jsf:action="/guestbook.xhtml"
+                       jsf:action="/guestbook.xhtmlfaces-redirect=true"
                        class="btn btn-sm"
                        jsf:immediate="true"
                        value="#{msgs.btn_discard_changes}">
@@ -47,7 +47,7 @@
                        value="#{msgs.save_guest_info}"
                        class="btn btn-sm btn-primary"
                        jsf:actionListener="#{addNewGuestBean.saveGuest}"
-                       jsf:action="/guestbook.xhtml">
+                       jsf:action="/guestbook.xhtmlfaces-redirect=true">
                 </input>
             </div>
         </h:form>

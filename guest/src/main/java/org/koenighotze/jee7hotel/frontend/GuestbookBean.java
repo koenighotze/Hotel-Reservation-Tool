@@ -24,6 +24,8 @@ public class GuestbookBean {
     public void fillInitialGuestBook() {
         // TODO trigger batch via JMS?
         addFlashMessage(SEVERITY_WARN, "Guest import via Batch is still work in progress...");
+
+//        return format("/guestbook.xhtml"); //?&faces-redirect=true");
     }
     
     public List<Guest> getGuestList() {

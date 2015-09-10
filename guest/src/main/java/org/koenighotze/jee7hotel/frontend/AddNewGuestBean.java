@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
-import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
+import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addFlashMessage;
 
 /**
  * @author dschmitz
@@ -37,8 +37,6 @@ public class AddNewGuestBean implements Serializable {
 
     public void saveGuest() {
         this.guestService.saveGuest(this.guest);
-        addMessage(SEVERITY_INFO, "Guest saved: " + this.guest);
-
-        this.guest = new Guest("", "");
+        addFlashMessage(SEVERITY_INFO, "Guest saved: " + this.guest);
     }
 }

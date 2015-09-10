@@ -42,7 +42,7 @@
                 <span class="icon-bar">f</span>
                 <span class="icon-bar">f</span>
             </button>
-            <a class="navbar-brand" href="#{facesContext.externalContext.requestContextPath}">#{msgs.application_title_short}</a>
+            <a class="navbar-brand" href="#{request.contextPath}">#{msgs.application_title_short}</a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -84,16 +84,14 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<h:outputStylesheet library="common" name="css/bootstrap.min.css" rel="stylesheet"/>
-<h:outputStylesheet library="common" name="css/font-awesome.css" rel="stylesheet"/>
-<h:outputStylesheet library="common" name="css/bootstrap-social.css" rel="stylesheet"/>
+<!-- including bootstrap like this, because of issues with glyphicons -->
+<link rel="stylesheet" type="text/css"
+      href="#{request.contextPath}/resources/css/bootstrap/bootstrap.css"/>
 
-<!-- Custom styles for this template -->
-<h:outputStylesheet library="common" name="css/default.css"  rel="stylesheet"/>
-
-<h:outputScript library="common" name="js/jquery-1.11.3.js" />
-<h:outputScript library="common" name="js/bootstrap.min.js" />
-<h:outputScript library="common" name="js/jee7hotelconfig.js" />
+<h:outputStylesheet library="common" name="css/default.css"/>
+<h:outputScript library="common" name="js/jquery-1.11.3.js"/>
+<h:outputScript library="common" name="js/jee7hotelconfig.js"/>
+<h:outputScript library="bootstrap" name="js/bootstrap.js"/>
 
 <ui:insert name="miscjavascript">
 </ui:insert>
