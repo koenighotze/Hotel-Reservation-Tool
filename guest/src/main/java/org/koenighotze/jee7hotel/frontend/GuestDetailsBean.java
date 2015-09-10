@@ -7,7 +7,6 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
 import java.util.Optional;
 
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
@@ -19,13 +18,16 @@ import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
  */
 @Named
 @ViewScoped
-public class GuestDetailsBean implements Serializable {
+public class GuestDetailsBean {
     private Guest guest;
 
     private Long guestId;
 
     @Inject
     private GuestService service;
+
+    public GuestDetailsBean() {
+    }
 
     public void loadGuest(ComponentSystemEvent evt) {
         if (null == this.guestId) {
@@ -42,9 +44,6 @@ public class GuestDetailsBean implements Serializable {
                         return new Guest("", "");
                     });
         }
-    }
-
-    public GuestDetailsBean() {
     }
 
     public Long getGuestId() {
