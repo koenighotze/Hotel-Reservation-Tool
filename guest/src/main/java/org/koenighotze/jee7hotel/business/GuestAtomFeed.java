@@ -15,6 +15,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.Date;
 
+import static java.time.ZoneOffset.UTC;
+
 /**
  * @author dschmitz
  */
@@ -51,7 +53,7 @@ public class GuestAtomFeed {
         guestService.getAllGuests().stream().forEach(guest -> {
             Entry entry = feed.addEntry();
             entry.setId(guest.getId() + "");
-            entry.setUpdated(new Date());
+            entry.setUpdated(Date.from(guest.getLastUpdate().toInstant(UTC)));
             entry.setAttributeValue("Version", guest.getVersion() + "");
 //            entry.setTitle("Entry title");
 //            entry.setSummaryAsHtml("<p>This is the entry title</p>");

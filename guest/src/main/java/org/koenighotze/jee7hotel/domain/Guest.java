@@ -8,6 +8,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+import static java.time.ZoneId.of;
+import static java.time.ZoneOffset.UTC;
+import static java.util.Date.from;
 
 /**
  * @author dschmitz
@@ -23,6 +29,7 @@ import java.io.Serializable;
                 name = Guest.GUEST_FIND_BY_PUBLIC_ID,
                 query = "select g from Guest g where g.publicId = :publicId")
 })
+@EntityListeners(Audit.class)
 public class Guest implements Serializable {
     public static final String GUEST_FIND_BY_PUBLIC_ID = "Guest.findByPublicId";
     public static final String GUEST_FIND_BY_NAME = "Guest.findByName";
@@ -40,6 +47,10 @@ public class Guest implements Serializable {
 
     @NotNull
     private String publicId;
+
+    @Auditable
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdate;
 
     public Guest() {
     }
@@ -88,6 +99,21 @@ public class Guest implements Serializable {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public LocalDateTime getLastUpdate() {
+        if (null == lastUpdate) {
+            return null;
+        }
+        return LocalDateTime.from(lastUpdate.toInstant().atZone(of(UTC.getId())));
+    }
+
+    public void setLastUpdate(LocalDateTime lastUpdate) {
+        if (null == lastUpdate) {
+            this.lastUpdate = null;
+        } else {
+            this.lastUpdate = from(lastUpdate.toInstant(UTC));
+        }
     }
 
     @Override
