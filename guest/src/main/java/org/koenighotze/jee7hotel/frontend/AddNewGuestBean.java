@@ -10,6 +10,7 @@ import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+import static java.util.UUID.randomUUID;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addFlashMessage;
 
@@ -28,7 +29,7 @@ public class AddNewGuestBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        this.guest = new Guest("", "");
+        this.guest = new Guest(randomUUID().toString(), "", "");
     }
 
     public Guest getGuest() {

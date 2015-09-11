@@ -6,9 +6,9 @@ import org.koenighotze.jee7hotel.business.GuestService;
 import org.koenighotze.jee7hotel.domain.Guest;
 
 import javax.persistence.TypedQuery;
-import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -25,7 +25,7 @@ public class GuestDataWriterTest extends AbstractBasePersistenceTest {
         guestDataWriter.setEntityManager(getEntityManager());
         guestDataWriter.setGuestService(guestService);
 
-        List<Object> items = Arrays.asList(new Guest("foo", "baz@bar.com"));
+        List<Object> items = asList(new Guest("dsa", "foo", "baz@bar.com"));
         guestDataWriter.writeItems(items);
 
         // check if the items where written to the PC

@@ -9,15 +9,18 @@ import javax.inject.Named;
 import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
 import static java.util.Optional.*;
+import static org.koenighotze.jee7hotel.domain.Guest.GUEST_FIND_BY_PUBLIC_ID;
 
 /**
  * Sample for a REST-based bean, that can also be used locally.
@@ -43,8 +46,14 @@ public class GuestService {
 
     public void saveGuest(Guest guest) {
         LOGGER.info(() -> "Saving guest " + guest);
-
         this.em.persist(guest);
+    }
+
+    @GET
+    @Produces({"application/xml", "application/json"})
+    @Path("/{guestId}")
+    public Guest findSingleGuestById(@PathParam("guestId") Long guestId) {
+        return this.em.find(Guest.class, guestId);
     }
 
     @GET
@@ -55,7 +64,7 @@ public class GuestService {
         return this.em.createQuery(cq).getResultList();
     }
 
-    public Optional<Guest> findById(Long guestId) {
+    public Optional<Guest> findById(@PathParam("guestId") Long guestId) {
         Guest guest = this.em.find(Guest.class, guestId);
         return ofNullable(guest);
     }
@@ -65,5 +74,15 @@ public class GuestService {
             return empty();
         }
         return of(this.em.merge(guest));
+    }
+
+    public Optional<Guest> findByPublicId(String publicId) {
+        TypedQuery<Guest> query = em.createNamedQuery(GUEST_FIND_BY_PUBLIC_ID, Guest.class);
+        query.setParameter("publicId", publicId);
+        List<Guest> resultList = query.getResultList();
+        if (resultList.isEmpty()) {
+            return empty();
+        }
+        return of(resultList.get(0));
     }
 }

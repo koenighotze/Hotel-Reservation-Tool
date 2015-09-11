@@ -8,7 +8,7 @@
 
 <body>
 <f:metadata>
-    <f:viewParam name="guestId" value="#{newReservationBean.guestId}"/>
+    <f:viewParam name="publicGuestId" value="#{newReservationBean.publicGuestId}"/>
     <f:viewParam name="roomId" value="#{newReservationBean.roomId}"/>
     <f:event type="preRenderView" listener="#{newReservationBean.init}"/>
 </f:metadata>
@@ -21,7 +21,7 @@
         <form jsf:id="welcomeForm">
             <div class="form-group">
                 <kh:input id="guest_id"
-                          val="#{newReservationBean.guestId}"
+                          val="#{newReservationBean.publicGuestId}"
                           label="#{msgs.guest_id}"
                           placeholder="#{msgs.enter_guest_id}"
                           required="true"

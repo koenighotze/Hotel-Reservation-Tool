@@ -7,6 +7,7 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.Optional;
 
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
@@ -18,10 +19,10 @@ import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
  */
 @Named
 @ViewScoped
-public class GuestDetailsBean {
+public class GuestDetailsBean implements Serializable {
     private Guest guest;
 
-    private Long guestId;
+    private String publicGuestId;
 
     @Inject
     private GuestService service;
@@ -30,28 +31,28 @@ public class GuestDetailsBean {
     }
 
     public void loadGuest(ComponentSystemEvent evt) {
-        if (null == this.guestId) {
-            this.guest = new Guest("", "");
+        if (null == this.publicGuestId) {
+            this.guest = Guest.nullGuest();
             addMessage(SEVERITY_ERROR,
                     "No guest id provided!");
             return;
         }
         if (null == this.guest) {
-            this.guest = this.service.findById(this.guestId)
+            this.guest = this.service.findByPublicId(this.publicGuestId)
                     .orElseGet(() -> {
                         addMessage(SEVERITY_ERROR,
-                                "Cannot find guest " + this.guestId);
-                        return new Guest("", "");
+                                "Cannot find guest " + this.publicGuestId);
+                        return Guest.nullGuest();
                     });
         }
     }
 
-    public Long getGuestId() {
-        return guestId;
+    public String getPublicGuestId() {
+        return publicGuestId;
     }
 
-    public void setGuestId(Long guestId) {
-        this.guestId = guestId;
+    public void setPublicGuestId(String publicGuestId) {
+        this.publicGuestId = publicGuestId;
     }
 
     public Guest getGuest() {

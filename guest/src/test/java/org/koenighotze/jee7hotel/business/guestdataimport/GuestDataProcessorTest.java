@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 public class GuestDataProcessorTest {
     @Test
     public void processReturnsGuest() throws Exception {
-        Object processItem = new GuestDataProcessor().processItem("foo bar, bratzen@putz.de");
+        Object processItem = new GuestDataProcessor().processItem("id, foo bar, bratzen@putz.de");
         Guest guest = (Guest) processItem;
 
         assertThat("foo bar", is(equalTo(guest.getName())));

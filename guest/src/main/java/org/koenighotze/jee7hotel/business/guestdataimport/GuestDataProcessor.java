@@ -33,17 +33,18 @@ public class GuestDataProcessor implements ItemProcessor {
 
         String[] split = ((String) o).split(",");
 
-        if (split.length != 2) {
+        if (split.length != 3) {
             throw new IllegalArgumentException("Unexpected format in " + o);
         }
 
-        String name = split[0].trim();
-        String email = split[1].trim();
+        String publicId = split[0].trim();
+        String name = split[1].trim();
+        String email = split[2].trim();
 
         if (!email.matches("\\p{Alnum}+@\\p{Alnum}+.\\p{Alnum}+")) {
             throw new IllegalArgumentException("Unexpected email '" + email + "'");
         }
 
-        return new Guest(name, email);
+        return new Guest(publicId, name, email);
     }
 }

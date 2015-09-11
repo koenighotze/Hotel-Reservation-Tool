@@ -6,14 +6,11 @@ import org.junit.Test;
 import org.koenighotze.jee7hotel.domain.Guest;
 
 import java.util.Optional;
-import java.util.Scanner;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static java.util.UUID.randomUUID;
+import static org.fest.assertions.Assertions.assertThat;
 
 /**
- *
  * @author dschmitz
  */
 public class GuestServiceTest extends AbstractBasePersistenceTest {
@@ -23,61 +20,67 @@ public class GuestServiceTest extends AbstractBasePersistenceTest {
 
     @Override
     protected void initHook() {
-        this.guestService = new GuestService();
-        this.guestService.setEntityManager(getEntityManager());
-    }
-
-    
-    public String readFile(String fname) {
-        try (Scanner scanner = new Scanner(getClass().getResourceAsStream(fname), "UTF-8")) {
-            return scanner.useDelimiter("\\A").next();
-        }
+        guestService = new GuestService();
+        guestService.setEntityManager(getEntityManager());
     }
 
     @Override
     protected void cleanupHook() {
-        this.guestService = null;
+        guestService = null;
     }
-    
+
     @Test
-    public void testFindAllGuests() {
-        assertThat(guestService.getAllGuests(), is(not(nullValue())));
+    public void finding_all_guests_does_not_return_null() {
+        assertThat(guestService.getAllGuests()).isNotNull();
     }
-    
+
     @Test
-    public void testAddGuest() {                        
-        Guest guest = new Guest("name", "email@foo.de");
-        
-        this.guestService.saveGuest(guest);
+    public void saving_a_guest_sets_the_technical_id() {
+        Guest guest = new Guest("jjjkl", "name", "email@foo.de");
+
+        guestService.saveGuest(guest);
         getEntityManager().flush(); // fore id pickup
-        
-        assertThat(guest.getId(), is(not(nullValue())));
+
+        assertThat(guest.getId()).isNotNull();
     }
-    
-    public void testfindAllGuestsEmpty() {
-        
-    }
-   
-    public void testfindAllGuestsNonEmpty() {
-        
-    }
-    
+
     @Test
-    public void testUpdateGuest() {
+    public void a_known_guest_can_be_found_by_his_public_id() {
+        final String PUBLIC_ID = "jjjkl";
+        Guest guest = new Guest(PUBLIC_ID, "name", "email@foo.de");
+
+        guestService.saveGuest(guest);
+        getEntityManager().flush();
+
+        Optional<Guest> result = guestService.findByPublicId(PUBLIC_ID);
+
+        assertThat(result.isPresent()).isTrue();
+        assertThat(result.get().getId()).isEqualTo(guest.getId());
+    }
+
+    @Test
+    public void an_unkown_guest_results_in_an_empty_optional() {
+        Optional<Guest> result = guestService.findByPublicId(randomUUID().toString());
+
+        assertThat(result.isPresent()).isFalse();
+    }
+
+    @Test
+    public void updating_a_guest_sets_all_fields_and_increases_the_version() {
         final String newName = "Bratislav Metulski";
-        
-        Optional<Guest> guest = this.guestService.findById(WELL_KNOWN_ID);
-        assertThat("Well known guest not found!", guest.get(), is(not(nullValue())));
-        assertThat("Name should not be " + newName, guest.get().getName(), is(not(equalTo(newName))));
-       
+
+        Optional<Guest> guest = guestService.findById(WELL_KNOWN_ID);
+        assertThat(guest.isPresent()).isTrue();
+        assertThat(guest.get().getName()).isNotEqualTo(newName);
+
         guest.get().setName(newName);
         getEntityManager().detach(guest.get());
-        
-        Optional<Guest> updated = this.guestService.updateGuestDetails(guest.get());
+
+        Optional<Guest> updated = guestService.updateGuestDetails(guest.get());
         getEntityManager().flush();
-        
-        assertThat("Name should be " + newName, updated.get().getName(), is(equalTo(newName)));
-        
-        assertTrue("Version should be incremented ", updated.get().getVersion() > guest.get().getVersion());
+
+        assertThat(guest.get().getName()).isEqualTo(newName);
+
+        assertThat(updated.get().getVersion()).isGreaterThan(guest.get().getVersion());
     }
 }
