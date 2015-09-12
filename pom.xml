@@ -25,6 +25,7 @@
 
     <modules>
         <module>framework</module>
+        <module>portal</module>
         <module>guest</module>
         <module>booking</module>
         <module>facilities</module>
