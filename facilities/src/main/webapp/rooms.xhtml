@@ -13,7 +13,7 @@
 
     <ui:define name="content">
         <ui:fragment rendered="#{!empty(roomsBean.rooms)}">
-            <div id="pagingControls"/>
+            <div id="pagingControls"></div>
 
             <div class="rooms">
                 <h:dataTable var="room"
@@ -60,7 +60,7 @@
             (function () {
                 $(document).ready(function () {
                     pager.pagingContainerPath = $('tbody'); // set of main container
-                    pager.paragraphs = $('tr.row', pager.pagingContainer); // set of required containers
+                    pager.paragraphs = $('tr.pagingRow', pager.pagingContainer); // set of required containers
                     pager.elemTagName = 'tr';
                     pager.showPage(1);
                 });
