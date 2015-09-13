@@ -15,6 +15,10 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.abdera</groupId>
+            <artifactId>abdera-parser</artifactId>
+        </dependency>
         <!--&lt;!&ndash; ...other than mongodb. &ndash;&gt;-->
         <!--<dependency>-->
         <!--<groupId>org.mongojack</groupId>-->

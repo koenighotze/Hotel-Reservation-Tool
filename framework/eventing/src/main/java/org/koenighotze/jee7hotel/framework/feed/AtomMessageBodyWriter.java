@@ -1,4 +1,4 @@
-package org.koenighotze.jee7hotel.business;
+package org.koenighotze.jee7hotel.framework.feed;
 
 import org.apache.abdera.Abdera;
 import org.apache.abdera.model.Entry;
