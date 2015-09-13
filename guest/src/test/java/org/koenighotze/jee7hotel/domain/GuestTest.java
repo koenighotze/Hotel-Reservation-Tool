@@ -2,6 +2,7 @@ package org.koenighotze.jee7hotel.domain;
 
 import org.junit.Test;
 import org.koenighotze.jee7hotel.business.AbstractBasePersistenceTest;
+import org.koenighotze.jee7hotel.framework.persistence.audit.Audit;
 
 import static org.fest.assertions.Assertions.assertThat;
 

@@ -39,7 +39,7 @@
 
         <ui:fragment rendered="#{!empty(guestbookBean.guestList)}">
             <form jsf:id="guestbook_form">
-                <div id="pagingControls"/>
+                <div id="pagingControls"></div>
                 <kh:guestlist id="guestList" guestList="#{guestbookBean.guestList}">
                     <f:facet name="actions">
                         <ul class="action_items">
@@ -75,7 +75,7 @@
             (function () {
                 $(document).ready(function () {
                     pager.pagingContainerPath = $('tbody'); // set of main container
-                    pager.paragraphs = $('tr.row', pager.pagingContainer); // set of required containers
+                    pager.paragraphs = $('tr.pagingRow', pager.pagingContainer); // set of required containers
                     pager.elemTagName = 'tr';
                     pager.showPage(1);
                 });

@@ -3,6 +3,8 @@
 package org.koenighotze.jee7hotel.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.koenighotze.jee7hotel.framework.persistence.audit.Audit;
+import org.koenighotze.jee7hotel.framework.persistence.audit.Auditable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
