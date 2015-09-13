@@ -60,10 +60,10 @@
             <to-view-id>/room/rooms.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
-        <navigation-case>
-            <from-outcome>addnewreservationflow</from-outcome>
-            <to-view-id>/addnewreservationflow/addnewreservationflow.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
+        <!--<navigation-case>-->
+            <!--<from-outcome>addnewreservationflow</from-outcome>-->
+            <!--<to-view-id>addnewreservationflow/addnewreservationflow.xhtml</to-view-id>-->
+            <!--&lt;!&ndash;<redirect/>&ndash;&gt;-->
+        <!--</navigation-case>-->
     </navigation-rule>
 </faces-config>

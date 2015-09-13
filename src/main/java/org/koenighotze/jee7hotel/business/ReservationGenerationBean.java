@@ -5,25 +5,15 @@ import org.koenighotze.jee7hotel.business.json.BookingMessageTOReader;
 import org.koenighotze.jee7hotel.domain.Guest;
 import org.koenighotze.jee7hotel.domain.Reservation;
 import org.koenighotze.jee7hotel.domain.Room;
-import org.koenighotze.jee7hotel.frontend.model.Booking;
 import org.koenighotze.jee7hotel.resources.MessagingDefinition;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
-import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.jms.*;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,24 +27,16 @@ import java.util.logging.Logger;
  * <p>
  * Created by dschmitz on 20.11.14.
  */
-//@JMSDestinationDefinition(
-//        name = "java:app/jee7hotel/reservationQueue",
-//        interfaceName = "javax.jms.Queue",
-//        destinationName = "reservationQueue"
-//)
-/* Activate the traffic-rar resource adapter from this MDB */
-//@MessageDriven(
-//        activationConfig = {
-//            @ActivationConfigProperty(
-//                    propertyName = "port",
-//                    propertyValue = "4008"
-//            )
-//        }
-//)
 // TODO activationSpec
 // TODO Trigger Event
-
-//@JMSDestinationDefinition(name = "java:app/jee7hotel/reservationQueue", interfaceName = "javax.jms.Queue")
+@JMSDestinationDefinitions({
+        @JMSDestinationDefinition(name = "java:app/jee7hotel/reservationQueue", interfaceName = "javax.jms.Queue"),
+        @JMSDestinationDefinition(
+                name = MessagingDefinition.CLASSIC_QUEUE,
+                resourceAdapter = "jmsra",
+                interfaceName = "javax.jms.Queue",
+                destinationName = "classicQueue",
+                description = "My Sync Queue")})
 @MessageDriven(
         activationConfig = {
                 @ActivationConfigProperty(propertyName = "destinationLookup",
@@ -99,8 +81,6 @@ public class ReservationGenerationBean implements MessageListener {
         } catch (IOException | JMSException e) {
             LOGGER.log(Level.SEVERE, "Cannot process message " + message, e);
         }
-
-
     }
 
     protected BookingMessageTO messageToBookingMessageTO(Message message) throws IOException, JMSException {

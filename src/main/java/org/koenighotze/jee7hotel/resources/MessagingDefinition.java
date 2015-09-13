@@ -1,5 +1,6 @@
 package org.koenighotze.jee7hotel.resources;
 
+import javax.inject.Named;
 import javax.jms.JMSDestinationDefinition;
 import javax.jms.JMSDestinationDefinitions;
 
@@ -30,6 +31,7 @@ import javax.jms.JMSDestinationDefinitions;
                 destinationName="syncContainerQueue",
                 description="My Sync Queue for Container-managed JMSContext")
 })
+@Named
 public class MessagingDefinition {
     public static final String SYNC_APP_MANAGED_QUEUE = "java:global/jms/mySyncAppQueue";
     public static final String SYNC_CONTAINER_MANAGED_QUEUE = "java:global/jms/mySyncContainerQueue";

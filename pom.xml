@@ -365,16 +365,13 @@
 
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>wildfly</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
                 <ws.port>8080</ws.port>
             </properties>
-        </profile>
-        <profile>
-            <id>wildfly</id>
             <build>
                 <plugins>
                     <plugin>
