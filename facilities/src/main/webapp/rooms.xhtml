@@ -19,8 +19,9 @@
                 <h:dataTable var="room"
                              value="#{roomsBean.rooms}"
                              styleClass="table table-striped"
+                             columnClasses="visible, visible, hidden-xs, visible"
                              rowClasses="pagingRow">
-                    <h:column>
+                    <h:column headerClass="visible">
                         <f:facet name="header">#{msgs.actions}</f:facet>
                         <ul class="action_items">
                             <li>
@@ -33,15 +34,15 @@
                             </li>
                         </ul>
                     </h:column>
-                    <h:column>
+                    <h:column headerClass="visible">
                         <f:facet name="header">#{msgs.id}</f:facet>
                         #{room.id}
                     </h:column>
-                    <h:column>
+                    <h:column headerClass="hidden-xs">
                         <f:facet name="header">#{msgs.room_number}</f:facet>
                         #{room.roomNumber}
                     </h:column>
-                    <h:column>
+                    <h:column headerClass="visible">
                         <f:facet name="header">#{msgs.room_equipment}</f:facet>
                         #{msgs[room.roomEquipment]}
                     </h:column>

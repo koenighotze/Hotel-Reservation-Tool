@@ -19,6 +19,10 @@
             <groupId>org.apache.abdera</groupId>
             <artifactId>abdera-parser</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-common</artifactId>
+        </dependency>
         <!--&lt;!&ndash; ...other than mongodb. &ndash;&gt;-->
         <!--<dependency>-->
         <!--<groupId>org.mongojack</groupId>-->

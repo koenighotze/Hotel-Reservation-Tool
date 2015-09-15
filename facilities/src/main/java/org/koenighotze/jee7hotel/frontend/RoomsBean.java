@@ -23,7 +23,6 @@ public class RoomsBean {
     private RoomService roomService;
 
     private List<Room> rooms;
-    private Room selectedRoom;
 
     @PostConstruct
     public void init() {
