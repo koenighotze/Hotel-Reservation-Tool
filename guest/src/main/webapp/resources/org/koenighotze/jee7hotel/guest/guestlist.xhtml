@@ -20,20 +20,21 @@
         <h:dataTable var="guest"
                      value="#{cc.attrs.guestList}"
                      styleClass="table table-striped"
-                     rowClasses="pagingRow">
-            <h:column>
+                     rowClasses="pagingRow"
+                     columnClasses="visible, visible-xs, hidden-xs, hidden-xs ">
+            <h:column headerClass="visible">
                 <f:facet name="header">#{msgs.actions}</f:facet>
                 <cc:renderFacet name="actions"/>
             </h:column>
-            <h:column>
+            <h:column headerClass="visible-xs">
                 <f:facet name="header">#{msgs.id}</f:facet>
                 #{guest.publicId}
             </h:column>
-            <h:column>
+            <h:column headerClass="hidden-xs">
                 <f:facet name="header">#{msgs.guest_name}</f:facet>
                 #{guest.name}
             </h:column>
-            <h:column>
+            <h:column headerClass="hidden-xs">
                 <f:facet name="header">#{msgs.email}</f:facet>
                 #{guest.email}
             </h:column>
