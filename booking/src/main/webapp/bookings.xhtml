@@ -44,7 +44,8 @@
                 <h:dataTable var="booking"
                              id="bookingstable"
                              value="#{bookingsBean.bookings}"
-                             styleClass="table table-striped">
+                             styleClass="table table-striped"
+                             columnClasses="visible, visible, hidden-xs, hidden-xs, hidden-xs, hidden-xs, hidden-xs, visible ">
                     <h:column>
                         <f:facet name="header">#{msgs.actions}</f:facet>
                         <ul class="action_items">
@@ -63,28 +64,28 @@
                         <f:facet name="header">#{msgs.reservation_number}</f:facet>
                         #{booking.reservationNumber}
                     </h:column>
-                    <h:column>
+                    <h:column headerClass="hidden-xs">
                         <f:facet name="header">#{msgs.room_number}</f:facet>
                         #{booking.assignedRoom}
                     </h:column>
-                    <h:column>
+                    <h:column headerClass="hidden-xs">
                         <f:facet name="header">#{msgs.guest_id}</f:facet>
                         #{booking.guest}
                     </h:column>
-                    <h:column>
+                    <h:column headerClass="hidden-xs">
                         <f:facet name="header">#{msgs.costs_in_euros}</f:facet>
                         <h:outputFormat value="#{booking.costsInEuro}">
                             <f:convertNumber currencyCode="EUR" type="currency"/>
                         </h:outputFormat>
                     </h:column>
-                    <h:column>
+                    <h:column headerClass="hidden-xs">
                         <f:facet name="header">#{msgs.checkin_date}</f:facet>
                         <h:outputFormat value="#{booking.checkinDate}">
 
                             <!--<f:convertDateTime pattern="dd.MM.yyyy"/>-->
                         </h:outputFormat>
                     </h:column>
-                    <h:column>
+                    <h:column headerClass="hidden-xs">
                         <f:facet name="header">#{msgs.checkout_date}</f:facet>
                         <h:outputFormat value="#{booking.checkoutDate}">
                             <!--<f:convertDateTime pattern="dd.MM.yyyy"/>-->
