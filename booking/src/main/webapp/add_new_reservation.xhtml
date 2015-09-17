@@ -10,6 +10,7 @@
 <f:metadata>
     <f:viewParam name="publicGuestId" value="#{newReservationBean.publicGuestId}"/>
     <f:viewParam name="roomId" value="#{newReservationBean.roomId}"/>
+    <f:viewParam name="backlink" value="#{newReservationBean.backlink}"/>
     <f:event type="preRenderView" listener="#{newReservationBean.init}"/>
 </f:metadata>
 <ui:composition template="/WEB-INF/template-bootstrap.html">

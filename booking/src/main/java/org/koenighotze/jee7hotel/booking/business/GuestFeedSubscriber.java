@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -58,12 +57,12 @@ public class GuestFeedSubscriber {
                     try {
                         fetchGuest(link.getHref().toURI());
                     } catch (URISyntaxException e) {
-                        e.printStackTrace();
+                        LOGGER.warning(() -> "Cannot load guest details for " + link.getHref());
                     }
                 });
             });
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, e, () -> "Cannot load guest data");
+            LOGGER.warning(() -> "Cannot load guest data from " + GUEST_URL + "! " + e.getMessage());
         }
     }
 
@@ -73,6 +72,5 @@ public class GuestFeedSubscriber {
         JsonObject response = target.request(MediaType.APPLICATION_JSON).get(JsonObject.class);
 
         LOGGER.info(() -> "Read guest " + response.toString());
-
     }
 }

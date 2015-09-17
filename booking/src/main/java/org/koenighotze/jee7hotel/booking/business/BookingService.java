@@ -4,7 +4,6 @@ import org.koenighotze.jee7hotel.booking.business.events.NewReservationEvent;
 import org.koenighotze.jee7hotel.booking.business.events.ReservationStatusChangeEvent;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
 import org.koenighotze.jee7hotel.booking.domain.RoomEquipment;
-import org.koenighotze.jee7hotel.business.logging.PerformanceLog;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
@@ -43,7 +42,7 @@ import static org.koenighotze.jee7hotel.booking.domain.ReservationStatus.*;
 //        EventSourceInterceptor.class
 //})
 //@EventSource
-@PerformanceLog
+//@PerformanceLog
 public class BookingService {
     private static final Logger LOGGER = Logger.getLogger(BookingService.class.getName());
 
@@ -73,10 +72,6 @@ public class BookingService {
     public boolean cancelReservation(String reservationNumber) {
         LOGGER.info(() -> "Cancelling " + reservationNumber);
         Optional<Reservation> reservation = findReservationByNumber(reservationNumber);
-
-//        if (!reservation.isPresent()) {
-//            return false;
-//        }
 
         reservation.ifPresent(r -> {
             r.setReservationStatus(CANCELED);

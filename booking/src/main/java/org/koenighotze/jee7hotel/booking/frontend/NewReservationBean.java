@@ -1,10 +1,12 @@
 package org.koenighotze.jee7hotel.booking.frontend;
 
+import org.apache.commons.lang3.StringUtils;
 import org.koenighotze.jee7hotel.booking.business.BookingService;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
 import org.koenighotze.jee7hotel.booking.frontend.model.Booking;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ComponentSystemEvent;
@@ -12,6 +14,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.io.Serializable;
 
 import static java.lang.String.format;
@@ -25,7 +28,9 @@ import static java.time.LocalDate.now;
 @Named
 @ViewScoped
 public class NewReservationBean implements Serializable {
-    private String guestId;
+    private String publicGuestId;
+
+    private String backlink;
 
     private String roomId;
 
@@ -34,16 +39,18 @@ public class NewReservationBean implements Serializable {
     @Inject
     private BookingService bookingService;
 
+
+
     public Booking getBooking() {
         return this.booking;
     }
 
-    public String getGuestId() {
-        return guestId;
+    public String getPublicGuestId() {
+        return publicGuestId;
     }
 
-    public void setGuestId(@NotNull String guestId) {
-        this.guestId = guestId;
+    public void setPublicGuestId(@NotNull String publicGuestId) {
+        this.publicGuestId = publicGuestId;
     }
 
     public String getRoomId() {
@@ -56,7 +63,7 @@ public class NewReservationBean implements Serializable {
 
     public void init(ComponentSystemEvent evt) {
         this.booking = new Booking();
-        this.booking.setGuest(guestId);
+        this.booking.setGuest(publicGuestId);
         this.booking.setRoom(roomId);
         this.booking.setCheckinDate(now().plusDays(1));
         this.booking.setCheckoutDate(now().plusDays(2));
@@ -94,6 +101,24 @@ public class NewReservationBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
         this.booking = null;
 
-        return format("/booking.xhtml?reservationNumber=%s&faces-redirect=true", realReservation.getReservationNumber());
+        if (StringUtils.isBlank(backlink)) {
+            return format("/booking.xhtml?reservationNumber=%s&faces-redirect=true", realReservation.getReservationNumber());
+        }
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            externalContext.redirect(backlink);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        FacesContext.getCurrentInstance().responseComplete();
+        return null;
+    }
+
+    public String getBacklink() {
+        return backlink;
+    }
+
+    public void setBacklink(String backlink) {
+        this.backlink = backlink;
     }
 }

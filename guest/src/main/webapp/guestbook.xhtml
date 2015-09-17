@@ -55,13 +55,19 @@
                                              value="#{guest.publicId}"/>
                                 </h:link>
                             </li>
+                            <li>
+                                <h:outputLink value="http://localhost:8080/booking/add_new_reservation.html">
+                                    <f:param name="publicGuestId" value="#{guest.publicId}"/>
+                                    <f:param name="backlink" value="#{request.requestURL}"/>
+                                    #{msgs.new_reservation}
+                                </h:outputLink>
+                            </li>
                         </ul>
                     </f:facet>
                 </kh:guestlist>
             </form>
         </ui:fragment>
     </ui:define>
-
 
     <ui:define name="miscjavascript">
 
