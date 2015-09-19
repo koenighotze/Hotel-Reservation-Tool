@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:kh="http://xmlns.jcp.org/jsf/composite/org/koenighotze/jee7hotel/framework/frontend"
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<body>
+<f:metadata>
+    <f:viewParam name="publicGuestId" value="#{newReservationBean.publicGuestId}"/>
+    <f:viewParam name="roomId" value="#{newReservationBean.roomId}"/>
+    <f:viewParam name="backlink" value="#{newReservationBean.backlink}"/>
+    <f:event type="preRenderView" listener="#{newReservationBean.init}"/>
+</f:metadata>
+<ui:composition template="/WEB-INF/template-bootstrap.html">
+    <ui:define name="page_header">
+        #{msgs.new_reservation}
+    </ui:define>
+
+    <ui:define name="content">
+        <form jsf:id="welcomeForm">
+            <div class="form-group">
+                <kh:input id="guest_id"
+                          val="#{newReservationBean.publicGuestId}"
+                          label="#{msgs.guest_id}"
+                          placeholder="#{msgs.enter_guest_id}"
+                          required="true"
+                          requiredMessage="#{msgs.guest_id_is_required}"
+                          validatorMessage="#{msgs.provide_valid_id}">
+                    <f:validateLength for="input" maximum="20"/>
+                </kh:input>
+
+                <kh:input id="room_number"
+                          val="#{newReservationBean.roomNumber}"
+                          label="#{msgs.room_number}"
+                          placeholder="#{msgs.enter_room_number}"
+                          required="true"
+                          requiredMessage="#{msgs.room_number_is_required}"
+                          validatorMessage="#{msgs.provide_valid_room_number}">
+                    <f:validateLength for="input" maximum="20"/>
+                    <f:validateRegex for="input" pattern="^[0-9a-zA-Z]+$"/>
+                </kh:input>
+
+                <div class="form-group">
+                    <label for="checkin_date">#{msgs.checkout_date}</label>
+                    <h:inputText id="checkin_date"
+                                 value="#{newReservationBean.booking.checkinDate}"
+                                 required="true"
+                                 p:type="date"
+                                 p:placeholder="#{msgs.checkout_date}"
+                                 styleClass="form-control #{component.valid ? '' : 'input-error'}"
+                            >
+                    </h:inputText>
+                </div>
+
+                <div class="form-group">
+                    <label for="checkout_date">#{msgs.checkout_date}</label>
+                    <h:inputText id="checkout_date"
+                                 value="#{newReservationBean.booking.checkoutDate}"
+                                 required="true"
+                                 p:type="date"
+                                 p:placeholder="#{msgs.checkout_date}"
+                                 styleClass="form-control #{component.valid ? '' : 'input-error'}"
+                            >
+                    </h:inputText>
+                </div>
+            </div>
+
+            <div class="btn-toolbar">
+                <input type="submit"
+                       jsf:action="/bookings.xhtml?faces-redirect=true"
+                       class="btn btn-sm"
+                       jsf:immediate="true"
+                       value="#{msgs.btn_discard_changes}">
+                </input>
+                <input type="submit"
+                       value="#{msgs.btn_book_room}"
+                       class="btn btn-sm btn-primary"
+                       jsf:action="#{newReservationBean.addReservation}">
+                </input>
+            </div>
+        </form>
+
+    </ui:define>
+
+</ui:composition>
+
+</body>
+</html>

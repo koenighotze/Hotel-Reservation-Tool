@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+        >
+
+<f:metadata>
+    <f:viewParam name="reservationNumber" value="#{bookingDetailsBean.reservationNumber}"/>
+    <f:event type="preRenderView" listener="#{bookingDetailsBean.init}"/>
+</f:metadata>
+
+<ui:composition template="/WEB-INF/template-bootstrap.html">
+    <ui:define name="page_header">
+        #{msgs.booking_details}
+    </ui:define>
+    <ui:define name="content">
+        <ui:fragment rendered="#{empty(bookingDetailsBean.reservation)}">
+            <div class="alert alert-warning" role="alert">
+                #{msgs.reservation_not_found}
+            </div>
+        </ui:fragment>
+
+        <ui:fragment rendered="#{!empty(bookingDetailsBean.reservation)}">
+
+            <form jsf:id="bookingDetailsForm">
+                <div class="form-group">
+                    <label for="reservation_number">#{msgs.reservation_number}</label>
+                    <h:inputText id="reservation_number"
+                                 value="#{bookingDetailsBean.reservation.reservationNumber}"
+                                 readonly="true"
+                                 class="form-control uneditable-input"
+                            />
+                </div>
+
+                <div class="form-group">
+                    <label for="guest_name">#{msgs.guest_id}</label>
+
+                    <h:inputText id="guest_name"
+                                 value="#{bookingDetailsBean.reservation.guest}"
+                                 readonly="true"
+                                 class="form-control uneditable-input"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="guest_name">#{msgs.room_number}</label>
+
+                    <h:inputText id="room"
+                                 value="#{bookingDetailsBean.reservation.assignedRoom}"
+                                 readonly="true"
+                                 class="form-control uneditable-input"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="checkinDate">#{msgs.checkin_date}</label>
+
+                    <h:inputText id="checkinDate"
+                                 value="#{bookingDetailsBean.reservation.checkinDate}"
+                                 readonly="true"
+                                 class="form-control uneditable-input">
+                    </h:inputText>
+                </div>
+
+                <div class="form-group">
+                    <label for="checkout">#{msgs.checkout_date}</label>
+
+                    <h:inputText id="checkout"
+                                 value="#{bookingDetailsBean.reservation.checkinDate}"
+                                 readonly="true"
+                                 class="form-control uneditable-input">
+                    </h:inputText>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="reservationStatus">#{msgs.status}</label>
+
+                    <h:inputText id="reservationStatus"
+                                 value="#{msgs[bookingDetailsBean.reservation.reservationStatus]}"
+                                 readonly="true"
+                                 class="form-control uneditable-input">
+                    </h:inputText>
+                </div>
+
+                <div class="btn-toolbar">
+                    <input type="submit"
+                           jsf:action="bookings.xhtml?faces-redirect=true"
+                           class="btn btn-sm btn-primary"
+                           jsf:immediate="true"
+                           value="#{msgs.btn_discard_changes}">
+                    </input>
+                    <ui:fragment rendered="#{bookingDetailsBean.reservation.isOpen()}">
+                        <input type="submit"
+                               value="#{msgs.btn_cancel_reservation}"
+                               class="btn btn-sm"
+                               jsf:action="bookings.xhtml?faces-redirect=true"
+                               jsf:actionListener="#{bookingDetailsBean.cancel()}">
+                        </input>
+                    </ui:fragment>
+
+                    <ui:fragment rendered="#{bookingDetailsBean.reservation.isCanceled()}">
+                        <input type="submit"
+                               value="#{msgs.btn_reopen_reservation}"
+                               class="btn btn-sm"
+                               jsf:action="bookings.xhtml?faces-redirect=true"
+                               jsf:actionListener="#{bookingDetailsBean.reopen()}"
+                                >
+                        </input>
+                    </ui:fragment>
+                </div>
+            </form>
+        </ui:fragment>
+
+    </ui:define>
+
+    <ui:define name="miscjavascript">
+        <script src="#{request.contextPath}/resources/js/update_booking.js"
+                type="text/javascript"></script>
+
+        <script type="text/javascript">
+            setupWs(jee7hotelconfig);
+        </script>
+    </ui:define>
+</ui:composition>
+</html>

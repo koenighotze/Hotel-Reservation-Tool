@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<ui:composition template="/WEB-INF/template-bootstrap.html">
+    <ui:define name="page_header">
+
+    </ui:define>
+
+    <ui:define name="content">
+        <ui:fragment rendered="#{param.reason=='expired'}">
+            <!-- TODO -->
+        </ui:fragment>
+
+        <div class="jumbotron">
+            <div class="container">
+                <h1>#{msgs.welcome_to_the_app}</h1>
+
+                <p>
+                    #{msgs.intro_text}
+                </p>
+
+                <p>
+                    <h:link outcome="rooms"
+                            styleClass="btn btn-primary btn-lg"
+                            p:role="button" value="#{msgs.learn_more}"/>
+                </p>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>
+
+
+

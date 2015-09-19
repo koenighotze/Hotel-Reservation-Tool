@@ -1,0 +1,142 @@
+body {
+  padding-top: 50px;
+}
+
+.starter-template {
+  padding: 40px 15px;
+}
+
+label {
+  text-align: left;
+}
+
+input.input-error {
+  border-color: #a94442;
+}
+
+table tbody ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+div.btn-toolbar {
+  margin-bottom: 5px;
+}
+
+.errorMessage {
+  color: #a94442;
+}
+
+div.error_box div.exceptionErrorMessage div.stackTrace {
+  font-family: monospace;
+}
+
+span.ui-state-default {
+  color: #337ab7 !important;
+  font-weight: normal !important;
+  border-color: #cccccc !important;
+  background-image: none !important;
+}
+span.ui-state-default.ui-state-active {
+  color: white !important;
+  cursor: default !important;
+  background-color: #337ab7 !important;
+  border-color: #337ab7 !important;
+}
+
+span.ui-widget-header {
+  border: none !important;
+  background: none !important;
+}
+
+span.ui-paginator-page {
+  color: #337ab7;
+}
+
+div.ui-paginator {
+  background: none !important;
+  border: none !important;
+}
+
+span.ui-button-text.ui-c {
+  padding: 0px !important;
+  text-shadow: none !important;
+}
+
+th[role='columnheader'].ui-state-default {
+  background-image: none !important;
+  background-color: white;
+  border: none !important;
+  border-bottom: 2px solid #dddddd !important;
+  text-align: left !important;
+}
+
+tbody td .ui-datatable {
+  border: none !important;
+  border-top: 1px solid #dddddd !important;
+}
+
+span.ui-column-title {
+  text-align: left !important;
+}
+
+tbody.ui-datatable-data.ui-widget-content {
+  border: none !important;
+}
+
+tr.ui-widget-content {
+  border: none !important;
+}
+
+td[role='gridcell'] {
+  border: none !important;
+  border-top: 1px solid #dddddd !important;
+}
+
+ul.action_items li a {
+  color: #428bca;
+  text-decoration: none;
+}
+ul.action_items li a:hover {
+  text-decoration: underline;
+}
+
+
+#pagingControls ul {
+  /*display: inline;*/
+  /*padding-left: 0.5em*/
+
+  display: inline-block;
+  padding-left: 0px;
+  margin: 20px 0px;
+  border-radius: 4px;
+}
+
+#pagingControls li {
+  display: inline;
+  /*display: inline;*/
+  /*padding: 0 0.5em*/
+}
+#pagingControls a {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.42857;
+  color: #428BCA;
+  text-decoration: none;
+  background-color: #FFF;
+  border: 1px solid #DDD;
+}
+
+#pagingControls span {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.42857;
+  color: #428BCA;
+  text-decoration: none;
+  border: 1px solid #DDD;
+  background-color: #EEE;
+}

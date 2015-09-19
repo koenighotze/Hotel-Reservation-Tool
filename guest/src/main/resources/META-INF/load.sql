@@ -1,0 +1,10 @@
+INSERT INTO GUEST (ID, EMAIL, PUBLICID, NAME, VERSION, lastUpdate) VALUES (9999, 'david@zuhause.de', 'dschm1', 'David Schmitz', 1, CURRENT_TIMESTAMP)
+INSERT INTO GUEST (ID, EMAIL, PUBLICID, NAME, VERSION, lastUpdate) VALUES (9998, '', 'drins1', 'Dr. Insano', 1, CURRENT_TIMESTAMP)
+INSERT INTO GUEST (ID, EMAIL, PUBLICID, NAME, VERSION, lastUpdate) VALUES (9997, 'kommander@bruka.se', 'kommdrikka', 'Kommandante Brikka', 1, CURRENT_TIMESTAMP)
+INSERT INTO GUEST (ID, EMAIL, PUBLICID, NAME, VERSION, lastUpdate) VALUES (9996, 'bratislaf@metulski.ru', 'metul1', 'Bratislaf Metulski', 1, CURRENT_TIMESTAMP)
+INSERT INTO GUEST (ID, EMAIL, PUBLICID, NAME, VERSION, lastUpdate) VALUES (9995, 'rschmutschen@panama.de', 'rutsch1', 'Rutschen Schmutschen', 1, CURRENT_TIMESTAMP)
+INSERT INTO GUEST (ID, EMAIL, PUBLICID, NAME, VERSION, lastUpdate) VALUES (9994, 'Onkel@Baer.de', 'onklbra', 'Der Onkel Baer', 1, CURRENT_TIMESTAMP)
+INSERT INTO GUEST (ID, EMAIL, PUBLICID, NAME, VERSION, lastUpdate) VALUES (9993, 'haggard@bavarian.de', 'bav1', 'Haggard Bavarian', 1, CURRENT_TIMESTAMP)
+INSERT INTO GUEST (ID, EMAIL, PUBLICID, NAME, VERSION, lastUpdate) VALUES (9992, 'yellow@drop.de', 'as9a24as','Yel Lowd Rop', 1, CURRENT_TIMESTAMP)
+INSERT INTO GUEST (ID, EMAIL, PUBLICID, NAME, VERSION, lastUpdate) VALUES (9991, 'lowkey@trondheim.com', 'lowke12a','Lowkey Demycod', 1, CURRENT_TIMESTAMP)
+

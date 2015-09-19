@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        >
+
+    <ui:composition template="/WEB-INF/template-bootstrap.html">
+        <ui:define name="page_header">
+            #{msgs.add_new_reservation_wizard_choose_room}
+        </ui:define>
+
+        <ui:define name="content">
+            <h:form id="addNewReservationWizardForm">
+                <div class="form-group">
+                    <label for="roomSelection">#{msgs.select_a_room}</label>
+                    <h:selectOneMenu id="roomSelection"
+                                     value="#{addNewReservationWizardBean.selectedRoom}"
+                                     required="true"
+                                     styleClass="form-control">
+                        <f:selectItem itemLabel="#{msgs.please_choose}"/>
+                        <f:selectItems
+                                var="room"
+                                value="#{addNewReservationWizardBean.roomList}"/>
+                    </h:selectOneMenu>
+                </div>
+
+                <div class="btn-toolbar">
+                    <h:commandButton styleClass="btn btn-sm"
+                                     id="prev"
+                                     immediate="true"
+                                     value="#{msgs.btn_prev_parameters}"
+                                     action="addnewreservationflow3" />
+
+                    <h:commandButton styleClass="btn btn-sm btn-primary"
+                                     id="next"
+                                     value="#{msgs.btn_verify_and_confirm}"
+                                     action="addnewreservationflow5" />
+                </div>
+            </h:form>
+        </ui:define>
+
+
+
+    </ui:composition>
+</html>

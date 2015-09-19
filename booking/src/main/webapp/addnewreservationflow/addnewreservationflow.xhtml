@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+        >
+
+<ui:composition template="/WEB-INF/template-bootstrap.html">
+    <ui:define name="page_header">
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="jumbotron">
+            <div class="container">
+                <h1>#{msgs.add_reservation_wizard_title}</h1>
+
+                <p>
+                    #{msgs.add_reservation_wizard_title_intro_text}
+                </p>
+
+
+                <h:form id="addNewReservationWizardForm">
+                    <h:commandButton styleClass="btn btn-primary btn-lg" id="next"
+                                     value="#{msgs.btn_wizard_choose_guest}"
+                                     action="addnewreservationflow2"/>
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

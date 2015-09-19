@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<body>
+
+<ui:composition template="/WEB-INF/template-bootstrap.html">
+
+    <ui:define name="page_header">
+        #{msgs.rooms}
+    </ui:define>
+
+    <ui:define name="content">
+        <ui:fragment rendered="#{!empty(roomsBean.rooms)}">
+            <div id="pagingControls"></div>
+
+            <div class="rooms">
+                <h:dataTable var="room"
+                             value="#{roomsBean.rooms}"
+                             styleClass="table table-striped"
+                             columnClasses="visible, visible, hidden-xs, visible"
+                             rowClasses="pagingRow">
+                    <h:column headerClass="visible">
+                        <f:facet name="header">#{msgs.actions}</f:facet>
+                        <ul class="action_items">
+                            <li>
+                                <h:link outcome="room.xhtml?faces-redirect=true"
+                                        includeViewParams="true"
+                                        value="#{msgs.details}">
+                                    <f:param name="roomId" value="#{room.id}"/>
+                                </h:link>
+
+                            </li>
+                        </ul>
+                    </h:column>
+                    <h:column headerClass="visible">
+                        <f:facet name="header">#{msgs.id}</f:facet>
+                        #{room.id}
+                    </h:column>
+                    <h:column headerClass="hidden-xs">
+                        <f:facet name="header">#{msgs.room_number}</f:facet>
+                        #{room.roomNumber}
+                    </h:column>
+                    <h:column headerClass="visible">
+                        <f:facet name="header">#{msgs.room_equipment}</f:facet>
+                        #{msgs[room.roomEquipment]}
+                    </h:column>
+                </h:dataTable>
+            </div>
+        </ui:fragment>
+    </ui:define>
+
+    <ui:define name="miscjavascript">
+        <h:outputScript library="common" name="js/pager.js"/>
+
+        <script>
+            // note: currently this must be visible globally....this sucks and I will
+            // fix the js-library. Scouts promise!
+            var pager = new Imtech.Pager();
+            (function () {
+                $(document).ready(function () {
+                    pager.pagingContainerPath = $('tbody'); // set of main container
+                    pager.paragraphs = $('tr.pagingRow', pager.pagingContainer); // set of required containers
+                    pager.elemTagName = 'tr';
+                    pager.showPage(1);
+                });
+            })();
+        </script>
+
+    </ui:define>
+</ui:composition>
+
+</body>
+</html>
