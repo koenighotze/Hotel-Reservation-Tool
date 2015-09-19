@@ -2,26 +2,26 @@
 
 This project shows some basic JEE7 technologies using a simple guestbook use case.
 
-
 ## Quick Start
 
-This project consists of actual four applications:
+This project consists of three applications, each is constraint to a clear domain:
 
-* eventdb
 * booking
 * guest
 * facilities
 
-In order to start each of these manually, just change into
-respecitve directory and run:
+Furthermore, a fourth application - portal - integrates the other three into a single
+UI.
+
+Just run the following to start up all apps:
 
 ```
-mvn wildfly:run
+# cd <WHEREEVER_THE_CODE_ROOT_IS>
+# ./start.sh
 ```
 
-This will startup the application using an embedded WildFly.
-
-
+Manually, you just need to cd into the app you want to start and run `mvn wildfly:run`
+This will startup the application using an embedded WildFly. 
 
 
 ## Overview of the architecture
