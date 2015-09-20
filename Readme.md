@@ -1,6 +1,8 @@
 # JEE7 Demo and Quickstart
 
-This project shows some basic JEE7 technologies using a simple guestbook use case.
+This project shows some basic JEE7 technologies using the domain of hotel reservation and booking as a naive example. Obviously,
+all aspects could have been implemented more efficiently using other technologies, but keep in mind that this serves as the
+foundation of a training session.
 
 ## Quick Start
 
@@ -21,54 +23,58 @@ Just run the following to start up all apps:
 ```
 
 Manually, you just need to cd into the app you want to start and run `mvn wildfly:run`
-This will startup the application using an embedded WildFly. 
+This will startup the application using an embedded WildFly.
 
 
-## Overview of the architecture
+## Architecture Overview
 TODO
 
+### The Tech Stack
 
-This application demonstrates key JEE7 features and is used as the basis for a
-tutorial/course.
-
-The main fictional background is a pseudo Hotel Reservation Frontend used by receptionist.
-
-### Use cases and user stories
-Pseudo use cases are chosen only to demonstrate certain technologies, obviously not all are implemented yet:
-
-* CRUD Frontends for Reservations, Guests, Rooms (CLERK role only)
-* Import and export for administrators (via REST, ADMINISTRATOR role only)
-* CRUD for clerks for administrator (via REST, ADMINISTRATOR, role only)
-* Confirmation of reservation by backend service (JMS 2.0)
-* Daily report of bookings (via batch)
-* Auto-update frontends (via WebSocket)
-
-### Tech stack
-
-One goal was to demonstrate building an App using only JEE7 and JDK8 at runtime, no other external dependencies are used.
-
-Testing however uses based on Mockito and Arquillian.
-
-Key technologies include:
-
-* JSF 2.2
-* CDI 1.1
-* EJB 3.2
-* JPA 2.1
-* Batch
-* JMS 2.0
+The main technolgies from an architectural point of view are:
+* JEE 7, as the programming model
+ * JSF 2.2, Ajax, HTML 5, Flows
+ * REST using JAX-RS
+ * WebSocket
+ * CDI and EJB
+ * JPA
+ * Events
+ * Batches
+* Wildfly 9, as the main runtime container
 * Arquillian for integration testing
-* WebSockets
-* Bootstrap
-* Selenium for UI testing
-* SASS
+* Thymeleaf for the portal UI
+* Unobtrusive JavaScript using JQuery, for enhancing the usability, for example paging
 
+## The Guest Application
+
+Main pseudo Use Cases
+* CRUD frontends for Guests (restricted based on roles, CLERK, CUSTOMER)
+* Import and export of Guests for administrators (via REST, ADMINISTRATOR role only)
+* Informing other applications of new Guests
+
+## The Facilities Application
+
+Main pseudo Use Cases
+* CRUD frontends for Rooms (CLERK role only)
+* Import and export of rooms (via REST, ADMINISTRATOR role only)
+* Informing other applications of new Rooms
+
+## The Booking Application
+
+Main pseudo Use Cases
+* CRUD frontends for Reservations (CLERK and CUSTOMER)
+* Confirmation of reservation by backend service (JMS 2.0)
+* Auto-update frontends (via WebSocket)
+* Local data store for Room and Guest Data
+
+## The Portal Application
+
+Main pseudo Use Cases
+* Transparent integration of all other applications
 
 ## Todo list
 The todo list includes (among other stuff):
 
-* Thymeleaf
-* AngularJS Demo
 * Generating reports/graphs using d3.js
 * load testing loader.io
 * Authentication using OAuth (google+ only)
@@ -82,17 +88,6 @@ The todo list includes (among other stuff):
 An open shift application hosts this tool: http://jee7hotel-koenighotze.rhcloud.com
 
 The respective jenkins is located at http://jenkins-koenighotze.rhcloud.com/job/jee7hotel-build/
-
-
-=== Long version
-
-* Start mongo docker
-
-* Start wildfly docker
-
-* determine host and port
-
-
 
 ```
 docker ps
@@ -126,20 +121,6 @@ or
 ```
 ./src/test/scripts/run_wildfly_test.sh
 ```
-
-###Glassfish
-```
-mvn clean integration-test verify -Pglassfish-integration-tests
-```
-
-Introduction
-------------
-
-###The use case: Booking Portal for Room Reservation
-
-* Application for receptionist
-* Mobile page for client-booking-checks
-
 
 ###Basic application architecture
 
@@ -191,16 +172,6 @@ digraph G {
 }
 ----
 
-## Building the images from scratch
-
-TODO
-
-
-## Wildfly
-
-## Mongo
-
-
 * start image using
 
 ```
@@ -220,55 +191,3 @@ CONTAINER ID        IMAGE                               COMMAND                C
 ```
 mongo $(docker-ip):49169
 ```
-
-
-## MySql
-
-
-
-Presentation layer
-------------------
-
-* Basic JSF 2.2
-* Ajax
-* HTML 5 integration
-* JSF Flows
-
-Business layer
---------------
-
-* REST
-* WebSocket
-
-Domain layer
-------------
-
-* Basic JPA
-* Criteria API
-* Events
-* PostTransaction Events
-* EntityListener
-
-
-Testing
--------
-* Arquillian
-
-
-Things to do
-------------
-
-* Arquillian UI
-* Security
-* IIOP
-* Stored Procedures
-* Angular JS Frontend
-* JMS 2.0
-* Role based security
-* Role ```**```
-* ```@Delegate```
-* add HAL to rest services
-
-* Futures
-* Embedded container ```EJBContainer.createEJBContainer```
-* Check why wildfly 9 breaks flows
