@@ -27,7 +27,18 @@ This will startup the application using an embedded WildFly.
 
 
 ## Architecture Overview
-TODO
+
+The following figure shows the top level dependencies between the applications.
+
+![Architecture Overview](dot/architecture_overview.png)
+
+The following figure shows the general package structure of each application.
+
+![General application structure](dot/app_structure.png)
+
+The following figure shows the general class dependencies of a typical JEE application.
+
+![General class dependencies](dot/class_dependencies.png)
 
 ### The Tech Stack
 

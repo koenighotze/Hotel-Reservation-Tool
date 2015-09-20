@@ -1,0 +1,15 @@
+digraph architecture_overview
+{
+  node [fontname=Verdana,fontsize=12];
+  node [style=filled];
+  node [fillcolor="#EEEEEE"];
+  node [color="black"];
+  edge [color="black"];
+
+  booking -> guest [label="GET /rest/guest/", style="dashed"];
+  booking -> facilities [label="GET /rest/room/", style="dashed"];
+
+  portal -> guest [label="ajax.load", style="dotted"];
+  portal -> facilities [label="ajax.load", style="dotted"];
+  portal -> booking [label="ajax.load", style="dotted"];
+}

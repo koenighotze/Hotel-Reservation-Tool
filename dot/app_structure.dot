@@ -1,0 +1,13 @@
+digraph application_layout
+{
+  node [fontname=Verdana,fontsize=12];
+  node [style=filled];
+  node [fillcolor="#EEEEEE"];
+  node [color="black"];
+  edge [color="black"];
+
+  frontend -> converter [label = "JSF"];
+  frontend -> business;
+  business -> domain;
+  domain -> converter [label = "JPA"];
+}

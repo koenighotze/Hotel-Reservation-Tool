@@ -1,0 +1,56 @@
+digraph class_dependencies
+{
+  node [fontname=Verdana,fontsize=12];
+  node [style=filled];
+  node [fillcolor="#EEEEEE"];
+  node [color="black"];
+  edge [color="black"];
+
+  subgraph cluster_0 {
+    label  = "View Layer";
+
+    style=filled;
+    color=lightgrey;
+
+    node [style=filled,color=white];
+
+    "view.xhtml" -> "ViewBean.java" [label = "#{viewBean.method()}"];
+    "ViewBean.java" [label = "@Named\n\N"];
+  }
+
+  subgraph cluster_1 {
+    label = "Service Layer";
+
+    style=filled;
+    color=lightgrey;
+
+    node [style=filled,color=white];
+
+    "Service.java" -> "EntityManager" [label = "@PersistenceContext"];
+    "Service.java" [label = "@Named\n@Path\n\N"] ;
+  }
+
+
+  subgraph cluster_2 {
+    label = "Domain Layer";
+
+    style=filled;
+    color=lightgrey;
+
+    node [style=filled,color=white];
+
+    "Entity.java" [label = "@Entity\n@XmlRoot\n\N"];
+  }
+
+  "ViewBean.java" -> "Service.java" [label = "@Inject"];
+  "Service.java" -> "Entity.java" [label = "via EM"];
+  "EntityManager" -> "Entity.java" [style = "dotted"];
+
+  browser -> "view.xhtml" [label = "http"];
+
+  "Rest-Client" -> "Service.java" [ label = "@GET"];
+
+
+
+
+}
