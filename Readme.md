@@ -4,6 +4,10 @@ This project shows some basic JEE7 technologies using the domain of hotel reserv
 all aspects could have been implemented more efficiently using other technologies, but keep in mind that this serves as the
 foundation of a training session.
 
+
+See (step_by_step.md)[step_by_step.md] for a step by step introduction for setting up
+a JEE7 app with JSF, persistence and REST services.
+
 ## Quick Start
 
 This project consists of three applications, each is constraint to a clear domain:
@@ -91,6 +95,8 @@ The todo list includes (among other stuff):
 * Authentication using OAuth (google+ only)
 * REST Service for Url lookup
 * docker compose for setting up containers
+* Inject REQUEST into VIEW
+* Inject SESSION into APPLICATION/SINGLETON
 
 
 # ye olde docs
