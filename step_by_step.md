@@ -68,7 +68,7 @@ Copy the following to [`web.xml`](https://gist.github.com/koenighotze/73d1625e7c
 ```
 
 ## Create index.xhtml
-Copy the following into (`src/main/resources/webapp/index.xhtml`)[https://gist.github.com/koenighotze/f4d534052aff939dabcb]
+Copy the following into [`src/main/resources/webapp/index.xhtml`](https://gist.github.com/koenighotze/f4d534052aff939dabcb)
 
 ```xml
 <!DOCTYPE html>
@@ -86,7 +86,7 @@ Copy the following into (`src/main/resources/webapp/index.xhtml`)[https://gist.g
 
 ## Create hello.xhtml
 
-Copy the following into (`src/main/resources/webapp/hello.xhtml`)[https://gist.github.com/koenighotze/07af8e874540e78a6beb]
+Copy the following into [`src/main/resources/webapp/hello.xhtml`](https://gist.github.com/koenighotze/07af8e874540e78a6beb)
 
 ```xml
 <!DOCTYPE html>
@@ -99,7 +99,7 @@ Hello #{hello.name}
 ```
 
 ## Add Model
-Copy the following into a new class (`src/main/java/hello/Hello.java)[https://gist.github.com/koenighotze/3f869a3c46aec29b0a17]
+Copy the following into a new class [`src/main/java/hello/Hello.java`](https://gist.github.com/koenighotze/3f869a3c46aec29b0a17)
 
 ```java
 package hello;
@@ -130,7 +130,7 @@ $ open http://localhost:8080/jee7helloworld
 
 ## Add Controller and CRUD
 
-Add JPA persistene by creating (`src/main/resources/META-INF/persistence.xml`)[https://gist.github.com/koenighotze/305fceff59a5a1987a01]
+Add JPA persistene by creating [`src/main/resources/META-INF/persistence.xml`](https://gist.github.com/koenighotze/305fceff59a5a1987a01)
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -157,7 +157,7 @@ public class Hello implements Serializable {
     private String name;
 ```
 
-Add the following to a new class (`src/main/java/hello/HelloController.java`)[https://gist.github.com/koenighotze/4e5195adc8671896323a]
+Add the following to a new class [`src/main/java/hello/HelloController.java`](https://gist.github.com/koenighotze/4e5195adc8671896323a)
 
 ```java
 package hello;
@@ -194,7 +194,7 @@ public class HelloController {
 
 ```
 
-Add the following to (`index.xhtml`)[https://gist.github.com/koenighotze/46408dcab0dfac530874]
+Add the following to [`index.xhtml`](https://gist.github.com/koenighotze/46408dcab0dfac530874)
 
 ```xml
 
