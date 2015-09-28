@@ -5,7 +5,7 @@ all aspects could have been implemented more efficiently using other technologie
 foundation of a training session.
 
 
-See (step_by_step.md)[step_by_step.md] for a step by step introduction for setting up
+See [step_by_step.md](step_by_step.md) for a step by step introduction for setting up
 a JEE7 app with JSF, persistence and REST services.
 
 ## Quick Start
