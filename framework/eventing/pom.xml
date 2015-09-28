@@ -1,65 +1,44 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.koenighotze.jee7hotel.framework</groupId>
-    <artifactId>eventing</artifactId>
-    <!--<version>1.0-SNAPSHOT</version>-->
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.koenighotze.jee7hotel.framework</groupId>
+  <artifactId>eventing</artifactId>
+  <!--<version>1.0-SNAPSHOT</version>-->
 
-    <parent>
-        <groupId>org.koenighotze.jee7hotel</groupId>
-        <artifactId>framework</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>..</relativePath>
-    </parent>
+  <parent>
+    <groupId>org.koenighotze.jee7hotel</groupId>
+    <artifactId>framework</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>..</relativePath>
+  </parent>
 
-    <packaging>jar</packaging>
+  <packaging>jar</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.abdera</groupId>
-            <artifactId>abdera-parser</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-common</artifactId>
-        </dependency>
-        <!--&lt;!&ndash; ...other than mongodb. &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--<groupId>org.mongojack</groupId>-->
-        <!--<artifactId>mongojack</artifactId>-->
-        <!--<version>2.1.0</version>-->
-        <!--<exclusions>-->
-        <!--<exclusion>-->
-        <!--<artifactId>persistence-api</artifactId>-->
-        <!--<groupId>javax.persistence</groupId>-->
-        <!--</exclusion>-->
-        <!--</exclusions>-->
-        <!--</dependency>-->
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.abdera</groupId>
+      <artifactId>abdera-parser</artifactId>
+    </dependency>
 
-        <!--<dependency>-->
-        <!--<groupId>org.koenighotze.jee7hotel.framework</groupId>-->
-        <!--<artifactId>application</artifactId>-->
-        <!--<version>1.0-SNAPSHOT</version>-->
-        <!--</dependency>-->
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-common</artifactId>
+    </dependency>
 
-        <!-- TEST DEPENDENCIES -->
-        <dependency>
-            <groupId>org.koenighotze.jee7hotel.framework</groupId>
-            <artifactId>test</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.main.extras</groupId>
-            <artifactId>glassfish-embedded-all</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!--<dependency>-->
-        <!--<groupId>com.github.fakemongo</groupId>-->
-        <!--<artifactId>fongo</artifactId>-->
-        <!--</dependency>-->
-    </dependencies>
+    <!-- TEST DEPENDENCIES -->
+    <dependency>
+      <groupId>org.koenighotze.jee7hotel.framework</groupId>
+      <artifactId>test</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.main.extras</groupId>
+      <artifactId>glassfish-embedded-all</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
-    <build>
-    </build>
+  <build>
+  </build>
 </project>

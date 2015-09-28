@@ -8,7 +8,6 @@ import javax.persistence.Cache;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-
 /**
  * @author koenighotze
  */
@@ -24,7 +23,6 @@ public class RoomCacheTest extends AbstractBasePersistenceTest {
         Cache cache = getEntityManager().getEntityManagerFactory().getCache();
         assertTrue("Rooms should be cached ", cache.contains(Room.class, room.getId()));
     }
-
 
     @Test
     public void testTransientRoomsAreNotCached() {

@@ -21,7 +21,7 @@ import java.util.List;
 public class BookingsBean {
     @Inject
     private BookingService bookingService;
-    
+
     private List<Reservation> reservations;
 
     public void setBookings(List<Reservation> reservations) {
@@ -32,7 +32,7 @@ public class BookingsBean {
     public void init() {
         this.reservations = this.bookingService.getAllReservations();
     }
-    
+
     public List<Reservation> getBookings() {
         return this.reservations;
     }

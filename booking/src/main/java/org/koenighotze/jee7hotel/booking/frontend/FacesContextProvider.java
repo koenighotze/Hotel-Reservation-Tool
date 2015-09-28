@@ -8,6 +8,7 @@ import javax.inject.Named;
  */
 @Named
 public class FacesContextProvider {
+    // TODO refactor to @Produces
     public FacesContext getCurrentFacesContext() {
         return FacesContext.getCurrentInstance();
     }

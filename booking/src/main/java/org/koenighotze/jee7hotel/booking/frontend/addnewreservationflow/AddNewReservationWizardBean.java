@@ -5,6 +5,7 @@ package org.koenighotze.jee7hotel.booking.frontend.addnewreservationflow;
 import org.koenighotze.jee7hotel.booking.business.BookingService;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
 import org.koenighotze.jee7hotel.booking.domain.RoomEquipment;
+import org.koenighotze.jee7hotel.booking.persistence.GuestModelRepository;
 
 import javax.annotation.PostConstruct;
 import javax.faces.flow.FlowScoped;
@@ -16,7 +17,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
+import static java.lang.String.format;
 import static java.time.LocalDate.now;
 import static java.util.Arrays.asList;
 import static java.util.UUID.randomUUID;
@@ -32,14 +35,13 @@ import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
  * @author dschmitz
  */
 @Named("addNewReservationWizardBean")
-//why the hell do I have to use the 'old Annotation'?
-//@javax.faces.bean.ManagedBean(name = "addNewReservationWizardBean")
 @FlowScoped("addnewreservationflow")
 public class AddNewReservationWizardBean implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(AddNewReservationWizardBean.class.getName());
 
-    @Inject
     private BookingService bookingService;
+
+    private GuestModelRepository guestModelRepository;
 
     private List<String> guestList;
     private List<String> roomList;
@@ -52,12 +54,20 @@ public class AddNewReservationWizardBean implements Serializable {
     private List<RoomEquipment> roomEquipments = asList(RoomEquipment.values());
     private RoomEquipment selectedRoomEquipment;
 
+    public AddNewReservationWizardBean() {
+    }
+
+    @Inject
+    public AddNewReservationWizardBean(BookingService bookingService, GuestModelRepository guestModelRepository) {
+        this.bookingService = bookingService;
+        this.guestModelRepository = guestModelRepository;
+    }
+
     @PostConstruct
     public void init() {
         LOGGER.info("Constructing initial data for wizard");
 
-        this.guestList = new ArrayList<>();
-        rangeClosed(0, 10).forEach(i -> this.guestList.add(randomUUID().toString()));
+        guestList = guestModelRepository.findAllGuests().stream().map(guest -> format("%s (%s)", guest.getName(), guest.getPublicId())).collect(Collectors.toList());
 
         this.roomList = new ArrayList<>();
         rangeClosed(0, 10).forEach(i -> this.roomList.add(randomUUID().toString()));
@@ -92,15 +102,9 @@ public class AddNewReservationWizardBean implements Serializable {
         }
 
         Reservation reservation = this.bookingService.bookRoom(this.selectedGuest, this.selectedRoom, this.checkinDate, this.checkoutDate);
-        addFlashMessage(SEVERITY_INFO, "Room "
-                + reservation.getAssignedRoom()
-                + " booked for "
-                + reservation.getGuest()
-                + "; Reservation number "
-                + reservation.getReservationNumber()
-                + " Costs: "
-                + reservation.getCostsInEuro() + " EUR");
-        return  "/bookings.xhtml";
+        addFlashMessage(SEVERITY_INFO, format("Room %s booked for %s; Reservation number %s  Costs: %s EUR",
+                reservation.getAssignedRoom(), reservation.getGuest(), reservation.getReservationNumber(), reservation.getCostsInEuro()));
+        return "/bookings.xhtml";
     }
 
     public LocalDate getCheckoutDate() {
@@ -147,7 +151,6 @@ public class AddNewReservationWizardBean implements Serializable {
     public List<String> getRoomList() {
         return this.roomList; // TODO filter based on criteria
     }
-
 
     public void setSelectedRoomEquipment(@NotNull RoomEquipment roomEquipment) {
         LOGGER.info("Setting roomequipment to " + roomEquipment);

@@ -22,7 +22,7 @@ public class GuestDataWriter extends AbstractItemWriter {
     @PersistenceContext
     private EntityManager em;
 
-    private GuestService guestService = new GuestService();
+    private GuestService guestService = new GuestService(null);
 
     public void setEntityManager(EntityManager em) {
         this.em = em;

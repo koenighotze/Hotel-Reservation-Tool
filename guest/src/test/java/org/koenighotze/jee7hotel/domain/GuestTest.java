@@ -4,6 +4,9 @@ import org.junit.Test;
 import org.koenighotze.jee7hotel.business.AbstractBasePersistenceTest;
 import org.koenighotze.jee7hotel.framework.persistence.audit.Audit;
 
+import javax.xml.bind.JAXB;
+import java.io.StringWriter;
+
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
@@ -30,4 +33,13 @@ public class GuestTest extends AbstractBasePersistenceTest {
 
         getEntityManager().flush();
     }
+
+    @Test
+    public void a_guest_can_be_transformed_to_xml() {
+        StringWriter w = new StringWriter();
+        Guest guest = new Guest("foo", "bar", "qux");
+        JAXB.marshal(guest, w);
+        assertThat(w.toString()).startsWith("<?xml");
+    }
+
 }

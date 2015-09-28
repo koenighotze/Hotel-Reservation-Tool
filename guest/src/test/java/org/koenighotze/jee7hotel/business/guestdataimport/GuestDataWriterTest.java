@@ -5,18 +5,20 @@ import org.koenighotze.jee7hotel.business.AbstractBasePersistenceTest;
 import org.koenighotze.jee7hotel.business.GuestService;
 import org.koenighotze.jee7hotel.domain.Guest;
 
+import javax.jms.JMSContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 public class GuestDataWriterTest extends AbstractBasePersistenceTest {
 
     @Test
     public void testWriteItem() throws Exception {
-        GuestService guestService = new GuestService();
+        GuestService guestService = new GuestService(mock(JMSContext.class));
         guestService.setEntityManager(getEntityManager());
 
         assertThat(getEntityManager(), is(not(nullValue())));

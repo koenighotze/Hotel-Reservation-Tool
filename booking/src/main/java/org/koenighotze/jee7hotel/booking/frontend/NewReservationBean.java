@@ -4,10 +4,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.koenighotze.jee7hotel.booking.business.BookingService;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
 import org.koenighotze.jee7hotel.booking.frontend.model.Booking;
+import org.koenighotze.jee7hotel.booking.persistence.GuestModelRepository;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.view.ViewScoped;
@@ -19,6 +19,7 @@ import java.io.Serializable;
 
 import static java.lang.String.format;
 import static java.time.LocalDate.now;
+import static javax.faces.context.FacesContext.getCurrentInstance;
 
 /**
  * Handles the creation of new reservations.
@@ -39,10 +40,11 @@ public class NewReservationBean implements Serializable {
     @Inject
     private BookingService bookingService;
 
-
+    @Inject
+    private GuestModelRepository guestModelRepository;
 
     public Booking getBooking() {
-        return this.booking;
+        return booking;
     }
 
     public String getPublicGuestId() {
@@ -62,55 +64,57 @@ public class NewReservationBean implements Serializable {
     }
 
     public void init(ComponentSystemEvent evt) {
-        this.booking = new Booking();
-        this.booking.setGuest(publicGuestId);
-        this.booking.setRoom(roomId);
-        this.booking.setCheckinDate(now().plusDays(1));
-        this.booking.setCheckoutDate(now().plusDays(2));
+        booking = new Booking();
+        booking.setGuest(publicGuestId);
+        booking.setRoom(roomId);
+        booking.setCheckinDate(now().plusDays(1));
+        booking.setCheckoutDate(now().plusDays(2));
     }
 
     public String getRoomNumber() {
-        if (null == this.booking.getRoom()) {
+        if (null == booking.getRoom()) {
             return null;
         }
 
-        return this.booking.getRoom();
+        return booking.getRoom();
     }
 
     public void setRoomNumber(@NotNull String number) {
-        this.roomId = number;
-        this.booking.setRoom(number);
+        roomId = number;
+        booking.setRoom(number);
     }
 
     public String addReservation() {
-        Reservation realReservation
-                = this.bookingService.bookRoom(this.booking.getGuest(), this.booking.getRoom(),
-                this.booking.getCheckinDate(), this.booking.getCheckoutDate());
-
-        Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+        Flash flash = getCurrentInstance().getExternalContext().getFlash();
         flash.setKeepMessages(true);
 
-        FacesMessage message = new FacesMessage("Room "
-                + this.booking.getRoom()
-                + " booked for "
-                + this.booking.getGuest()
-                + "; Reservation number "
-                + realReservation.getReservationNumber()
-                + " Costs: "
-                + realReservation.getCostsInEuro() + " EUR");
-        FacesContext.getCurrentInstance().addMessage(null, message);
-        this.booking = null;
+        if (!guestModelRepository.findByPublicId(booking.getGuest()).isPresent()) {
+            FacesMessage message = new FacesMessage(format("Guest %s is currently unknown. Booking will be created but check in Guest system for correctness", booking.getGuest()));
+            message.setSeverity(FacesMessage.SEVERITY_WARN);
+            getCurrentInstance().addMessage(null, message);
+        }
+
+        Reservation realReservation
+                = bookingService.bookRoom(booking.getGuest(), booking.getRoom(),
+                booking.getCheckinDate(), booking.getCheckoutDate());
+
+        FacesMessage message = new FacesMessage(format("Room %s is booked for %s; Reservation number %s; Cost: %s EUR",
+                booking.getRoom(), booking.getGuest(), realReservation.getReservationNumber(),
+                realReservation.getCostsInEuro()));
+        getCurrentInstance().addMessage(null, message);
+        booking = null;
 
         if (StringUtils.isBlank(backlink)) {
             return format("/booking.xhtml?reservationNumber=%s&faces-redirect=true", realReservation.getReservationNumber());
         }
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+
+        ExternalContext externalContext = getCurrentInstance().getExternalContext();
         try {
             externalContext.redirect(backlink);
         } catch (IOException e) {
-            e.printStackTrace();
+            // TODO: handle exception
         }
-        FacesContext.getCurrentInstance().responseComplete();
+        getCurrentInstance().responseComplete();
         return null;
     }
 

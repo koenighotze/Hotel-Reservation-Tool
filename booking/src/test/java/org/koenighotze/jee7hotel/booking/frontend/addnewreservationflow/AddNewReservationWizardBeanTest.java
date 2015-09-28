@@ -1,18 +1,23 @@
 package org.koenighotze.jee7hotel.booking.frontend.addnewreservationflow;
 
+import mockit.Mocked;
 import org.junit.Test;
+import org.koenighotze.jee7hotel.booking.business.BookingService;
+import org.koenighotze.jee7hotel.booking.persistence.GuestModelRepository;
 import org.koenighotze.jee7hotel.business.AbstractBasePersistenceTest;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
+import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 public class AddNewReservationWizardBeanTest extends AbstractBasePersistenceTest {
 
-//    private GuestService guestService;
-
-//    private RoomService roomService;
-
     private AddNewReservationWizardBean wizardBean;
+
+    @Mocked
+    private BookingService bookingService;
+
+    @Mocked
+    private GuestModelRepository guestModelRepository;
 
     @Override
     protected void initHook() {
@@ -23,28 +28,32 @@ public class AddNewReservationWizardBeanTest extends AbstractBasePersistenceTest
 
 //        this.roomService = new RoomService();
 //        this.roomService.setEntityManager(getEntityManager());
-        this.wizardBean = new AddNewReservationWizardBean();
+        this.wizardBean = new AddNewReservationWizardBean(bookingService, guestModelRepository);
 //        this.wizardBean.setGuestService(this.guestService);
 //        this.wizardBean.setRoomService(this.roomService);
     }
+
     @Override
     protected String getPersistenceUnitName() {
         return "booking-integration-test";
     }
-    @Test
-    public void testInit() throws Exception {
 
+    @Test
+    public void after_initialization_the_list_of_guests_is_not_null() throws Exception {
         wizardBean.init();
 
-        assertThat(wizardBean.getGuestList(), is(not(nullValue())));
+        assertThat(wizardBean.getGuestList()).isNotNull();
+    }
 
-//        for (SelectItem s : wizardBean.getGuestList()) {
-//            System.out.println(s.getLabel() + ", " + s.getValue());
-//        }
+    @Test
+    public void after_initialization_the_list_of_rooms_is_not_null() throws Exception {
+        wizardBean.init();
 
-//        for (SelectItem s : wizardBean.getRoomList()) {
-//            System.out.println(s.getLabel() + ", " + s.getValue());
-//        }
+        assertThat(wizardBean.getRoomList()).isNotNull();
+    }
 
+    @Test
+    public void guests_entries_consist_of_name_and_public_id() throws Exception {
+        fail();
     }
 }

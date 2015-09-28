@@ -1,5 +1,3 @@
-
-
 package org.koenighotze.jee7hotel.booking.frontend;
 
 import org.koenighotze.jee7hotel.booking.business.BookingService;

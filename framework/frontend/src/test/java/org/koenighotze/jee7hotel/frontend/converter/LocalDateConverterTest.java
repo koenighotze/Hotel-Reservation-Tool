@@ -7,6 +7,7 @@ import org.junit.Test;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
 import static java.time.Month.APRIL;
@@ -65,4 +66,10 @@ public class LocalDateConverterTest {
         Object localDate = new LocalDateConverter().getAsObject(mock(FacesContext.class), mock(UIComponent.class), "2012-04-05");
         assertThat(localDate).isEqualTo(LocalDate.of(2012, APRIL, 5));
     }
+
+    @Test(expected = DateTimeParseException.class)
+    public void invalid_date_strings_result_in_a_conversion_exception() {
+        new LocalDateConverter().getAsObject(mock(FacesContext.class), mock(UIComponent.class), "adsdas");
+    }
+
 }

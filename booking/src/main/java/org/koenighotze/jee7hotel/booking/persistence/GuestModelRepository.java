@@ -10,7 +10,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import static com.mongodb.client.model.Filters.eq;
 import static java.util.Optional.empty;
@@ -35,8 +38,7 @@ public class GuestModelRepository {
     }
 
     public void storeGuestModel(@NotNull GuestModel guestModel) {
-        MongoDatabase db = mongoClient.getDatabase("booking");
-        MongoCollection<Document> coll = db.getCollection("guestmodel");
+        MongoCollection<Document> coll = getGuestModelCollection();
 
         if (null != coll.find(eq("publicId", guestModel.getPublicId())).limit(1).first()) {
             throw new RuntimeException("Guest with " + guestModel.getPublicId() + " already exists!");
@@ -49,14 +51,35 @@ public class GuestModelRepository {
     }
 
     public Optional<GuestModel> findByPublicId(@NotNull String publicId) {
-        MongoDatabase db = mongoClient.getDatabase("booking");
-        MongoCollection<Document> coll = db.getCollection("guestmodel");
+        MongoCollection<Document> coll = getGuestModelCollection();
         Document doc = coll.find(eq("publicId", publicId)).first();
 
         if (null == doc) {
             return empty();
         }
 
-        return Optional.of(new GuestModel(doc.getString("publicId"), doc.getString("name")));
+        return Optional.of(createGuestModelFromDocument(doc));
+    }
+
+    protected GuestModel createGuestModelFromDocument(Document doc) {
+        return new GuestModel(doc.getString("publicId"), doc.getString("name"));
+    }
+
+    protected MongoCollection<Document> getGuestModelCollection() {
+        return getBookingDb().getCollection("guestmodel");
+    }
+
+    protected MongoDatabase getBookingDb() {
+        return mongoClient.getDatabase("booking");
+    }
+
+    public List<GuestModel> findAllGuests() {
+        MongoCollection<Document> guestModelCollection = getGuestModelCollection();
+
+        List<GuestModel> result = new ArrayList<>();
+        guestModelCollection.find().forEach((Consumer<Document>) document -> {
+            result.add(createGuestModelFromDocument(document));
+        });
+        return result;
     }
 }

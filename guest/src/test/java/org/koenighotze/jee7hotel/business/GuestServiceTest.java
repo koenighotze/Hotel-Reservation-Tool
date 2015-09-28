@@ -5,10 +5,12 @@ package org.koenighotze.jee7hotel.business;
 import org.junit.Test;
 import org.koenighotze.jee7hotel.domain.Guest;
 
+import javax.jms.JMSContext;
 import java.util.Optional;
 
 import static java.util.UUID.randomUUID;
 import static org.fest.assertions.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 /**
  * @author dschmitz
@@ -20,7 +22,7 @@ public class GuestServiceTest extends AbstractBasePersistenceTest {
 
     @Override
     protected void initHook() {
-        guestService = new GuestService();
+        guestService = new GuestService(mock(JMSContext.class));
         guestService.setEntityManager(getEntityManager());
     }
 

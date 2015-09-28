@@ -56,6 +56,10 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
+                <configuration>
+                    <!-- needs message queuing -->
+                    <serverConfig>standalone-full.xml</serverConfig>
+                </configuration>
             </plugin>
         </plugins>
     </build>
