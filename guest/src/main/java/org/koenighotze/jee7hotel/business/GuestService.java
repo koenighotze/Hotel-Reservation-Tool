@@ -28,6 +28,8 @@ import static java.lang.String.format;
 import static java.util.Optional.*;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Level.WARNING;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static org.koenighotze.jee7hotel.domain.Guest.GUEST_FIND_BY_PUBLIC_ID;
 
 /**
@@ -104,14 +106,14 @@ public class GuestService {
     }
 
     @GET
-    @Produces({"application/xml", "application/json"})
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
     @Path("/{guestId}")
     public Guest findSingleGuestById(@PathParam("guestId") Long guestId) {
         return this.em.find(Guest.class, guestId);
     }
 
     @GET
-    @Produces({"application/xml", "application/json"})
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
     public List<Guest> getAllGuests() {
         CriteriaQuery<Guest> cq = this.em.getCriteriaBuilder().createQuery(Guest.class);
         cq.select(cq.from(Guest.class));
