@@ -193,7 +193,7 @@ public class HelloController {
 
 ```
 
-Replace the submit button in [`index.xhtml`](NEW GIST) with
+Replace the submit button in [`index.xhtml`](https://gist.github.com/koenighotze/a56a10e50eaf4fede0fe) with
 
 ```xml
 <input type="submit" value="Greet me" 
@@ -201,7 +201,7 @@ Replace the submit button in [`index.xhtml`](NEW GIST) with
        jsf:action="hello.xhtml"/>
 ```
 
-Add the following to [`index.xhtml`](NEW GIST)
+Add the following to [`index.xhtml`](https://gist.github.com/koenighotze/a56a10e50eaf4fede0fe)
 
 ```xml
     
@@ -227,7 +227,7 @@ $ open http://localhost:8080/jee7helloworld/index.xhtml
 
 ## And now REST
 
-Enable [`Hello.java`](NEW GIST) for automagic XML/JSON-ification.
+Enable [`Hello.java`](https://gist.github.com/koenighotze/30bba9760ee797b12902) for automagic XML/JSON-ification.
 
 ```java
 @Model
@@ -236,7 +236,7 @@ Enable [`Hello.java`](NEW GIST) for automagic XML/JSON-ification.
 public class Hello implements Serializable {
 ```
 
-Add the following class [`Application.java`](NEW GIST):
+Add the following class [`Application.java`](https://gist.github.com/koenighotze/c945d46b9072632ea757):
 
 ```java
 package hello;
@@ -247,7 +247,7 @@ public class Application extends javax.ws.rs.core.Application {
 }
 ```
 
-Expose the [`HelloController.java`](NEW GIST) methods via Jax-RS
+Expose the [`HelloController.java`](https://gist.github.com/koenighotze/56e6bb6d9fafba7263ef) methods via Jax-RS
 
 
 ```java
