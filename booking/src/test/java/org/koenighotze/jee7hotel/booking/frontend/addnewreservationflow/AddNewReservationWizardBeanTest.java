@@ -1,13 +1,15 @@
 package org.koenighotze.jee7hotel.booking.frontend.addnewreservationflow;
 
+import mockit.Expectations;
 import mockit.Mocked;
 import org.junit.Test;
 import org.koenighotze.jee7hotel.booking.business.BookingService;
+import org.koenighotze.jee7hotel.booking.domain.GuestModel;
 import org.koenighotze.jee7hotel.booking.persistence.GuestModelRepository;
 import org.koenighotze.jee7hotel.business.AbstractBasePersistenceTest;
 
+import static java.util.Collections.singletonList;
 import static org.fest.assertions.Assertions.assertThat;
-import static org.junit.Assert.fail;
 
 public class AddNewReservationWizardBeanTest extends AbstractBasePersistenceTest {
 
@@ -54,6 +56,14 @@ public class AddNewReservationWizardBeanTest extends AbstractBasePersistenceTest
 
     @Test
     public void guests_entries_consist_of_name_and_public_id() throws Exception {
-        fail();
+        new Expectations() {{
+            guestModelRepository.findAllGuests();
+
+            result = singletonList(new GuestModel("publicId", "lastName"));
+        }};
+
+        wizardBean.init();
+
+        assertThat(wizardBean.getGuestList().get(0)).isEqualTo("lastName (publicId)");
     }
 }

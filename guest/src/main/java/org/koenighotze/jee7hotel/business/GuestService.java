@@ -14,10 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.xml.bind.JAXB;
 import java.io.StringWriter;
 import java.util.List;
@@ -81,6 +78,8 @@ public class GuestService {
         this.em = em;
     }
 
+    @GET
+    @Consumes({APPLICATION_XML, APPLICATION_JSON})
     public void saveGuest(Guest guest) {
         LOGGER.info(() -> "Saving guest " + guest);
         this.em.persist(guest);

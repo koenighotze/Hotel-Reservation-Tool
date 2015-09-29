@@ -21,7 +21,6 @@ import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
 @ViewScoped
 public class GuestDetailsBean implements Serializable {
     private Guest guest;
-
     private String publicGuestId;
 
     @Inject
