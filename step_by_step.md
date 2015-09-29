@@ -42,8 +42,7 @@ In [pom.xml](https://gist.github.com/koenighotze/bedce5cec0f7c7148da8) add:
 
 ```shell
 $ mvn wildfly:run
-$ mvn
-$ open http://localhost:8080/jee7helloworld
+$ open http://localhost:8080/jee7helloworld/
 ```
 
 ## Setup JSF
@@ -124,13 +123,13 @@ public class Hello implements Serializable {
 ## Run Application
 
 ```shell
-$ mvn wildfly:run
-$ open http://localhost:8080/jee7helloworld
+$ mvn wildfly:redeploy
+$ open http://localhost:8080/jee7helloworld/index.xhtml
 ```
 
 ## Add Controller and CRUD
 
-Add JPA persistene by creating [`src/main/resources/META-INF/persistence.xml`](https://gist.github.com/koenighotze/305fceff59a5a1987a01)
+Add JPA persistence by creating [`src/main/resources/META-INF/persistence.xml`](https://gist.github.com/koenighotze/305fceff59a5a1987a01)
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -194,42 +193,93 @@ public class HelloController {
 
 ```
 
-Add the following to [`index.xhtml`](https://gist.github.com/koenighotze/46408dcab0dfac530874)
+Replace the submit button in [`index.xhtml`](NEW GIST) with
 
 ```xml
+<input type="submit" value="Greet me" 
+       jsf:actionListener="#{helloController.storeName(hello)}" 
+       jsf:action="hello.xhtml"/>
+```
 
-  <br/>
-  <div>
-    Hellos thus far:<br/>
-    #{helloController.helloSoFar()}
-  </div>
+Add the following to [`index.xhtml`](NEW GIST)
+
+```xml
+    
+<br/>
+<div>
+Hellos thus far:<br/>
+    <ul>
+        <ui:repeat value="#{helloController.helloSoFar()}" var="h">
+          <li>#{h.name}</li>
+        </ui:repeat>
+    </ul>
+</div>
 ```
 
 ## Run Application
 
 ```shell
-$ mvn wildfly:run
-$ open http://localhost:8080/jee7helloworld
+$ mvn wildfly:redeploy
+$ open http://localhost:8080/jee7helloworld/index.xhtml
 ```
 
 
 
 ## And now REST
 
+Enable [`Hello.java`](NEW GIST) for automagic XML/JSON-ification.
+
+```java
+@Model
+@Entity
+@XmlRootElement
+public class Hello implements Serializable {
+```
+
+Add the following class [`Application.java`](NEW GIST):
+
+```java
+package hello;
+
+@javax.ws.rs.ApplicationPath("rest")
+public class Application extends javax.ws.rs.core.Application {
+
+}
+```
+
+Expose the [`HelloController.java`](NEW GIST) methods via Jax-RS
+
+
+```java
+@Named
+@ApplicationScoped
+@Path("hello")
+public class HelloController {
 ...
-
-
+    @GET
+    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    public List<Hello> helloSoFar() {
+    ...
+    
+    @POST
+    @Consumes({APPLICATION_XML, APPLICATION_JSON})
+    @Transactional
+    public void storeName(Hello hello) {
+    ...
+```
 
 ## Run Application...again
 
 ```shell
-$ mvn wildfly:run
-$ open http://localhost:8080/jee7helloworld
+$ mvn wildfly:redeploy
+$ open http://localhost:8080/jee7helloworld/index.xhtml
 ```
 
 Try `curl` on the REST service:
 
 ```shell
-$ curl ....TODO
 
+$ curl http://localhost:8080/jee7helloworld/rest/hello
+ 
+$ curl -X POST http://localhost:8080/jee7helloworld/rest/hello  --header "Content-Type: application/xml" --data '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><hello><name>Test</name></hello>'
 ```
