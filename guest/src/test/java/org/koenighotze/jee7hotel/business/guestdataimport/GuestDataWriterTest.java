@@ -5,7 +5,7 @@ import org.koenighotze.jee7hotel.business.AbstractBasePersistenceTest;
 import org.koenighotze.jee7hotel.business.GuestService;
 import org.koenighotze.jee7hotel.domain.Guest;
 
-import javax.jms.JMSContext;
+import javax.enterprise.event.Event;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -17,8 +17,9 @@ import static org.mockito.Mockito.mock;
 public class GuestDataWriterTest extends AbstractBasePersistenceTest {
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testWriteItem() throws Exception {
-        GuestService guestService = new GuestService(mock(JMSContext.class));
+        GuestService guestService = new GuestService(mock(Event.class));
         guestService.setEntityManager(getEntityManager());
 
         assertThat(getEntityManager(), is(not(nullValue())));
@@ -35,7 +36,5 @@ public class GuestDataWriterTest extends AbstractBasePersistenceTest {
         TypedQuery<Guest> query = getEntityManager().createNamedQuery("Guest.findByName", Guest.class);
 
         assertThat(query.setParameter("name", "foo").getSingleResult(), is(not(nullValue())));
-
     }
-
 }

@@ -22,6 +22,7 @@ public class GuestDataWriter extends AbstractItemWriter {
     @PersistenceContext
     private EntityManager em;
 
+    // TODO fix me. This will fail with a NPE
     private GuestService guestService = new GuestService(null);
 
     public void setEntityManager(EntityManager em) {

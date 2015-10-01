@@ -5,7 +5,7 @@ package org.koenighotze.jee7hotel.business;
 import org.junit.Test;
 import org.koenighotze.jee7hotel.domain.Guest;
 
-import javax.jms.JMSContext;
+import javax.enterprise.event.Event;
 import java.util.Optional;
 
 import static java.util.UUID.randomUUID;
@@ -21,8 +21,9 @@ public class GuestServiceTest extends AbstractBasePersistenceTest {
     private static final Long WELL_KNOWN_ID = 9999L;
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void initHook() {
-        guestService = new GuestService(mock(JMSContext.class));
+        guestService = new GuestService(mock(Event.class));
         guestService.setEntityManager(getEntityManager());
     }
 

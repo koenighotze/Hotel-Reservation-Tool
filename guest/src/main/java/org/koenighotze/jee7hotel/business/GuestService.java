@@ -4,27 +4,21 @@ import org.koenighotze.jee7hotel.business.eventsource.EventSourceInterceptor;
 import org.koenighotze.jee7hotel.business.logging.PerformanceLogger;
 import org.koenighotze.jee7hotel.domain.Guest;
 
-import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.interceptor.Interceptors;
-import javax.jms.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.ws.rs.*;
-import javax.xml.bind.JAXB;
-import java.io.StringWriter;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import static java.lang.String.format;
 import static java.util.Optional.*;
-import static java.util.logging.Level.SEVERE;
-import static java.util.logging.Level.WARNING;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static org.koenighotze.jee7hotel.domain.Guest.GUEST_FIND_BY_PUBLIC_ID;
@@ -41,37 +35,20 @@ import static org.koenighotze.jee7hotel.domain.Guest.GUEST_FIND_BY_PUBLIC_ID;
         PerformanceLogger.class,
         EventSourceInterceptor.class
 })
-@JMSDestinationDefinitions({
-        @JMSDestinationDefinition(
-                name = GuestService.GUEST_EVENT_TOPIC,
-                resourceAdapter = "jmsra",
-                interfaceName = "javax.jms.Topic",
-                destinationName = "guestEventTopic")
-})
 public class GuestService {
     private static final Logger LOGGER = Logger.getLogger(GuestService.class.getName());
-
-    public static final String GUEST_EVENT_TOPIC = "java:global/jms/topic/guest";
 
     @PersistenceContext
     private EntityManager em;
 
-    private JMSContext jmsContext;
-
-    private Destination guestEventQueue;
+    private Event<Guest> guestEvents;
 
     public GuestService() {
     }
 
     @Inject
-    public GuestService(JMSContext jmsContext) {
-        this.jmsContext = jmsContext;
-    }
-
-    // cannot be applied to constructor
-    @Resource(lookup = GUEST_EVENT_TOPIC)
-    public void setGuestEventQueue(Destination queue) {
-        this.guestEventQueue = queue;
+    public GuestService(@Background Event<Guest> guestEvents) {
+        this.guestEvents = guestEvents;
     }
 
     public void setEntityManager(EntityManager em) {
@@ -83,26 +60,8 @@ public class GuestService {
     public void saveGuest(Guest guest) {
         LOGGER.info(() -> "Saving guest " + guest);
         this.em.persist(guest);
-        sendGuestEvent(guest);
-    }
 
-    // TODO: Extract to CDI Events
-    public void sendGuestEvent(Guest guest) {
-        if (null == jmsContext || null == guestEventQueue) {
-            LOGGER.log(WARNING, () -> "Sending messages is deactivated!");
-            return;
-        }
-
-        LOGGER.info(() -> format("Sending info about %s to %s", guest, guestEventQueue));
-        try {
-            StringWriter w = new StringWriter();
-            JAXB.marshal(guest, w);
-            TextMessage textMessage = this.jmsContext.createTextMessage(w.toString());
-            this.jmsContext.createProducer().send(this.guestEventQueue, textMessage);
-        }
-        catch (JMSRuntimeException e) {
-            LOGGER.log(SEVERE, e, () -> "Cannot send message due to technical reasons!");
-        }
+        guestEvents.fire(guest);
     }
 
     @GET
