@@ -45,8 +45,8 @@ import static org.koenighotze.jee7hotel.domain.Guest.GUEST_FIND_BY_PUBLIC_ID;
         @JMSDestinationDefinition(
                 name = GuestService.GUEST_EVENT_TOPIC,
                 resourceAdapter = "jmsra",
-                interfaceName = "javax.jms.Queue",
-                destinationName = "guestEventQueue")
+                interfaceName = "javax.jms.Topic",
+                destinationName = "guestEventTopic")
 })
 public class GuestService {
     private static final Logger LOGGER = Logger.getLogger(GuestService.class.getName());
@@ -86,6 +86,7 @@ public class GuestService {
         sendGuestEvent(guest);
     }
 
+    // TODO: Extract to CDI Events
     public void sendGuestEvent(Guest guest) {
         if (null == jmsContext || null == guestEventQueue) {
             LOGGER.log(WARNING, () -> "Sending messages is deactivated!");

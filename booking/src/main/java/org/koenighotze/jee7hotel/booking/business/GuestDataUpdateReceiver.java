@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 import static java.util.logging.Level.SEVERE;
 
 /**
+ * Receiver for updates to guest data via MQ.
+ *
  * @author dschmitz
  */
 @MessageDriven(
@@ -24,7 +26,7 @@ import static java.util.logging.Level.SEVERE;
                 @ActivationConfigProperty(propertyName = "destinationLookup",
                         propertyValue = GuestDataUpdateReceiver.GUEST_EVENT_TOPIC),
                 @ActivationConfigProperty(propertyName = "destinationType",
-                        propertyValue = "javax.jms.Queue")
+                        propertyValue = "javax.jms.Topic")
         }
 )
 public class GuestDataUpdateReceiver implements MessageListener {
