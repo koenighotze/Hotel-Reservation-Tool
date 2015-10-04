@@ -1,5 +1,6 @@
 package org.koenighotze.jee7hotel.business;
 
+import org.koenighotze.jee7hotel.business.eventing.Background;
 import org.koenighotze.jee7hotel.business.eventsource.EventSourceInterceptor;
 import org.koenighotze.jee7hotel.business.logging.PerformanceLogger;
 import org.koenighotze.jee7hotel.domain.Guest;

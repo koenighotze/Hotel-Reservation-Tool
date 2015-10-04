@@ -1,4 +1,4 @@
-package org.koenighotze.jee7hotel.business;
+package org.koenighotze.jee7hotel.business.eventing;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.Retention;
@@ -13,5 +13,5 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Qualifier
 @Retention(RUNTIME)
 @Target({METHOD, FIELD, PARAMETER, TYPE})
-public @interface Background {
+public @interface GuestEventTopic {
 }

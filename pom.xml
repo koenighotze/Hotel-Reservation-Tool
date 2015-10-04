@@ -27,9 +27,10 @@
     <module>framework</module>
     <module>portal</module>
     <module>guest</module>
+    <module>guest-integration-test</module>
     <module>booking</module>
+    <module>booking-integration-test</module>
     <module>facilities</module>
-    <module>frontend</module>
   </modules>
 
   <dependencies>
@@ -39,6 +40,7 @@
       <version>7.0</version>
       <scope>provided</scope>
     </dependency>
+
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
@@ -59,11 +61,12 @@
       <artifactId>h2</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.jmockit</groupId>
-      <artifactId>jmockit</artifactId>
-      <scope>test</scope>
-    </dependency>
+    <!--<dependency>-->
+    <!--<groupId>org.jmockit</groupId>-->
+    <!--<artifactId>jmockit</artifactId>-->
+    <!--<scope>test</scope>-->
+    <!--</dependency>-->
+
     <!-- must be after the jmockit stuff -->
     <dependency>
       <groupId>junit</groupId>
@@ -86,23 +89,6 @@
       <groupId>org.powermock</groupId>
       <artifactId>powermock-api-mockito</artifactId>
     </dependency>
-
-    <!-- Arquillian dependencies -->
-    <dependency>
-      <groupId>org.jboss.arquillian.junit</groupId>
-      <artifactId>arquillian-junit-container</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.shrinkwrap.resolver</groupId>
-      <artifactId>shrinkwrap-resolver-api-maven</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.shrinkwrap.resolver</groupId>
-      <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>
@@ -111,45 +97,39 @@
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.17</version>
-          <configuration>
-            <excludes>
-              <!-- exclude integration tests, these are picked up by failsafe  -->
-              <exclude>**/*IT.java</exclude>
-            </excludes>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>2.7.1</version>
-          <configuration>
-            <systemProperties>
-              <includes>
-                <include>**/*IT.java</include>
-              </includes>
-            </systemProperties>
-            <!--
-            currently the Arquillian tests keep failing if run one after another.
-            Execute tests using the scripts under src/test/scripts.
-            -->
-            <skipTests>true</skipTests>
-          </configuration>
+          <version>2.18.1</version>
           <executions>
             <execution>
-              <id>integration-test</id>
-              <phase>integration-test</phase>
               <goals>
                 <goal>integration-test</goal>
-              </goals>
-            </execution>
-            <execution>
-              <id>verify</id>
-              <phase>verify</phase>
-              <goals>
                 <goal>verify</goal>
               </goals>
             </execution>
           </executions>
+
+          <configuration>
+            <systemProperties>
+              <!-- Setting is needed for arquillian/jboss integration -->
+              <property>
+                <name>java.util.logging.manager</name>
+                <value>org.jboss.logmanager.LogManager</value>
+              </property>
+              <property>
+                <name>arquillian.launch</name>
+                <value>wildfly</value>
+              </property>
+            </systemProperties>
+
+            <!--&lt;!&ndash;-->
+            <!--currently the Arquillian tests keep failing if run one after another.-->
+            <!--Execute tests using the scripts under src/test/scripts.-->
+            <!--&ndash;&gt;-->
+            <!--<skipTests>true</skipTests>-->
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -268,17 +248,10 @@
         <version>1.19</version>
         <scope>test</scope>
       </dependency>
-
       <dependency>
-        <groupId>org.mongojack</groupId>
-        <artifactId>mongojack</artifactId>
-        <version>2.1.0</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>persistence-api</artifactId>
-            <groupId>javax.persistence</groupId>
-          </exclusion>
-        </exclusions>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>4.5</version>
       </dependency>
 
       <dependency>
@@ -299,11 +272,11 @@
         <scope>test</scope>
       </dependency>
       <!-- MongoDB Stuff -->
-      <dependency>
-        <groupId>org.mongodb</groupId>
-        <artifactId>mongo-java-driver</artifactId>
-        <version>3.0.3</version>
-      </dependency>
+      <!--<dependency>-->
+      <!--<groupId>org.mongodb</groupId>-->
+      <!--<artifactId>mongo-java-driver</artifactId>-->
+      <!--<version>3.0.3</version>-->
+      <!--</dependency>-->
       <dependency>
         <groupId>com.google.code.gson</groupId>
         <artifactId>gson</artifactId>
@@ -334,13 +307,6 @@
         <scope>test</scope>
       </dependency>
       <dependency>
-        <groupId>org.jboss.arquillian.graphene</groupId>
-        <artifactId>graphene-webdriver</artifactId>
-        <version>2.0.3.Final</version>
-        <type>pom</type>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-simple</artifactId>
         <version>1.6.4</version>
@@ -352,11 +318,29 @@
         <version>1.4.187</version>
         <scope>test</scope>
       </dependency>
+
       <dependency>
         <groupId>com.github.fakemongo</groupId>
         <artifactId>fongo</artifactId>
-        <version>1.5.8</version>
+        <version>2.0.1</version>
       </dependency>
+      <dependency>
+        <groupId>org.mongojack</groupId>
+        <artifactId>mongojack</artifactId>
+        <version>2.5.0</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>persistence-api</artifactId>
+            <groupId>javax.persistence</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>mongo-java-driver</artifactId>
+        <version>3.0.4</version>
+      </dependency>
+
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
@@ -389,6 +373,7 @@
         <version>${powermock.version}</version>
         <scope>test</scope>
       </dependency>
+
       <dependency>
         <groupId>org.jboss.arquillian</groupId>
         <artifactId>arquillian-bom</artifactId>
@@ -396,16 +381,19 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
+
+      <dependency>
+        <groupId>org.jboss.shrinkwrap.resolver</groupId>
+        <artifactId>shrinkwrap-resolver-depchain</artifactId>
+        <version>2.2.0</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+
       <dependency>
         <groupId>org.wildfly</groupId>
         <artifactId>wildfly-arquillian-container-managed</artifactId>
         <version>8.2.0.Final</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.wildfly.arquillian</groupId>
-        <artifactId>wildfly-arquillian-container-remote</artifactId>
-        <version>1.0.0.Alpha4</version>
         <scope>test</scope>
       </dependency>
     </dependencies>
@@ -437,83 +425,58 @@
         <ws.port>8080</ws.port>
       </properties>
     </profile>
-    <!--<profile>-->
-    <!--<id>wildfly</id>-->
 
-    <!--<build>-->
-    <!--<plugins>-->
-    <!--<plugin>-->
-    <!--<groupId>org.wildfly.plugins</groupId>-->
-    <!--<artifactId>wildfly-maven-plugin</artifactId>-->
-    <!--<version>1.0.2.Final</version>-->
-    <!--<configuration>-->
-    <!--<server-config>standalone-full.xml</server-config>-->
-    <!--</configuration>-->
-    <!--</plugin>-->
-    <!--</plugins>-->
-    <!--</build>-->
-    <!--</profile>-->
     <profile>
-      <id>wildfly-managed-integration-tests</id>
-      <dependencies>
-        <dependency>
-          <groupId>org.wildfly.arquillian</groupId>
-          <artifactId>wildfly-arquillian-container-managed</artifactId>
-        </dependency>
-      </dependencies>
+      <id>application-build</id>
+      <activation>
+        <file>
+          <!-- only for webapps -->
+          <exists>${basedir}/src/main/webapp/WEB-INF</exists>
+        </file>
+      </activation>
       <build>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-failsafe-plugin</artifactId>
-            <configuration>
-              <systemProperties>
-                <!-- Setting is needed for arquillian/jboss integration -->
-                <property>
-                  <name>java.util.logging.manager</name>
-                  <value>org.jboss.logmanager.LogManager</value>
-                </property>
-                <property>
-                  <name>arquillian.launch</name>
-                  <value>wildfly</value>
-                </property>
-              </systemProperties>
-            </configuration>
+            <artifactId>maven-jar-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>make-a-jar</id>
+                <phase>compile</phase>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
           </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>wildfly-remote-integration-tests</id>
-      <dependencies>
-        <dependency>
-          <groupId>org.wildfly.arquillian</groupId>
-          <artifactId>wildfly-arquillian-container-remote</artifactId>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-failsafe-plugin</artifactId>
-            <configuration>
-              <systemProperties>
-                <!-- Setting is needed for arquillian/jboss integration -->
-                <property>
-                  <name>java.util.logging.manager</name>
-                  <value>org.jboss.logmanager.LogManager</value>
-                </property>
-                <property>
-                  <name>arquillian.launch</name>
-                  <value>wildfly-remote</value>
-                </property>
-              </systemProperties>
-            </configuration>
+            <artifactId>maven-install-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>install</phase>
+                <goals>
+                  <goal>install-file</goal>
+                </goals>
+                <configuration>
+                  <packaging>jar</packaging>
+                  <artifactId>${project.artifactId}</artifactId>
+                  <groupId>${project.groupId}</groupId>
+                  <version>${project.version}</version>
+                  <file>
+                    ${project.build.directory}/${project.artifactId}-${project.version}.jar
+                  </file>
+                </configuration>
+              </execution>
+            </executions>
           </plugin>
+
         </plugins>
+
       </build>
+
     </profile>
+
     <profile>
       <!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->
       <!-- Use this profile for any OpenShift specific customization your app will need. -->

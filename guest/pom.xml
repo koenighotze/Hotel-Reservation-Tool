@@ -1,66 +1,64 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.koenighotze.jee7hotel</groupId>
-    <artifactId>guest</artifactId>
-    <!--<version>1.0-SNAPSHOT</version>-->
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.koenighotze.jee7hotel</groupId>
+  <artifactId>guest</artifactId>
+  <!--<version>1.0-SNAPSHOT</version>-->
 
-    <parent>
-        <groupId>org.koenighotze</groupId>
-        <artifactId>jee7hotel</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <!--<relativePath/>-->
-    </parent>
+  <parent>
+    <groupId>org.koenighotze</groupId>
+    <artifactId>jee7hotel</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!--<relativePath/>-->
+  </parent>
 
-    <packaging>war</packaging>
+  <packaging>war</packaging>
 
-    <properties>
-        <application.contextRoot>/guest</application.contextRoot>
-        <application.finalName>guest</application.finalName>
-    </properties>
+  <properties>
+    <application.contextRoot>/guest</application.contextRoot>
+    <application.finalName>guest</application.finalName>
+  </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.koenighotze.jee7hotel.framework</groupId>
-            <artifactId>application</artifactId>
-            <version>${jee7hotel.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.koenighotze.jee7hotel.framework</groupId>
-            <artifactId>frontend</artifactId>
-            <version>${jee7hotel.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.koenighotze.jee7hotel.framework</groupId>
-            <artifactId>eventing</artifactId>
-            <version>${jee7hotel.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.koenighotze.jee7hotel.framework</groupId>
-            <artifactId>persistence</artifactId>
-            <version>${jee7hotel.version}</version>
-        </dependency>
-        <!-- TEST DEPENDENCIES -->
-        <dependency>
-            <groupId>org.koenighotze.jee7hotel.framework</groupId>
-            <artifactId>test</artifactId>
-            <version>${jee7hotel.version}</version>
-            <scope>test</scope>
-        </dependency>
+  <dependencies>
+    <dependency>
+      <groupId>org.koenighotze.jee7hotel.framework</groupId>
+      <artifactId>application</artifactId>
+      <version>${jee7hotel.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.koenighotze.jee7hotel.framework</groupId>
+      <artifactId>frontend</artifactId>
+      <version>${jee7hotel.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.koenighotze.jee7hotel.framework</groupId>
+      <artifactId>eventing</artifactId>
+      <version>${jee7hotel.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.koenighotze.jee7hotel.framework</groupId>
+      <artifactId>persistence</artifactId>
+      <version>${jee7hotel.version}</version>
+    </dependency>
+    <!-- TEST DEPENDENCIES -->
+    <dependency>
+      <groupId>org.koenighotze.jee7hotel.framework</groupId>
+      <artifactId>test</artifactId>
+      <version>${jee7hotel.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
-
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.wildfly.plugins</groupId>
-                <artifactId>wildfly-maven-plugin</artifactId>
-                <configuration>
-                    <!-- needs message queuing -->
-                    <serverConfig>standalone-full.xml</serverConfig>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.wildfly.plugins</groupId>
+        <artifactId>wildfly-maven-plugin</artifactId>
+        <configuration>
+          <!-- needs message queuing -->
+          <serverConfig>standalone-full.xml</serverConfig>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
