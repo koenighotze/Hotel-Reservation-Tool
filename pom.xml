@@ -31,6 +31,7 @@
     <module>booking</module>
     <module>booking-integration-test</module>
     <module>facilities</module>
+    <module>facilities-integration-test</module>
   </modules>
 
   <dependencies>

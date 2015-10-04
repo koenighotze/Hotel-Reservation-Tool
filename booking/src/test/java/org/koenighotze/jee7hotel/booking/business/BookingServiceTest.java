@@ -8,7 +8,7 @@ import org.koenighotze.jee7hotel.booking.business.events.NewReservationEvent;
 import org.koenighotze.jee7hotel.booking.business.events.ReservationStatusChangeEvent;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
 import org.koenighotze.jee7hotel.booking.domain.RoomEquipment;
-import org.koenighotze.jee7hotel.business.AbstractBasePersistenceTest;
+import org.koenighotze.jee7hotel.framework.test.AbstractBasePersistenceTest;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 

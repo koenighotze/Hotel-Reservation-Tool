@@ -1,7 +1,6 @@
 package org.koenighotze.jee7hotel.framework.frontend;
 
 import org.junit.Test;
-import org.koenighotze.jee7hotel.frontend.ErrorBean;
 
 import java.io.IOException;
 import java.util.stream.Stream;

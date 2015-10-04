@@ -1,7 +1,9 @@
 package org.koenighotze.jee7hotel.domain;
 
 import org.junit.Test;
-import org.koenighotze.jee7hotel.business.AbstractBasePersistenceTest;
+import org.koenighotze.jee7hotel.facilities.domain.Room;
+import org.koenighotze.jee7hotel.facilities.domain.RoomEquipment;
+import org.koenighotze.jee7hotel.framework.test.AbstractBasePersistenceTest;
 
 import javax.persistence.Cache;
 

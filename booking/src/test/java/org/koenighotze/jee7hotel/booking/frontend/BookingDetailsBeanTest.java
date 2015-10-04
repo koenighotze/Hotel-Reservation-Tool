@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.koenighotze.jee7hotel.booking.business.BookingService;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
-import org.koenighotze.jee7hotel.business.AbstractBasePersistenceTest;
+import org.koenighotze.jee7hotel.framework.test.AbstractBasePersistenceTest;
 import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;

@@ -100,7 +100,7 @@
 
     <filter>
         <filter-name>Header Filter</filter-name>
-        <filter-class>org.koenighotze.jee7hotel.frontend.HeaderFilter</filter-class>
+        <filter-class>org.koenighotze.jee7hotel.framework.frontend.HeaderFilter</filter-class>
     </filter>
 
     <filter-mapping>

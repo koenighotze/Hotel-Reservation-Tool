@@ -26,8 +26,8 @@ import static java.util.UUID.randomUUID;
 import static java.util.stream.IntStream.rangeClosed;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
-import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addFlashMessage;
-import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
+import static org.koenighotze.jee7hotel.framework.frontend.FacesMessageHelper.addFlashMessage;
+import static org.koenighotze.jee7hotel.framework.frontend.FacesMessageHelper.addMessage;
 
 /**
  * Flow Bean for the booking wizard.

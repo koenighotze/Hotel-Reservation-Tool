@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.koenighotze.jee7hotel.booking.business.BookingService;
 import org.koenighotze.jee7hotel.booking.domain.GuestModel;
 import org.koenighotze.jee7hotel.booking.persistence.GuestModelRepository;
-import org.koenighotze.jee7hotel.business.AbstractBasePersistenceTest;
+import org.koenighotze.jee7hotel.framework.test.AbstractBasePersistenceTest;
 
 import static java.util.Collections.singletonList;
 import static org.fest.assertions.Assertions.assertThat;

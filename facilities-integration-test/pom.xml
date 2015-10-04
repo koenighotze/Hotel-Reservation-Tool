@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.koenighotze.jee7hotel</groupId>
+    <artifactId>facilities-integration-test</artifactId>
+    <!--<version>1.0-SNAPSHOT</version>-->
+
+    <parent>
+        <groupId>org.koenighotze</groupId>
+        <artifactId>jee7hotel</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <!--<relativePath/>-->
+    </parent>
+
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.koenighotze.jee7hotel.framework</groupId>
+            <artifactId>integration-test</artifactId>
+            <version>${jee7hotel.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.koenighotze.jee7hotel</groupId>
+            <artifactId>facilities</artifactId>
+            <version>${jee7hotel.version}</version>
+        </dependency>
+        
+    </dependencies>
+    <build>
+    </build>
+</project>

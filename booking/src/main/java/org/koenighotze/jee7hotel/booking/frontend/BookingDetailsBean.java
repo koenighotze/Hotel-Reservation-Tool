@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.logging.Logger;
 
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
-import static org.koenighotze.jee7hotel.frontend.FacesMessageHelper.addMessage;
+import static org.koenighotze.jee7hotel.framework.frontend.FacesMessageHelper.addMessage;
 
 /**
  * Handles showing details of a booking.

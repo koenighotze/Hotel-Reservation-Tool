@@ -2,8 +2,8 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="integration-test" transaction-type="RESOURCE_LOCAL">
     <!-- java se context still need explicit list of entities? -->
-    <class>org.koenighotze.jee7hotel.domain.Room</class>
-    <class>org.koenighotze.jee7hotel.domain.converter.RoomEquipmentConverter</class>
+    <class>org.koenighotze.jee7hotel.facilities.domain.Room</class>
+    <class>org.koenighotze.jee7hotel.facilities.domain.converter.RoomEquipmentConverter</class>
     <class>koenighotze.jee7hotel.framework.persistence.converter.LocalDateConverter</class>
     <!-- actually this should gather all entities, but it does not? -->
     <!--    <exclude-unlisted-classes>false</exclude-unlisted-classes>-->

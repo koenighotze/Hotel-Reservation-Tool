@@ -1,10 +1,11 @@
 package org.koenighotze.jee7hotel.domain.converter;
 
 import org.junit.Test;
-import org.koenighotze.jee7hotel.domain.RoomEquipment;
+import org.koenighotze.jee7hotel.facilities.domain.RoomEquipment;
+import org.koenighotze.jee7hotel.facilities.domain.converter.RoomEquipmentConverter;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.koenighotze.jee7hotel.domain.RoomEquipment.BUDGET;
+import static org.koenighotze.jee7hotel.facilities.domain.RoomEquipment.BUDGET;
 
 /**
  * @author dschmitz
