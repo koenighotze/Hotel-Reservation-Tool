@@ -13,10 +13,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.interceptor.Interceptors;
 import java.util.Random;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.lang.Thread.currentThread;
+import static java.lang.Thread.sleep;
 import static java.util.logging.Level.INFO;
+import static java.util.logging.Level.SEVERE;
 
 /**
  * Async handler for reservations. 
@@ -46,15 +48,15 @@ public class ReservationBackendHandler {
 
         try {
             LOGGER.log(INFO, "delaying {0} secs before accepting", duration);
-            Thread.sleep(duration * 1000L);
+            sleep(duration * 1000L);
 
-            this.bookingService.confirmReservation(newReservation.getReservationNumber());
+            bookingService.confirmReservation(newReservation.getReservationNumber());
 
             LOGGER.log(INFO, "Sending Email to guest about confirmation for {0}",
                     newReservation.getReservationNumber());
         } catch (InterruptedException ex) {
-            LOGGER.log(Level.SEVERE, "Cannot sleep", ex);
-            Thread.currentThread().interrupt();
+            LOGGER.log(SEVERE, "Cannot sleep", ex);
+            currentThread().interrupt();
         }
     }
 }

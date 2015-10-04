@@ -16,10 +16,11 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.logging.Logger;
 
+import static java.lang.Thread.sleep;
+import static java.time.LocalDate.now;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
@@ -27,7 +28,6 @@ import static org.koenighotze.jee7hotel.framework.integration.BaseArquillianSetu
 
 @RunWith(Arquillian.class)
 public class ReservationGenerationTriggerBeanRestIT {
-    private static final Logger LOGGER = Logger.getLogger(ReservationGenerationTriggerBeanRestIT.class.getName());
 
     @Deployment
     public static WebArchive createMicroDeployment() {
@@ -37,16 +37,15 @@ public class ReservationGenerationTriggerBeanRestIT {
     @Test
     @RunAsClient
     public void testRestInterface(@ArquillianResource URL baseURI) throws InterruptedException {
-        String targetUrl = baseURI + "rest/bookingstrigger";
+        String targetUrl = baseURI + "rest/trigger";
 
         // Client does not implement autoclosable :(
         Client client = null;
-        WebTarget webTarget = null;
 
         try {
             client = ClientBuilder.newClient();
-            webTarget = client.target(targetUrl);
-            BookingMessageTO messageTO = new BookingMessageTO(12L, "abc", LocalDate.now(), LocalDate.now().plusDays(1));
+            WebTarget webTarget = client.target(targetUrl);
+            BookingMessageTO messageTO = new BookingMessageTO(12L, "abc", now(), now().plusDays(1));
 
             Response response = webTarget
                     .register(BookingMessageTOWriter.class)
@@ -54,7 +53,10 @@ public class ReservationGenerationTriggerBeanRestIT {
                     .request()
                     .post(Entity.entity(messageTO, APPLICATION_JSON));
 
-            assertThat(response.getStatusInfo().getFamily(), is(sameInstance(Response.Status.Family.SUCCESSFUL)));
+            assertThat(response.getStatusInfo().getFamily(), is(sameInstance(SUCCESSFUL)));
+
+            // now give the app some time to process the message
+            sleep(11000L);
         } finally {
             if (null != client) {
                 client.close();
