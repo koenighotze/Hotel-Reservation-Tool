@@ -3,7 +3,7 @@ package org.koenighotze.jee7hotel.business;
 import org.apache.abdera.Abdera;
 import org.apache.abdera.model.Entry;
 import org.apache.abdera.model.Feed;
-import org.koenighotze.jee7hotel.business.logging.PerformanceLogger;
+import org.koenighotze.jee7hotel.framework.application.logging.PerformanceLogger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;

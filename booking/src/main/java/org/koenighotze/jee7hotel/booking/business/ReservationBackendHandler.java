@@ -3,8 +3,8 @@
 package org.koenighotze.jee7hotel.booking.business;
 
 import org.koenighotze.jee7hotel.booking.business.events.NewReservationEvent;
-import org.koenighotze.jee7hotel.business.eventsource.EventSourceInterceptor;
-import org.koenighotze.jee7hotel.business.logging.PerformanceLogger;
+import org.koenighotze.jee7hotel.framework.application.logging.PerformanceLogger;
+import org.koenighotze.jee7hotel.framework.eventing.eventsource.EventSourceInterceptor;
 
 import javax.ejb.Asynchronous;
 import javax.ejb.Singleton;

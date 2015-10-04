@@ -1,4 +1,4 @@
-package org.koenighotze.jee7hotel.business.monitor;
+package org.koenighotze.jee7hotel.framework.application.monitor;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;

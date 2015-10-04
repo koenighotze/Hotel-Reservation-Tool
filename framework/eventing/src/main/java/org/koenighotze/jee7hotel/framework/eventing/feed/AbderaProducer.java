@@ -1,4 +1,4 @@
-package org.koenighotze.jee7hotel.framework.feed;
+package org.koenighotze.jee7hotel.framework.eventing.feed;
 
 import org.apache.abdera.Abdera;
 

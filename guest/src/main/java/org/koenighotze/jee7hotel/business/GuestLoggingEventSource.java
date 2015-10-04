@@ -1,6 +1,6 @@
 package org.koenighotze.jee7hotel.business;
 
-import org.koenighotze.jee7hotel.business.eventsource.IEventSource;
+import org.koenighotze.jee7hotel.framework.eventing.eventsource.IEventSource;
 
 import javax.annotation.Priority;
 import javax.enterprise.inject.Alternative;

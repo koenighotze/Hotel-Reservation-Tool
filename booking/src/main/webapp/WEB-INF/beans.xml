@@ -19,7 +19,7 @@ and annotation based interceptor bindings should be used.
            The annotations used on the interceptors determine if the interceptor will be applied.
      -->
     <interceptors>
-        <class>org.koenighotze.jee7hotel.business.logging.PerformanceLogger</class>
-        <class>org.koenighotze.jee7hotel.business.eventsource.EventSourceInterceptor</class>
+        <class>org.koenighotze.jee7hotel.framework.application.logging.PerformanceLogger</class>
+        <class>org.koenighotze.jee7hotel.framework.eventing.eventsource.EventSourceInterceptor</class>
     </interceptors>
 </beans>

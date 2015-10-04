@@ -3,12 +3,15 @@
 package org.koenighotze.jee7hotel.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.koenighotze.jee7hotel.framework.application.jaxb.DateAdapter;
 import org.koenighotze.jee7hotel.framework.persistence.audit.Audit;
 import org.koenighotze.jee7hotel.framework.persistence.audit.Auditable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -52,7 +55,8 @@ public class Guest implements Serializable {
 
     @Auditable
     @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdate;
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    private Date lastUpdateTimestamp;
 
     public Guest() {
     }
@@ -103,18 +107,20 @@ public class Guest implements Serializable {
         this.version = version;
     }
 
+    @XmlTransient
+    @Transient
     public LocalDateTime getLastUpdate() {
-        if (null == lastUpdate) {
+        if (null == lastUpdateTimestamp) {
             return null;
         }
-        return LocalDateTime.from(lastUpdate.toInstant().atZone(of(UTC.getId())));
+        return LocalDateTime.from(lastUpdateTimestamp.toInstant().atZone(of(UTC.getId())));
     }
 
     public void setLastUpdate(LocalDateTime lastUpdate) {
         if (null == lastUpdate) {
-            this.lastUpdate = null;
+            this.lastUpdateTimestamp = null;
         } else {
-            this.lastUpdate = from(lastUpdate.toInstant(UTC));
+            this.lastUpdateTimestamp = from(lastUpdate.toInstant(UTC));
         }
     }
 
@@ -126,6 +132,7 @@ public class Guest implements Serializable {
                 .append("publicId", publicId)
                 .append("email", email)
                 .append("name", name)
+                .append("lastUpdateTimestamp", lastUpdateTimestamp)
                 .toString();
     }
 

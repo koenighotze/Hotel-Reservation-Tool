@@ -1,4 +1,4 @@
-package org.koenighotze.jee7hotel.business.logging;
+package org.koenighotze.jee7hotel.framework.application.logging;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;

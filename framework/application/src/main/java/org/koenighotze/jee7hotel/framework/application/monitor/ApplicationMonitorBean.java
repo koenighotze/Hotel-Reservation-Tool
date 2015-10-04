@@ -1,13 +1,10 @@
 
 
-package org.koenighotze.jee7hotel.business.monitor;
+package org.koenighotze.jee7hotel.framework.application.monitor;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Schedule;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

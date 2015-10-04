@@ -3,7 +3,6 @@ package org.koenighotze.jee7hotel.booking.business.integration;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.koenighotze.jee7hotel.booking.business.BookingService;
@@ -11,6 +10,7 @@ import org.koenighotze.jee7hotel.booking.business.ReservationGenerationTriggerBe
 import org.koenighotze.jee7hotel.booking.business.events.BookingMessageTO;
 import org.koenighotze.jee7hotel.booking.business.resources.MessagingDefinition;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
+import org.koenighotze.jee7hotel.framework.integration.BaseArquillianSetup;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -18,19 +18,13 @@ import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
 import javax.jms.JMSException;
 import javax.jms.Queue;
-import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static java.util.logging.Level.SEVERE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.jboss.shrinkwrap.api.ShrinkWrap.create;
-import static org.jboss.shrinkwrap.api.formatter.Formatters.VERBOSE;
 import static org.junit.Assert.assertThat;
-import static org.koenighotze.jee7hotel.booking.business.integration.BaseArquillianSetup.buildMavenLibraryDependencies;
-import static org.koenighotze.jee7hotel.booking.business.integration.BaseArquillianSetup.readJBossWebXml;
 
 /**
  * @author koenighotze
@@ -58,21 +52,7 @@ public class ReservationGenerationBeanArquillianIT {
 
     @Deployment
     public static Archive<?> createMicroDeployment() {
-        try {
-            String jbossWebXml = readJBossWebXml(ReservationGenerationBeanArquillianIT.class.getPackage());
-
-            File[] libs = buildMavenLibraryDependencies();
-
-            WebArchive baseDeployment = create(WebArchive.class)
-                    .addAsWebInfResource(jbossWebXml, "jboss-web.xml")
-                    .addAsLibraries(libs);
-
-            LOGGER.info(() -> baseDeployment.toString(VERBOSE));
-            return baseDeployment;
-        } catch (Exception e) {
-            LOGGER.log(SEVERE, e, () -> "Creating deployment failed");
-            throw e;
-        }
+        return BaseArquillianSetup.createStandardDeployment(ReservationGenerationBeanArquillianIT.class.getPackage());
     }
 
 //    @Deployment

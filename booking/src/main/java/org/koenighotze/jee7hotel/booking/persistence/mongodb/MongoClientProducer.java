@@ -2,7 +2,7 @@ package org.koenighotze.jee7hotel.booking.persistence.mongodb;
 
 import com.github.fakemongo.Fongo;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
+import org.bson.Document;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -11,6 +11,7 @@ import javax.enterprise.inject.Produces;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import static com.mongodb.MongoClientOptions.builder;
 import static java.util.stream.Collectors.joining;
 
 /**
@@ -30,9 +31,9 @@ public class MongoClientProducer {
     public void setup() {
         try {
             LOGGER.info(() -> "Starting MongoClient");
-            mongoClient = new MongoClient("localhost", MongoClientOptions.builder().connectTimeout(1000).serverSelectionTimeout(3000).socketTimeout(1000).build());
+            mongoClient = new MongoClient("localhost", builder().connectTimeout(1000).serverSelectionTimeout(3000).socketTimeout(1000).build());
             LOGGER.info(() ->  {
-                String dbs = mongoClient.listDatabases().map(doc -> doc.toJson()).into(new ArrayList<String>()).stream().collect(joining(", "));
+                String dbs = mongoClient.listDatabases().map(Document::toJson).into(new ArrayList<>()).stream().collect(joining(", "));
                 return "Connected to MongoDB, known Databases: " + dbs;
             });
         }
@@ -52,4 +53,5 @@ public class MongoClientProducer {
     public MongoClient mongoClient() {
         return mongoClient;
     }
+
 }

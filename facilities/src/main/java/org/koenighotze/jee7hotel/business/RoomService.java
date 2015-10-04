@@ -2,10 +2,10 @@
 
 package org.koenighotze.jee7hotel.business;
 
-import org.koenighotze.jee7hotel.business.eventsource.EventSourceInterceptor;
-import org.koenighotze.jee7hotel.business.logging.PerformanceLogger;
 import org.koenighotze.jee7hotel.domain.Room;
 import org.koenighotze.jee7hotel.domain.RoomEquipment;
+import org.koenighotze.jee7hotel.framework.application.logging.PerformanceLogger;
+import org.koenighotze.jee7hotel.framework.eventing.eventsource.EventSourceInterceptor;
 
 import javax.ejb.Stateless;
 import javax.inject.Named;

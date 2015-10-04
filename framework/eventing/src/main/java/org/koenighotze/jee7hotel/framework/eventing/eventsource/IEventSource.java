@@ -1,4 +1,4 @@
-package org.koenighotze.jee7hotel.business.eventsource;
+package org.koenighotze.jee7hotel.framework.eventing.eventsource;
 
 import javax.validation.constraints.NotNull;
 import java.lang.reflect.Method;
