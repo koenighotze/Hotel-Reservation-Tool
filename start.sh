@@ -2,7 +2,7 @@
 
 # Convinience script for starting the whole application w/o docker
 
-mvn install
+mvn install || exit
 
 pushd booking
 
