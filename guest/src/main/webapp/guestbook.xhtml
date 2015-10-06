@@ -67,7 +67,8 @@
                                 </h:link>
                             </li>
                             <li>
-                                <h:outputLink value="http://localhost:8080/booking/add_new_reservation.html">
+                                <!-- TODO hide if unavailable -->
+                                <h:outputLink value="#{serviceRegistration.addNewReservationUrl}">
                                     <f:param name="publicGuestId" value="#{guest.publicId}"/>
                                     <f:param name="backlink" value="#{request.requestURL}"/>
                                     #{msgs.new_reservation}

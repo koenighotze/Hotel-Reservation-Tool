@@ -4,6 +4,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 /**
+ * Fake application status.
+ *
  * @author koenighotze
  */
 @XmlRootElement
