@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import static java.time.temporal.ChronoUnit.DAYS;
 import static java.util.logging.Level.WARNING;
 import static org.koenighotze.jee7hotel.booking.domain.ReservationStatus.*;
+import static org.koenighotze.jee7hotel.booking.domain.RoomEquipment.BUDGET;
 
 /**
  * @author dschmitz
@@ -133,7 +134,7 @@ public class BookingService {
     public Reservation bookRoom(String guestId, String roomId, LocalDate checkin, LocalDate checkout) {
         Reservation reservation =
                 new Reservation(guestId, newReservationNumber(), roomId,
-                        checkin, checkout, calculateRateFor(RoomEquipment.BUDGET, checkin, checkout));
+                        checkin, checkout, calculateRateFor(BUDGET, checkin, checkout));
 
         LOGGER.info(() -> "Storing " + reservation);
         this.em.persist(reservation);

@@ -6,6 +6,17 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:kh="http://java.sun.com/jsf/composite/org/koenighotze/jee7hotel/guest">
 
+<f:metadata>
+    <ui:remove>
+        The following parameters are used to inject a successful reservation
+        into this page.
+    </ui:remove>
+    <f:viewParam name="publicGuestId" value="#{guestbookBean.publicGuestId}"/>
+    <f:viewParam name="reservationNumber" value="#{guestbookBean.reservationNumber}"/>
+    <f:viewParam name="roomNumber" value="#{guestbookBean.roomNumber}"/>
+    <f:event type="preRenderView" listener="#{guestbookBean.initReservationMessage}"/>
+</f:metadata>
+
 <ui:composition template="/WEB-INF/template-bootstrap.html">
     <ui:define name="page_header">
         #{msgs.guests_so_far}

@@ -1,6 +1,5 @@
 package org.koenighotze.jee7hotel.booking.frontend;
 
-import org.apache.commons.lang3.StringUtils;
 import org.koenighotze.jee7hotel.booking.business.BookingService;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
 import org.koenighotze.jee7hotel.booking.frontend.model.Booking;
@@ -19,7 +18,9 @@ import java.io.Serializable;
 
 import static java.lang.String.format;
 import static java.time.LocalDate.now;
+import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 import static javax.faces.context.FacesContext.getCurrentInstance;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * Handles the creation of new reservations.
@@ -85,37 +86,48 @@ public class NewReservationBean implements Serializable {
     }
 
     public String addReservation() {
-        Flash flash = getCurrentInstance().getExternalContext().getFlash();
-        flash.setKeepMessages(true);
-
         if (!guestModelRepository.findByPublicId(booking.getGuest()).isPresent()) {
             FacesMessage message = new FacesMessage(format("Guest %s is currently unknown. Booking will be created but check in Guest system for correctness", booking.getGuest()));
-            message.setSeverity(FacesMessage.SEVERITY_WARN);
+            message.setSeverity(SEVERITY_WARN);
             getCurrentInstance().addMessage(null, message);
         }
+
+        // TODO should do the same with room numbers
 
         Reservation realReservation
                 = bookingService.bookRoom(booking.getGuest(), booking.getRoom(),
                 booking.getCheckinDate(), booking.getCheckoutDate());
+        // TODO handle errors
 
-        FacesMessage message = new FacesMessage(format("Room %s is booked for %s; Reservation number %s; Cost: %s EUR",
-                booking.getRoom(), booking.getGuest(), realReservation.getReservationNumber(),
-                realReservation.getCostsInEuro()));
-        getCurrentInstance().addMessage(null, message);
-        booking = null;
-
-        if (StringUtils.isBlank(backlink)) {
-            return format("/booking.xhtml?reservationNumber=%s&faces-redirect=true", realReservation.getReservationNumber());
+        if (isBlank(backlink)) {
+            return navigateToBookingsPage(realReservation);
         }
 
+        return navigateToBacklink(realReservation);
+    }
+
+    protected String navigateToBacklink(Reservation realReservation) {
         ExternalContext externalContext = getCurrentInstance().getExternalContext();
         try {
-            externalContext.redirect(backlink);
+            String requestParams = format("?reservationNumber=%s&publicGuestId=%s&roomNumber=%s", realReservation.getReservationNumber(), realReservation.getGuest(), realReservation.getAssignedRoom());
+
+            externalContext.redirect(backlink + requestParams);
         } catch (IOException e) {
             // TODO: handle exception
         }
         getCurrentInstance().responseComplete();
         return null;
+    }
+
+    protected String navigateToBookingsPage(Reservation realReservation) {
+        Flash flash = getCurrentInstance().getExternalContext().getFlash();
+        FacesMessage message = new FacesMessage(format("Room %s is booked for %s; Reservation number %s; Cost: %s EUR",
+                booking.getRoom(), booking.getGuest(), realReservation.getReservationNumber(),
+                realReservation.getCostsInEuro()));
+        getCurrentInstance().addMessage(null, message);
+        booking = null;
+        flash.setKeepMessages(true); // only keep messages if we do not have a backlink
+        return format("/booking.xhtml?reservationNumber=%s&faces-redirect=true", realReservation.getReservationNumber());
     }
 
     public String getBacklink() {
