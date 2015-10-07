@@ -1,4 +1,4 @@
-package org.koenighotze.jee7hotel.framework.test.guest.integration;
+package org.koenighotze.jee7hotel.guest.integration;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
