@@ -29,6 +29,13 @@
             </div>
         </ui:fragment>
 
+        <ui:fragment rendered="#{empty(guestbookBean.addNewReservationUrl)}">
+            <div class="alert alert-warning" role="alert">
+                #{msgs.no_new_reservations}
+            </div>
+        </ui:fragment>
+
+
         <form jsf:id="new_guest_form">
             <div class="btn-toolbar">
 
@@ -67,12 +74,19 @@
                                 </h:link>
                             </li>
                             <li>
-                                <!-- TODO hide if unavailable -->
-                                <h:outputLink value="#{serviceRegistration.addNewReservationUrl}">
-                                    <f:param name="publicGuestId" value="#{guest.publicId}"/>
-                                    <f:param name="backlink" value="#{request.requestURL}"/>
-                                    #{msgs.new_reservation}
-                                </h:outputLink>
+                                <ui:remove>
+                                    If we do it this way, then the producer will be called multiple
+                                    times during the JSF lifecycle :(
+                                    <!-- h:outputLink value="#{serviceRegistration.addNewReservationUrl}" -->
+                                </ui:remove>
+
+                                <ui:fragment rendered="#{!empty(guestbookBean.addNewReservationUrl)}">
+                                    <h:outputLink value="#{guestbookBean.addNewReservationUrl}">
+                                        <f:param name="publicGuestId" value="#{guest.publicId}"/>
+                                        <f:param name="backlink" value="#{request.requestURL}"/>
+                                        #{msgs.new_reservation}
+                                    </h:outputLink>
+                                </ui:fragment>
                             </li>
                         </ul>
                     </f:facet>

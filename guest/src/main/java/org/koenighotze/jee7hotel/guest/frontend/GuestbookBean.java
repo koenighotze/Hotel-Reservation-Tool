@@ -1,5 +1,6 @@
 package org.koenighotze.jee7hotel.guest.frontend;
 
+import org.koenighotze.jee7hotel.framework.application.registry.AddReservationUrl;
 import org.koenighotze.jee7hotel.guest.business.GuestService;
 import org.koenighotze.jee7hotel.guest.domain.Guest;
 
@@ -33,6 +34,10 @@ public class GuestbookBean {
     private String reservationNumber;
 
     private String roomNumber;
+
+    @Inject
+    @AddReservationUrl
+    private String addNewReservationUrl;
 
     public void fillInitialGuestBook() {
         // TODO trigger batch via JMS?
@@ -88,5 +93,9 @@ public class GuestbookBean {
 
     public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
+    }
+
+    public String getAddNewReservationUrl() {
+        return addNewReservationUrl;
     }
 }
