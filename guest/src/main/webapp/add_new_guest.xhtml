@@ -4,7 +4,9 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:kh="http://xmlns.jcp.org/jsf/composite/org/koenighotze/jee7hotel/framework/frontend"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
         >
+
 <ui:composition template="/WEB-INF/template-bootstrap.html">
     <ui:define name="page_header">
         #{msgs.main_guestbook}
@@ -29,7 +31,8 @@
                       label="#{msgs.email}"
                       val="#{addNewGuestBean.guest.email}"
                       placeholder="#{msgs.spam_location}"
-                      validatorMessage="#{msgs.provide_valid_email}">
+                      validatorMessage="#{msgs.provide_valid_email}"
+                      inputType="email">
                 <f:validateRegex pattern="^[A-Za-z 0-9.@\\-_]*$" for="input"/>
             </kh:input>
 
@@ -50,6 +53,41 @@
                 </input>
             </div>
         </form>
+    </ui:define>
+
+    <ui:define name="miscjavascript">
+        <h:outputScript library="js" name="jquery.validate.js"/>
+        <h:outputScript library="js" name="additional-methods.js"/>
+        <script>
+            $("#welcomeForm").validate({
+                errorElement: 'span',
+                errorClass: "input-error",
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.next("span"));
+                    error.addClass('errorMessage');
+                },
+                rules: {
+                    'welcomeForm:guest_name:inputTextField': {
+                        required: true,
+                        pattern: /^[A-Za-z .\-]{5,20}$/,
+                        minlength: 5,
+                        maxlength: 20,
+                    },
+                    'welcomeForm:guest_email:inputTextField': {
+                        email: true
+                    }
+                },
+                messages: {
+                    'welcomeForm:guest_name:inputTextField': {
+                        required: "#{msgs.guest_name_is_required}",
+                        pattern: "#{msgs.provide_valid_name}"
+                    },
+                    'welcomeForm:guest_email:inputTextField': {
+                        email: "#{msgs.provide_valid_email}"
+                    }
+                }
+            });
+        </script>
     </ui:define>
 </ui:composition>
 </html>

@@ -17,7 +17,7 @@ This project consists of three applications, each is constraint to a clear domai
 * facilities
 
 Furthermore, a fourth application - portal - integrates the other three into a single
-UI.
+UI and basically acts as the composition ui.
 
 Just run the following to start up all apps:
 
@@ -58,7 +58,7 @@ The main technolgies from an architectural point of view are:
 * Wildfly 9, as the main runtime container
 * Arquillian for integration testing
 * Thymeleaf for the portal UI
-* Unobtrusive JavaScript using JQuery, for enhancing the usability, for example paging
+* Unobtrusive JavaScript using JQuery, for enhancing the usability, for example paging and form validation
 
 ## The Guest Application
 
@@ -66,6 +66,7 @@ Main pseudo Use Cases
 * CRUD frontends for Guests (restricted based on roles, CLERK, CUSTOMER)
 * Import and export of Guests for administrators (via REST, ADMINISTRATOR role only)
 * Informing other applications of new Guests
+* New reservations can be created for guests, if the booking application is available
 
 ## The Facilities Application
 
@@ -97,6 +98,10 @@ The todo list includes (among other stuff):
 * docker compose for setting up containers
 * Inject REQUEST into VIEW
 * Inject SESSION into APPLICATION/SINGLETON
+* Add Jquery Validation to form
+* Integrate facilities and booking
+* setup batches
+* fix pager
 
 
 # ye olde docs
