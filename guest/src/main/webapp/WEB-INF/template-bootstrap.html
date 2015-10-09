@@ -93,6 +93,13 @@
 <h:outputScript library="common" name="js/jee7hotelconfig.js"/>
 <h:outputScript library="bootstrap" name="js/bootstrap.js"/>
 
+<script>
+    $(document).ready(function() {
+        jee7hotelconfig.setRequestContextPath("#{request.contextPath}");
+        jee7hotelconfig.setMessagesProviderUrl("#{request.requestURL}rest/messages");
+    });
+</script>
+
 <ui:insert name="miscjavascript">
 </ui:insert>
 </body>

@@ -14,7 +14,7 @@
 
     <ui:define name="content">
 
-        <form jsf:id="welcomeForm">
+        <form jsf:id="form">
             <kh:input id="guest_name"
                       label="#{msgs.guest_name}"
                       val="#{addNewGuestBean.guest.name}"
@@ -40,7 +40,7 @@
                 <input jsf:id="btn_discard_changes"
                        type="submit"
                        jsf:action="/guestbook.xhtmlfaces-redirect=true"
-                       class="btn btn-sm"
+                       class="btn btn-sm cancel"
                        jsf:immediate="true"
                        value="#{msgs.btn_discard_changes}">
                 </input>
@@ -56,37 +56,15 @@
     </ui:define>
 
     <ui:define name="miscjavascript">
-        <h:outputScript library="js" name="jquery.validate.js"/>
-        <h:outputScript library="js" name="additional-methods.js"/>
+        <h:outputScript library="common" name="js/jquery.validate.js"/>
+        <h:outputScript library="common" name="js/additional-methods.js"/>
+        <h:outputScript library="js" name="add_new_guest_validation.js"/>
+
         <script>
-            $("#welcomeForm").validate({
-                errorElement: 'span',
-                errorClass: "input-error",
-                errorPlacement: function (error, element) {
-                    error.appendTo(element.next("span"));
-                    error.addClass('errorMessage');
-                },
-                rules: {
-                    'welcomeForm:guest_name:inputTextField': {
-                        required: true,
-                        pattern: /^[A-Za-z .\-]{5,20}$/,
-                        minlength: 5,
-                        maxlength: 20,
-                    },
-                    'welcomeForm:guest_email:inputTextField': {
-                        email: true
-                    }
-                },
-                messages: {
-                    'welcomeForm:guest_name:inputTextField': {
-                        required: "#{msgs.guest_name_is_required}",
-                        pattern: "#{msgs.provide_valid_name}"
-                    },
-                    'welcomeForm:guest_email:inputTextField': {
-                        email: "#{msgs.provide_valid_email}"
-                    }
-                }
-            });
+            /*
+            TODO: pass messages to JavaScript file, or export
+            as resource during build
+            */
         </script>
     </ui:define>
 </ui:composition>

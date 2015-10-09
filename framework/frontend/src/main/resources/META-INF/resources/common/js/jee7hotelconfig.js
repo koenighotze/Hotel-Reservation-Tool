@@ -9,7 +9,8 @@
     settings : {
       href: window.location.href,
       hostname: window.location.hostname,
-      wsPort: 8080
+      wsPort: 8080,
+      httpPort: 8080,
     },
 
     webSocketBaseUrl : function() {
@@ -22,6 +23,10 @@
 
     setRequestContextPath : function(path) {
       this.settings.requestContextPath = path;
+    },
+
+    setMessagesProviderUrl : function(url) {
+      this.settings.messagesProviderUrl = url;
     }
   };
 

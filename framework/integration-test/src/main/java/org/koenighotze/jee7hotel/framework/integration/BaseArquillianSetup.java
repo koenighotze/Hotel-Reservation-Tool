@@ -1,6 +1,5 @@
 package org.koenighotze.jee7hotel.framework.integration;
 
-import org.fest.assertions.Assertions;
 import org.jboss.shrinkwrap.api.ArchivePath;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.impl.base.asset.AssetUtil;
@@ -9,6 +8,7 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.SEVERE;
+import static org.fest.assertions.Assertions.assertThat;
 import static org.jboss.shrinkwrap.api.ShrinkWrap.create;
 import static org.jboss.shrinkwrap.api.formatter.Formatters.VERBOSE;
 import static org.jboss.shrinkwrap.resolver.api.maven.Maven.resolver;
@@ -28,7 +28,7 @@ public class BaseArquillianSetup {
         String jbossWebXml = AssetUtil
                 .getClassLoaderResourceName(resourcePackage,
                         "integration-jboss-web.xml");
-        Assertions.assertThat(jbossWebXml).isNotNull();
+        assertThat(jbossWebXml).isNotNull();
         return jbossWebXml;
     }
 

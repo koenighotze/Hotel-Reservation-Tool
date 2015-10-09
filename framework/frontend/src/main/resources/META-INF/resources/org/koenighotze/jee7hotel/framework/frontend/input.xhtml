@@ -26,6 +26,10 @@
                jsf:required="#{cc.attrs.required}"
                jsf:requiredMessage="#{cc.attrs.requiredMessage}"
                jsf:validatorMessage="#{cc.attrs.validatorMessage}">
+            <!--
+            removed ajax on purpose. This should be enabled
+            by the using application, or not at all
+            -->
             <!--<f:ajax event="blur" render="@this messageFor"/>-->
         </input>
 
