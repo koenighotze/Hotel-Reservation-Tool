@@ -1,54 +1,66 @@
 "use strict";
 // Client side paging
-var Imtech = {};
-Imtech.Pager = function () {
-    this.paragraphsPerPage = 5;
-    this.currentPage = 1;
-    this.pagingControlsContainer = '#pagingControls';
-    this.pagingContainerPath = '#content';
-    this.elemTagName = 'div';
+(function (pager, $) {
+  var currentPage = 1;
 
-    this.numPages = function () {
-        var numPages = 0;
-        if (this.paragraphs != null && this.paragraphsPerPage != null) {
-            numPages = Math.ceil(this.paragraphs.length / this.paragraphsPerPage);
-        }
-        return numPages;
-    };
+  pager.paragraphsPerPage = 5;
+  pager.pagingControlsContainer = '#pagingControls';
+  pager.pagingContainerPath = '#content';
+  pager.elemTagName = 'div';
+  pager.paragraphs = [];
 
-    this.showPage = function (page) {
-        this.currentPage = page;
-        var html = '';
-        var self = this;
+  function numPages() {
+    var numPages = 0;
+    if (pager.paragraphs != null && pager.paragraphsPerPage != null) {
+      numPages = Math.ceil(pager.paragraphs.length / pager.paragraphsPerPage);
+    }
+    return numPages;
+  }
 
-        this.paragraphs.slice((page - 1) * this.paragraphsPerPage,
-            ((page - 1) * this.paragraphsPerPage) + this.paragraphsPerPage).each(function () {
-                html += "<" + self.elemTagName + ">" + $(this).html() + "</" + self.elemTagName + ">";
-            });
-        $(this.pagingContainerPath).html(html);
+  function renderControls(container, currentPage, numPages) {
+    var pagingControls = '<ul>';
 
-        renderControls(this.pagingControlsContainer, this.currentPage, this.numPages());
+    if (numPages <= 1) {
+      return;
     }
 
-    var renderControls = function (container, currentPage, numPages) {
-        var pagingControls = '<ul>';
-
-        if (numPages <= 1) {
-            return;
-        }
-
-        for (var i = 1; i <= numPages; i++) {
-            if (i != currentPage) {
-                pagingControls += '<li><a href="#" onclick="pager.showPage(' + i + '); return false;">' + i + '</a></li>';
-            } else {
-                pagingControls += '<li><span>' + i + '</span></li>';
-            }
-        }
-
-        pagingControls += '</ul>';
-
-        // todo: extract reference to pager from onclick: better register callback
-
-        $(container).html(pagingControls);
+    for (var i = 1; i <= numPages; i++) {
+      // todo extract onclick
+      if (currentPage == i) {
+        pagingControls += '<li><span>' + i + '</span></li>';
+      } else {
+        pagingControls += '<li><a href="#" class="pagerLink" data-row-id="' + i + '">' + i + '</a></li>';
+      }
     }
-}
+
+    pagingControls += '</ul>';
+    //onclick="pager.showPage(' + i + '); return false;"
+
+    $(container).html(pagingControls);
+    $("li>a.pagerLink").on("click", function (evt) {
+      pager.showPage(evt.target.attributes['data-row-id'].value);
+      evt.preventDefault();
+    });
+  }
+
+  pager.showPage = function (page) {
+    var html = '',
+      self = this;
+
+    currentPage = page;
+
+    pager.paragraphs.slice((page - 1) * pager.paragraphsPerPage,
+      ((page - 1) * pager.paragraphsPerPage) + pager.paragraphsPerPage).each(function () {
+        html += "<" + self.elemTagName + ">" + $(this).html() + "</" + self.elemTagName + ">";
+      });
+    $(pager.pagingContainerPath).html(html);
+
+    renderControls(pager.pagingControlsContainer, currentPage, numPages());
+  }
+
+})(window.pager = window.pager || {}, jQuery);
+
+
+
+
+

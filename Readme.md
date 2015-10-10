@@ -98,8 +98,6 @@ The todo list includes (among other stuff):
 * docker compose for setting up containers
 * Inject REQUEST into VIEW
 * Inject SESSION into APPLICATION/SINGLETON
-* Add Jquery Validation to form
-* Integrate facilities and booking
 * setup batches
 * fix pager
 
