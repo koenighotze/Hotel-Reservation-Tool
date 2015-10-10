@@ -5,6 +5,7 @@ import org.koenighotze.jee7hotel.booking.domain.Reservation;
 import org.koenighotze.jee7hotel.booking.frontend.model.Booking;
 import org.koenighotze.jee7hotel.booking.persistence.GuestModelRepository;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.Flash;
@@ -30,11 +31,8 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 @Named
 @ViewScoped
 public class NewReservationBean implements Serializable {
-    private String publicGuestId;
 
     private String backlink;
-
-    private String roomId;
 
     private Booking booking = new Booking();
 
@@ -44,44 +42,36 @@ public class NewReservationBean implements Serializable {
     @Inject
     private GuestModelRepository guestModelRepository;
 
+    @PostConstruct
+    public void initBooking() {
+        booking = new Booking();
+        booking.setCheckinDate(now().plusDays(1));
+        booking.setCheckoutDate(now().plusDays(2));
+    }
+
     public Booking getBooking() {
         return booking;
     }
 
     public String getPublicGuestId() {
-        return publicGuestId;
+        return booking.getGuest();
     }
 
     public void setPublicGuestId(@NotNull String publicGuestId) {
-        this.publicGuestId = publicGuestId;
-    }
-
-    public String getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(@NotNull String roomId) {
-        this.roomId = roomId;
+        booking.setGuest(publicGuestId);
     }
 
     public void init(ComponentSystemEvent evt) {
-        booking = new Booking();
-        booking.setGuest(publicGuestId);
-        booking.setRoom(roomId);
-        booking.setCheckinDate(now().plusDays(1));
-        booking.setCheckoutDate(now().plusDays(2));
+//        booking = new Booking();
+//        booking.setCheckinDate(now().plusDays(1));
+//        booking.setCheckoutDate(now().plusDays(2));
     }
 
     public String getRoomNumber() {
-        if (null == booking.getRoom()) {
-            return null;
-        }
-
         return booking.getRoom();
     }
 
     public void setRoomNumber(@NotNull String number) {
-        roomId = number;
         booking.setRoom(number);
     }
 

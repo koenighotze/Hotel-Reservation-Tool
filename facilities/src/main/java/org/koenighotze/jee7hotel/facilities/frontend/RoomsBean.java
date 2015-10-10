@@ -4,6 +4,7 @@ package org.koenighotze.jee7hotel.facilities.frontend;
 
 import org.koenighotze.jee7hotel.facilities.business.RoomService;
 import org.koenighotze.jee7hotel.facilities.domain.Room;
+import org.koenighotze.jee7hotel.framework.application.registry.AddReservationUrl;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
@@ -24,6 +25,10 @@ public class RoomsBean {
 
     private List<Room> rooms;
 
+    @Inject
+    @AddReservationUrl
+    private String addNewReservationUrl;
+
     @PostConstruct
     public void init() {
         this.rooms = this.roomService.getAllRooms();
@@ -35,5 +40,9 @@ public class RoomsBean {
 
     public List<Room> getRooms() {
         return this.rooms;
+    }
+
+    public String getAddNewReservationUrl() {
+        return addNewReservationUrl;
     }
 }

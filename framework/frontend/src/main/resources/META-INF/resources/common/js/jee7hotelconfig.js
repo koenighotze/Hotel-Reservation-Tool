@@ -10,7 +10,7 @@
       href: window.location.href,
       hostname: window.location.hostname,
       wsPort: 8080,
-      httpPort: 8080,
+      httpPort: 8080
     },
 
     webSocketBaseUrl : function() {

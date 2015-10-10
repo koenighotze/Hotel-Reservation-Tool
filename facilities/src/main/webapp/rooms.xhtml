@@ -32,6 +32,16 @@
                                 </h:link>
 
                             </li>
+
+                            <li>
+                                <ui:fragment rendered="#{!empty(roomsBean.addNewReservationUrl)}">
+                                    <h:outputLink value="#{roomsBean.addNewReservationUrl}">
+                                        <f:param name="roomId" value="#{room.id}"/>
+                                        <f:param name="backlink" value="#{request.requestURL}"/>
+                                        #{msgs.new_reservation}
+                                    </h:outputLink>
+                                </ui:fragment>
+                            </li>
                         </ul>
                     </h:column>
                     <h:column headerClass="visible">

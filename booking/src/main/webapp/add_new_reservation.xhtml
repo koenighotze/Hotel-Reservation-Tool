@@ -4,14 +4,14 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:kh="http://xmlns.jcp.org/jsf/composite/org/koenighotze/jee7hotel/framework/frontend"
-      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 <body>
 <f:metadata>
-    <f:viewParam name="publicGuestId" value="#{newReservationBean.publicGuestId}"/>
-    <f:viewParam name="roomId" value="#{newReservationBean.roomId}"/>
+    <f:viewParam name="publicGuestId" value="#{newReservationBean.booking.guest}"/>
+    <f:viewParam name="roomId" value="#{newReservationBean.booking.room}"/>
     <f:viewParam name="backlink" value="#{newReservationBean.backlink}"/>
-    <f:event type="preRenderView" listener="#{newReservationBean.init}"/>
+    <!--<f:event type="preRenderView" listener="#{newReservationBean.init}"/>-->
 </f:metadata>
 <ui:composition template="/WEB-INF/template-bootstrap.html">
     <ui:define name="page_header">
@@ -19,7 +19,7 @@
     </ui:define>
 
     <ui:define name="content">
-        <form jsf:id="welcomeForm">
+        <form jsf:id="form">
             <div class="form-group">
                 <kh:input id="guest_id"
                           val="#{newReservationBean.publicGuestId}"
@@ -44,31 +44,33 @@
 
                 <div class="form-group">
                     <label for="checkin_date">#{msgs.checkout_date}</label>
-                    <h:inputText id="checkin_date"
-                                 value="#{newReservationBean.booking.checkinDate}"
-                                 required="true"
-                                 p:type="date"
-                                 styleClass="form-control #{component.valid ? '' : 'input-error'}"
-                            >
-                    </h:inputText>
+                    <input jsf:id="checkin_date"
+                           jsf:value="#{newReservationBean.booking.checkinDate}"
+                           required="required"
+                           type="date"
+                           class="form-control #{component.valid ? '' : 'input-error'}"/>
+                    <h:panelGroup id="messageForCheckinDate">
+                        <h:message errorClass="errorMessage" for="checkin_date"/>
+                    </h:panelGroup>
                 </div>
 
                 <div class="form-group">
                     <label for="checkout_date">#{msgs.checkout_date}</label>
-                    <h:inputText id="checkout_date"
-                                 value="#{newReservationBean.booking.checkoutDate}"
-                                 required="true"
-                                 p:type="date"
-                                 styleClass="form-control #{component.valid ? '' : 'input-error'}"
-                            >
-                    </h:inputText>
+                    <input jsf:id="checkout_date"
+                           jsf:value="#{newReservationBean.booking.checkoutDate}"
+                           required="required"
+                           type="date"
+                           class="form-control #{component.valid ? '' : 'input-error'}"/>
+                    <h:panelGroup id="messageForCheckoutDate">
+                        <h:message errorClass="errorMessage" for="checkout_date"/>
+                    </h:panelGroup>
                 </div>
             </div>
 
             <div class="btn-toolbar">
                 <input type="submit"
                        jsf:action="/bookings.xhtml?faces-redirect=true"
-                       class="btn btn-sm"
+                       class="btn btn-sm cancel"
                        jsf:immediate="true"
                        value="#{msgs.btn_discard_changes}">
                 </input>
@@ -79,7 +81,6 @@
                 </input>
             </div>
         </form>
-
     </ui:define>
 
 </ui:composition>
