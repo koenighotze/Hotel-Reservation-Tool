@@ -102,13 +102,10 @@
         <h:outputStylesheet library="common" name="css/pager.css"/>
 
         <script>
-            // note: currently this must be visible globally....this sucks and I will
-            // fix the js-library. Scouts promise!
-//            var pager = new Imtech.Pager();
             (function () {
                 $(document).ready(function () {
                     pager.pagingContainerPath = $('tbody'); // set of main container
-                    pager.paragraphs = $('tr.pagingRow', pager.pagingContainer); // set of required containers
+                    pager.paragraphs = $('tr.pagingRow', pager.pagingContainerPath); // set of required containers
                     pager.elemTagName = 'tr';
                     pager.showPage(1);
                 });
