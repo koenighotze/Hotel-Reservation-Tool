@@ -36,13 +36,13 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li>
-          <a class="mashup" href="@{/guest/guestbook.html}">Guests</a>
+          <a class="mashup" th:href="@{~/guest/guestbook.html}">Guests</a>
         </li>
         <li>
-          <a class="mashup" href="@{/facilities/rooms.html}">Rooms</a>
+          <a class="mashup" th:href="@{~/facilities/rooms.html}">Rooms</a>
         </li>
         <li>
-          <a class="mashup" href="@{/booking/bookings.html}">Bookings</a>
+          <a class="mashup" th:href="@{~/booking/bookings.html}">Bookings</a>
         </li>
       </ul>
     </div>
@@ -55,15 +55,15 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li><a class="mashup" href="@{/guest/guestbook.html}">Guestbook <span class="sr-only">(current)</span></a>
+        <li><a class="mashup" th:href="@{~/guest/guestbook.html}">Guestbook <span class="sr-only">(current)</span></a>
         </li>
-        <li><a class="mashup" href="@{/guest/add_new_guest.html}">Add new guest</a></li>
+        <li><a class="mashup" th:href="@{~/guest/add_new_guest.html}">Add new guest</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a class="mashup" href="@{/facilities/rooms.html}">Facilities</a></li>
+        <li><a class="mashup" th:href="@{~/facilities/rooms.html}">Facilities</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a class="mashup" href="@{/booking/bookings.html">Bookings</a></li>
+        <li><a class="mashup" th:href="@{~/booking/bookings.html}">Bookings</a></li>
       </ul>
     </div>
 
