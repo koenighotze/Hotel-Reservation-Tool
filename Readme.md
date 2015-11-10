@@ -26,6 +26,17 @@ Just run the following to start up all apps:
 # ./start.sh
 ```
 
+If you prefer a Docker based setup, then change into the ```portal``` application and run
+
+```
+portal/ # ./build-all.sh && ./run_docker.sh
+```
+
+The application can be accessed at ```http://<DOCKER_IP>/portal```. Note that, at the time of 
+this writing, the WebSocket setup is broken, when used within a Docker container (see issue: 31).
+The ```<DOCKER_IP>``` part is obviously the IP of the container, e.g. the output of ```docker-machine ip default``` 
+if you are using Docker machine and the VM is called ```default```.
+
 Manually, you just need to cd into the app you want to start and run `mvn wildfly:run`
 This will startup the application using an embedded WildFly.
 
