@@ -17,7 +17,7 @@
     <properties>
         <application.contextRoot>/booking</application.contextRoot>
         <application.finalName>booking</application.finalName>
-
+        <docker.image.name>koenighotze/jee7hotelbooking</docker.image.name>
         <!--<jboss.socket.binding.port.offset>1000</jboss.socket.binding.port.offset>-->
     </properties>
 

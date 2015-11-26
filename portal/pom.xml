@@ -17,6 +17,7 @@
   <properties>
     <application.contextRoot>/portal</application.contextRoot>
     <application.finalName>portal</application.finalName>
+    <docker.image.name>koenighotze/jee7hotelguest</docker.image.name>
   </properties>
 
   <repositories>

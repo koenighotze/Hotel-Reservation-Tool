@@ -17,6 +17,7 @@
     <properties>
         <application.contextRoot>/facilities</application.contextRoot>
         <application.finalName>facilities</application.finalName>
+        <docker.image.name>koenighotze/jee7hotelfacilities</docker.image.name>
     </properties>
 
     <dependencies>
