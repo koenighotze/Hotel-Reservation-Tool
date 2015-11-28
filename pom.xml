@@ -16,6 +16,7 @@
     <browser>phantomjs</browser>
     <powermock.version>1.6.2</powermock.version>
     <jee7hotel.version>1.0-SNAPSHOT</jee7hotel.version>
+    <docker.image.name></docker.image.name>
   </properties>
   <scm>
     <url>https://github.com/koenighotze/jee7hotelreservationtool</url>
@@ -62,11 +63,6 @@
       <artifactId>h2</artifactId>
       <scope>test</scope>
     </dependency>
-    <!--<dependency>-->
-    <!--<groupId>org.jmockit</groupId>-->
-    <!--<artifactId>jmockit</artifactId>-->
-    <!--<scope>test</scope>-->
-    <!--</dependency>-->
 
     <!-- must be after the jmockit stuff -->
     <dependency>
@@ -99,24 +95,24 @@
           <groupId>com.spotify</groupId>
           <artifactId>docker-maven-plugin</artifactId>
           <version>0.3.6</version>
-          <!-- <executions>
+          <executions>
             <execution>
-              <phase>package</phase>
+              <phase>install</phase>
               <goals>
                 <goal>build</goal>
               </goals>
             </execution>
-          </executions> -->
+          </executions>
 
           <configuration>
             <imageName>${docker.image.name}</imageName>
             <dockerDirectory>src/docker</dockerDirectory>
             <resources>
-               <resource>
-                 <targetPath>/</targetPath>
-                 <directory>${project.build.directory}</directory>
-                 <include>${project.build.finalName}.war</include>
-               </resource>
+              <resource>
+                <targetPath>/</targetPath>
+                <directory>${project.build.directory}</directory>
+                <include>${project.build.finalName}.war</include>
+              </resource>
             </resources>
           </configuration>
         </plugin>
@@ -298,12 +294,6 @@
         <version>4.1</version>
         <scope>test</scope>
       </dependency>
-      <!-- MongoDB Stuff -->
-      <!--<dependency>-->
-      <!--<groupId>org.mongodb</groupId>-->
-      <!--<artifactId>mongo-java-driver</artifactId>-->
-      <!--<version>3.0.3</version>-->
-      <!--</dependency>-->
       <dependency>
         <groupId>com.google.code.gson</groupId>
         <artifactId>gson</artifactId>
@@ -425,12 +415,14 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
   <repositories>
     <repository>
       <id>JBoss Repository</id>
       <url>https://repository.jboss.org/nexus/content/groups/public/</url>
     </repository>
   </repositories>
+
   <pluginRepositories>
     <pluginRepository>
       <id>maven.java.net</id>

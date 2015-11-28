@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 mvn package
 
 for i in booking facilities guest portal; do

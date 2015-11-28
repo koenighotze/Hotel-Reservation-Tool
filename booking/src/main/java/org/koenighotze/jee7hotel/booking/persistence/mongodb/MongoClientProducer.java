@@ -31,7 +31,7 @@ public class MongoClientProducer {
     public void setup() {
         try {
             LOGGER.info(() -> "Starting MongoClient");
-            mongoClient = new MongoClient("localhost", builder().connectTimeout(1000).serverSelectionTimeout(3000).socketTimeout(1000).build());
+            mongoClient = new MongoClient("mongodb", builder().connectTimeout(1000).serverSelectionTimeout(3000).socketTimeout(1000).build());
             LOGGER.info(() ->  {
                 String dbs = mongoClient.listDatabases().map(Document::toJson).into(new ArrayList<>()).stream().collect(joining(", "));
                 return "Connected to MongoDB, known Databases: " + dbs;
