@@ -32,7 +32,7 @@ import static java.util.logging.Level.WARNING;
 public class GuestFeedSubscriber {
     private static final Logger LOGGER = Logger.getLogger(GuestFeedSubscriber.class.getName());
 
-    private static final String GUEST_URL = "http://localhost:8080/guest/rest/guest";
+    private static final String GUEST_URL = "http://guest:8080/guest/rest/guest";
 
     private Date lastUpdate = null;
 
