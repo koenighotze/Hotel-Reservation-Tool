@@ -16,13 +16,17 @@ import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 import java.net.URI;
 import java.net.URL;
 import java.util.Date;
 import java.util.logging.Logger;
 
+import static java.lang.String.format;
+import static java.lang.System.getenv;
+import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Level.WARNING;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static org.apache.commons.lang3.StringUtils.defaultString;
 
 /**
  * @author dschmitz
@@ -30,9 +34,10 @@ import static java.util.logging.Level.WARNING;
 @Startup
 @Singleton
 public class GuestFeedSubscriber {
+    static final String GUEST_URI_ENV_PROPERTY_KEY = "GUEST_URI";
     private static final Logger LOGGER = Logger.getLogger(GuestFeedSubscriber.class.getName());
 
-    private static final String GUEST_URL = "http://guest:8080/guest/rest/guest";
+//    private static final String GUEST_URL = "http://guest:8080/guest/rest/guest";
 
     private Date lastUpdate = null;
 
@@ -47,23 +52,33 @@ public class GuestFeedSubscriber {
         updateFeed();
     }
 
+    String buildGuestUrl() {
+        return format("http://%s/guest/rest/guest", determineGuestHostAndPort());
+    }
+
+    // TODO: inject me
+    String determineGuestHostAndPort() {
+        return defaultString(getenv(GUEST_URI_ENV_PROPERTY_KEY), "localhost:8080");
+    }
+
     @Schedule(minute = "*/1", hour = "*")
     public void updateFeed() {
-        LOGGER.info(() -> "Reading feed from " + GUEST_URL);
+
+        final String guestUrl = buildGuestUrl();
+        LOGGER.info(() -> "Reading feed from " + guestUrl);
 
         Parser parser = abdera.getParser();
 
         // TODO: use http client to set timeout
         try {
-            URL url = new URL(GUEST_URL);
+            URL url = new URL(guestUrl);
             Document<Feed> doc = parser.parse(url.openStream(), url.toString());
             Feed feed = doc.getRoot();
             Date updated = feed.getUpdated();
             if (null == lastUpdate || lastUpdate.before(updated)) {
                 lastUpdate = updated;
                 LOGGER.info(() -> "Feed contains unknown data...continue to parse it");
-            }
-            else {
+            } else {
                 LOGGER.info(() -> "Feed contains stale data...skip parsing entries");
                 return;
             }
@@ -80,22 +95,21 @@ public class GuestFeedSubscriber {
                 });
             });
         } catch (Exception e) { // must not fail...ev0r
-            LOGGER.warning(() -> "Cannot load guest data from " + GUEST_URL + "! " + e.getMessage());
+            LOGGER.log(SEVERE, e, () -> "Cannot load guest data from " + guestUrl + "! " + e.getMessage());
         }
     }
 
     private void fetchGuest(URI link) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(link);
-        JsonObject response = target.request(MediaType.APPLICATION_JSON).get(JsonObject.class);
+        JsonObject response = target.request(APPLICATION_JSON).get(JsonObject.class);
 
         LOGGER.fine(() -> "Read guest " + response.toString());
 
         GuestModel model = new GuestModel(response.getString("publicId"), response.getString("name"));
         if (guestModelRepository.findByPublicId(model.getPublicId()).isPresent()) {
             LOGGER.fine(() -> "Guest " + model + " is already known...will not import");
-        }
-        else {
+        } else {
             guestModelRepository.storeGuestModel(model);
         }
     }

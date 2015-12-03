@@ -15,13 +15,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.logging.Logger;
 
 import static java.time.ZoneOffset.UTC;
-import static java.util.logging.Level.WARNING;
 
 /**
  * @author dschmitz
@@ -46,15 +43,6 @@ public class GuestAtomFeed {
     public GuestAtomFeed(GuestService guestService, Abdera abdera) {
         this.guestService = guestService;
         this.abdera = abdera;
-    }
-
-    private String getLocalhostName() {
-        try {
-            return InetAddress.getLocalHost().getHostName();
-        } catch (UnknownHostException e) {
-            LOGGER.log(WARNING, e, () -> "Cannot determine localhost name");
-            return "localhost";
-        }
     }
 
     @GET

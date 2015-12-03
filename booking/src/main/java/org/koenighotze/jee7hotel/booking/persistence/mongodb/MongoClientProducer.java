@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import static com.mongodb.MongoClientOptions.builder;
+import static java.lang.System.getenv;
 import static java.util.stream.Collectors.joining;
+import static org.apache.commons.lang3.StringUtils.defaultString;
 
 /**
  * Producer for MongoDB Clients.
@@ -31,7 +33,10 @@ public class MongoClientProducer {
     public void setup() {
         try {
             LOGGER.info(() -> "Starting MongoClient");
-            mongoClient = new MongoClient("mongodb", builder().connectTimeout(1000).serverSelectionTimeout(3000).socketTimeout(1000).build());
+
+            final String mongodb = defaultString(getenv("MONGO_URI"), "localhost");
+
+            mongoClient = new MongoClient(mongodb, builder().connectTimeout(1000).serverSelectionTimeout(3000).socketTimeout(1000).build());
             LOGGER.info(() ->  {
                 String dbs = mongoClient.listDatabases().map(Document::toJson).into(new ArrayList<>()).stream().collect(joining(", "));
                 return "Connected to MongoDB, known Databases: " + dbs;
