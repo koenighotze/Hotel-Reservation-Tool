@@ -18,6 +18,7 @@
     <jee7hotel.version>1.0-SNAPSHOT</jee7hotel.version>
     <docker.image.name></docker.image.name>
   </properties>
+
   <scm>
     <url>https://github.com/koenighotze/jee7hotelreservationtool</url>
     <connection>scm:git:git@github.com:koenighotze/jee7hotelreservationtool.git</connection>
@@ -106,7 +107,8 @@
 
           <configuration>
             <imageName>${docker.image.name}</imageName>
-            <dockerDirectory>src/docker</dockerDirectory>
+            <!-- Portal project fails when building the docker image if we use relative paths -->
+            <dockerDirectory>${project.basedir}/src/docker</dockerDirectory>
             <resources>
               <resource>
                 <targetPath>/</targetPath>
@@ -146,12 +148,6 @@
                 <value>wildfly</value>
               </property>
             </systemProperties>
-
-            <!--&lt;!&ndash;-->
-            <!--currently the Arquillian tests keep failing if run one after another.-->
-            <!--Execute tests using the scripts under src/test/scripts.-->
-            <!--&ndash;&gt;-->
-            <!--<skipTests>true</skipTests>-->
           </configuration>
         </plugin>
         <plugin>

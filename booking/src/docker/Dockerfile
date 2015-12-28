@@ -1,6 +1,6 @@
-FROM jboss/wildfly
+FROM koenighotze/wildfly:stripped
 MAINTAINER Koenig Hotze
-ENV REFRESHED_AT 20151107
+ENV REFRESHED_AT 20151227
 
 RUN /opt/jboss/wildfly/bin/add-user.sh admin geheim123 --silent
 

@@ -1,4 +1,4 @@
-FROM jboss/wildfly
+FROM koenighotze/wildfly:stripped
 MAINTAINER Koenig Hotze
 ENV REFRESHED_AT 20151107
 
