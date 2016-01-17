@@ -10,7 +10,7 @@ import org.koenighotze.jee7hotel.guest.domain.Guest;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.assertEquals;
+import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.koenighotze.jee7hotel.framework.integration.BaseArquillianSetup.createStandardDeployment;
 
@@ -36,9 +36,10 @@ public class GuestServiceArquillianIT {
         assertNotNull(guest.getId());
 
         Guest loaded = guestService.findById(guest.getId()).get();
-        assertEquals(loaded.getId(), guest.getId());
-        assertEquals(loaded.getName(), guest.getName());
-        assertEquals(loaded.getEmail(), guest.getEmail());
+        assertThat(loaded.getId()).isEqualTo(guest.getId());
+        assertThat(loaded.getId()).isEqualTo(guest.getId());
+        assertThat(loaded.getName()).isEqualTo(guest.getName());
+        assertThat(loaded.getEmail()).isEqualTo(guest.getEmail());
     }
 
     @Test
