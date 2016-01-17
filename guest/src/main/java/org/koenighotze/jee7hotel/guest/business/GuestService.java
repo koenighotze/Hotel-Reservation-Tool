@@ -55,7 +55,7 @@ public class GuestService {
         this.em = em;
     }
 
-    @GET
+    @PUT
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
     public void saveGuest(Guest guest) {
         LOGGER.info(() -> "Saving guest " + guest);

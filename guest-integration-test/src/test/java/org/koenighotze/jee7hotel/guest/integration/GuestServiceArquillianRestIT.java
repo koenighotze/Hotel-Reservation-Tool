@@ -14,6 +14,7 @@ import org.koenighotze.jee7hotel.guest.domain.Guest;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.logging.Logger;
@@ -71,7 +72,7 @@ public class GuestServiceArquillianRestIT {
         WebTarget webTarget = client.target(targetUrl);
 
         Guest[] guests = webTarget
-                .request()
+                .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(Guest[].class);
 
         LOGGER.fine("Received " + Arrays.toString(guests));
