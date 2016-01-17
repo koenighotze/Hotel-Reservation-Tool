@@ -14,7 +14,6 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import java.net.URI;
 import java.net.URL;
@@ -25,6 +24,7 @@ import static java.lang.String.format;
 import static java.lang.System.getenv;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Level.WARNING;
+import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.apache.commons.lang3.StringUtils.defaultString;
 
@@ -100,7 +100,7 @@ public class GuestFeedSubscriber {
     }
 
     private void fetchGuest(URI link) {
-        Client client = ClientBuilder.newClient();
+        Client client = newClient();
         WebTarget target = client.target(link);
         JsonObject response = target.request(APPLICATION_JSON).get(JsonObject.class);
 
