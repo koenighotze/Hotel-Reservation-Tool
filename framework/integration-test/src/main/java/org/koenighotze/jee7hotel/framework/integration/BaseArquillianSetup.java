@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Logger.getLogger;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.jboss.shrinkwrap.api.ShrinkWrap.create;
 import static org.jboss.shrinkwrap.api.formatter.Formatters.VERBOSE;
@@ -18,7 +19,7 @@ import static org.jboss.shrinkwrap.resolver.api.maven.Maven.resolver;
  */
 // TODO clean up the mess
 public class BaseArquillianSetup {
-    private static final Logger LOGGER = Logger.getLogger(BaseArquillianSetup.class.getName());
+    private static final Logger LOGGER = getLogger(BaseArquillianSetup.class.getName());
 
     public static boolean excludeTest(ArchivePath path) {
         return !(path.get().endsWith("Test.class") || path.get().endsWith("IT.class"));

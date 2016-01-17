@@ -17,6 +17,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -116,8 +117,6 @@ public class BookingService {
         return query.getResultList();
     }
 
-    @GET
-    @Produces({"application/xml", "application/json"})
     public List<Reservation> getAllReservations() {
         CriteriaQuery<Reservation> cq = this.em.getCriteriaBuilder().createQuery(Reservation.class);
         cq.select(cq.from(Reservation.class));
@@ -126,7 +125,24 @@ public class BookingService {
 
     @GET
     @Produces({"application/xml", "application/json"})
+    public Response allReservations() {
+        List<Reservation> allReservations = getAllReservations();
+        return Response.ok(allReservations).build();
+    }
+
+    @GET
+    @Produces({"application/xml", "application/json"})
     @Path("{id}")
+    public Response reservationById(@PathParam("id") Long id) {
+        Reservation reservation = getReservation(id);
+
+        if (reservation == null) {
+            return Response.ok().status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.ok(reservation).build();
+    }
+
     public Reservation getReservation(@PathParam("id") Long id) {
         return this.em.find(Reservation.class, id);
     }

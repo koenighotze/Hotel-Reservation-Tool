@@ -21,7 +21,7 @@ import java.lang.reflect.Type;
 
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
-public class ReservationBodyWriter  implements MessageBodyWriter<Reservation> {
+public class ReservationBodyWriter implements MessageBodyWriter<Reservation> {
     @Override
     public boolean isWriteable(Class<?> aClass, Type type, Annotation[] annotations, MediaType mediaType) {
         return Reservation.class.isAssignableFrom(aClass);
@@ -36,7 +36,13 @@ public class ReservationBodyWriter  implements MessageBodyWriter<Reservation> {
     public void writeTo(Reservation reservation, Class<?> aClass, Type type, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> multivaluedMap, OutputStream outputStream) throws IOException, WebApplicationException {
         JsonGenerator writer = Json.createGenerator(outputStream);
         writer.writeStartObject()
-                .write("Foo", "Bar")
+                .write("guestId", reservation.getGuest())
+                .write("reservationNumber", reservation.getReservationNumber())
+                .write("checkinDate", reservation.getCheckinDate().toString())
+                .write("checkoutDate", reservation.getCheckoutDate().toString())
+                .write("assignedRoomId", reservation.getAssignedRoom())
+                .write("reservationStatus", reservation.getReservationStatus().toString())
+                .write("costsInEuro", reservation.getCostsInEuro())
                 .writeEnd();
         writer.flush();
     }
