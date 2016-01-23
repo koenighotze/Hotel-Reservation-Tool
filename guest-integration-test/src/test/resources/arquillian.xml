@@ -8,7 +8,7 @@
         <configuration>
             <!-- needed for testing jms -->
             <property name="serverConfig">standalone-full.xml</property>
-            <property name="jbossHome">${user.home}/opt/wildfly-8.2.0.Final/</property>
+            <property name="jbossHome">${user.home}/opt/wildfly/</property>
         </configuration>
     </container>
 
