@@ -21,5 +21,6 @@
         <module>eventing</module>
         <module>integration-test</module>
         <module>frontend</module>
+        <module>jug</module>
     </modules>
 </project>

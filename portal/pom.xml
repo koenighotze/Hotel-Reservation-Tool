@@ -21,6 +21,10 @@
   </properties>
 
   <repositories>
+      <!--
+        This repos seems to have disappeared. That's why I have move the jug sources to 
+        framework/jug :(
+
     <repository>
       <id>jug-mvn-repo</id>
       <url>https://raw.github.com/miles2run/jug/mvn-repo/</url>
@@ -29,6 +33,7 @@
         <updatePolicy>always</updatePolicy>
       </snapshots>
     </repository>
+    -->
   </repositories>
 
   <dependencies>
