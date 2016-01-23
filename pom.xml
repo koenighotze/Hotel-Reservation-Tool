@@ -96,14 +96,15 @@
           <groupId>com.spotify</groupId>
           <artifactId>docker-maven-plugin</artifactId>
           <version>0.3.6</version>
-          <executions>
+          <!-- auto image creation is disabled... -->
+          <!-- executions>
             <execution>
               <phase>install</phase>
               <goals>
                 <goal>build</goal>
               </goals>
             </execution>
-          </executions>
+          </executions -->
 
           <configuration>
             <imageName>${docker.image.name}</imageName>
