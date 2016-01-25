@@ -3,6 +3,7 @@ package org.koenighotze.jee7hotel.booking.domain;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.koenighotze.jee7hotel.booking.business.BookingService;
+import org.koenighotze.jee7hotel.booking.business.ReservationCostCalculator;
 import org.koenighotze.jee7hotel.booking.business.events.NewReservationEvent;
 import org.koenighotze.jee7hotel.booking.business.events.ReservationStatusChangeEvent;
 import org.koenighotze.jee7hotel.framework.test.AbstractBasePersistenceTest;
@@ -36,7 +37,7 @@ public class ReservationTest extends AbstractBasePersistenceTest {
     @Override
     protected void initHook() {
         super.initHook();
-        this.bookingService = new BookingService(this.mockEvent, this.mockResEvent);
+        this.bookingService = new BookingService(this.mockEvent, this.mockResEvent, new ReservationCostCalculator());
 
         this.bookingService.setEntityManager(getEntityManager());
     }

@@ -3,7 +3,6 @@ package org.koenighotze.jee7hotel.booking.business;
 import org.koenighotze.jee7hotel.booking.business.events.NewReservationEvent;
 import org.koenighotze.jee7hotel.booking.business.events.ReservationStatusChangeEvent;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
-import org.koenighotze.jee7hotel.booking.domain.RoomEquipment;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
@@ -13,12 +12,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.container.ResourceContext;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.math.BigDecimal;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import static java.time.temporal.ChronoUnit.DAYS;
+import static java.util.Objects.requireNonNull;
 import static java.util.logging.Level.WARNING;
 import static org.koenighotze.jee7hotel.booking.domain.ReservationStatus.*;
 import static org.koenighotze.jee7hotel.booking.domain.RoomEquipment.BUDGET;
@@ -48,6 +48,11 @@ import static org.koenighotze.jee7hotel.booking.domain.RoomEquipment.BUDGET;
 public class BookingService {
     private static final Logger LOGGER = Logger.getLogger(BookingService.class.getName());
 
+    @Context
+    private ResourceContext resourceContext;
+
+    private ReservationCostCalculator reservationCostCalculator;
+
     private EntityManager em;
 
     private Event<NewReservationEvent> reservationEvents;
@@ -58,9 +63,10 @@ public class BookingService {
     }
 
     @Inject
-    public BookingService(Event<NewReservationEvent> reservationEvents, Event<ReservationStatusChangeEvent> reservationStateChangeEvents) {
-        this.reservationEvents = reservationEvents;
-        this.reservationStateChangeEvents = reservationStateChangeEvents;
+    public BookingService(Event<NewReservationEvent> reservationEvents, Event<ReservationStatusChangeEvent> reservationStateChangeEvents, ReservationCostCalculator reservationCostCalculator) {
+        this.reservationEvents = requireNonNull(reservationEvents);
+        this.reservationStateChangeEvents = requireNonNull(reservationStateChangeEvents);
+        this.reservationCostCalculator = requireNonNull(reservationCostCalculator);
     }
 
     public void setReservationStateChangeEvents(Event<ReservationStatusChangeEvent> reservationStateChangeEvents) {
@@ -83,29 +89,6 @@ public class BookingService {
         return false;
     }
 
-    // TODO: extract to calculation strategy or similar
-    public BigDecimal calculateRateFor(RoomEquipment roomEquipment, LocalDate checkin, LocalDate checkout) {
-        // rather simple...
-        long days = checkin.until(checkout, DAYS);
-
-        BigDecimal rate = null;
-
-        switch (roomEquipment) {
-            case BUDGET:
-                rate = BigDecimal.valueOf(60L);
-                break;
-            case STANDARD:
-                rate = BigDecimal.valueOf(92L);
-                break;
-            case SUPERIOR:
-                rate = BigDecimal.valueOf(210L);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown equipment " + roomEquipment);
-        }
-
-        return rate.multiply(BigDecimal.valueOf(days));
-    }
 
     public String newReservationNumber() {
         return UUID.randomUUID().toString();
@@ -132,25 +115,38 @@ public class BookingService {
 
     @GET
     @Produces({"application/xml", "application/json"})
-    @Path("{id}")
-    public Response reservationById(@PathParam("id") Long id) {
-        Reservation reservation = getReservation(id);
+    @Path("/{publicId}")
+    public Response reservation(@PathParam("publicId") String id) {
+        Optional<Reservation> reservation = findReservationByNumber(id);
 
-        if (reservation == null) {
-            return Response.ok().status(Response.Status.NOT_FOUND).build();
+        if (reservation.isPresent()) {
+
+            LOGGER.info(() -> "Returning reservation " + reservation.get());
+            return Response.ok(reservation.get()).build();
         }
 
-        return Response.ok(reservation).build();
+        return Response.ok().status(Response.Status.NOT_FOUND).build();
     }
 
-    public Reservation getReservation(@PathParam("id") Long id) {
+    public Reservation getReservation(Long id) {
         return this.em.find(Reservation.class, id);
+    }
+
+
+    @POST
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON })
+    public Response reservation(Reservation booking,  @Context UriInfo uriInfo) {
+        Reservation reservation = bookRoom(booking.getGuest(), booking.getAssignedRoom(), booking.getCheckinDate(), booking.getCheckoutDate());
+
+        URI build = uriInfo.getAbsolutePathBuilder().path(reservation.getReservationNumber()).build();
+        LOGGER.info(() -> "New reservation at " + build);
+        return Response.created(build).build();
     }
 
     public Reservation bookRoom(String guestId, String roomId, LocalDate checkin, LocalDate checkout) {
         Reservation reservation =
                 new Reservation(guestId, newReservationNumber(), roomId,
-                        checkin, checkout, calculateRateFor(BUDGET, checkin, checkout));
+                        checkin, checkout, reservationCostCalculator.calculateRateFor(BUDGET, checkin, checkout));
 
         LOGGER.info(() -> "Storing " + reservation);
         this.em.persist(reservation);

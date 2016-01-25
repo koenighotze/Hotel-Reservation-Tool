@@ -7,15 +7,11 @@ import org.junit.runner.RunWith;
 import org.koenighotze.jee7hotel.booking.business.events.NewReservationEvent;
 import org.koenighotze.jee7hotel.booking.business.events.ReservationStatusChangeEvent;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
-import org.koenighotze.jee7hotel.booking.domain.RoomEquipment;
 import org.koenighotze.jee7hotel.framework.test.AbstractBasePersistenceTest;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.enterprise.event.Event;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 
 import static java.time.LocalDate.now;
@@ -34,7 +30,7 @@ public class BookingServiceTest extends AbstractBasePersistenceTest {
 
     @Override
     protected void initHook() {
-        bookingService = new BookingService(mockEvent, mockResEvent);
+        bookingService = new BookingService(mockEvent, mockResEvent, new ReservationCostCalculator());
 
         bookingService.setEntityManager(super.getEntityManager());
     }
@@ -58,26 +54,18 @@ public class BookingServiceTest extends AbstractBasePersistenceTest {
     }
 
     @Test
-    public void testGetAllReservations() {
+    public void get_all_reservations_returns_the_reservations() {
         List<Reservation> allReservations = bookingService.getAllReservations();
         assertThat(allReservations).isNotNull();
     }
 
     @Test
-    public void testBookRoom() {
+    public void booking_a_room_sets_the_reservation_number() {
         Reservation reservation =
                 bookingService.bookRoom("guest", "room", now(), now());
         getEntityManager().flush();
         assertThat(reservation).isNotNull();
         assertThat(reservation.getReservationNumber()).isNotNull();
-    }
-
-    @Test
-    public void calcRate() {
-        LocalDate from = LocalDate.of(1976, Month.SEPTEMBER, 8);
-        LocalDate to = LocalDate.of(1976, Month.SEPTEMBER, 12);
-        BigDecimal rate = bookingService.calculateRateFor(RoomEquipment.BUDGET, from, to);
-        assertThat(rate).isEqualTo(BigDecimal.valueOf(240L));
     }
 
     @Test
