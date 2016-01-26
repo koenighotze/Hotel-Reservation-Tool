@@ -27,9 +27,9 @@ import static org.koenighotze.jee7hotel.framework.integration.BaseArquillianSetu
  * @author koenighotze
  */
 @RunWith(Arquillian.class)
-public class ReservationGenerationBeanArquillianIT {
+public class ReservationGenerationBeanIT {
 
-    private static final Logger LOGGER = Logger.getLogger(ReservationGenerationBeanArquillianIT.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ReservationGenerationBeanIT.class.getName());
 
     @Inject
     private BookingService bookingService;
@@ -39,7 +39,7 @@ public class ReservationGenerationBeanArquillianIT {
 
     @Deployment
     public static WebArchive createMicroDeployment() {
-        return createStandardDeployment(ReservationGenerationBeanArquillianIT.class.getPackage());
+        return createStandardDeployment(ReservationGenerationBeanIT.class.getPackage());
     }
 
     @Test

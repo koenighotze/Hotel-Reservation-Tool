@@ -17,16 +17,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static java.time.LocalDate.parse;
 import static java.time.format.DateTimeFormatter.ofPattern;
 import static java.util.Objects.requireNonNull;
+import static org.koenighotze.jee7hotel.booking.business.json.ReservationJsonFields.*;
+import static org.koenighotze.jee7hotel.booking.domain.RoomEquipment.STANDARD;
 
 /**
  * JSON reader for reservations.
- *
+ * <p>
  * Note, that the services need to take care of values that should not be set from outside, e.g. costs should
  * obviously be recalculated.
  *
@@ -58,13 +61,21 @@ public class ReservationBodyReader implements MessageBodyReader<Reservation> {
         JsonObject jsonObject = reader.readObject();
 
         DateTimeFormatter formatter = ofPattern("yyyy-MM-dd");
-        LocalDate checkin = parse(jsonObject.getString("checkinDate"), formatter);
-        LocalDate checkout = parse(jsonObject.getString("checkoutDate"), formatter);
-        return new Reservation(jsonObject.getString("guest"),
-                jsonObject.getString("reservationNumber", ""),
-                jsonObject.getString("assignedRoom"),
+        LocalDate checkin = parse(requireNonNull(jsonObject.getString(CHECKINDATE.fieldName())), formatter);
+        LocalDate checkout = parse(requireNonNull(jsonObject.getString(CHECKOUTDATE.fieldName())), formatter);
+
+        BigDecimal cost = null;
+        if (null == jsonObject.getJsonNumber(COSTSINEURO.fieldName())) {
+            cost = reservationCostCalculator.calculateRateFor(STANDARD, checkin, checkout);
+        } else {
+            cost = jsonObject.getJsonNumber(COSTSINEURO.fieldName()).bigDecimalValue();
+        }
+
+        return new Reservation(requireNonNull(jsonObject.getString(GUESTID.fieldName())),
+                jsonObject.getString(RESERVATIONNUMBER.fieldName(), ""),
+                requireNonNull(jsonObject.getString(ASSIGNEDROOMID.fieldName())),
                 checkin,
                 checkout,
-                jsonObject.getJsonNumber("costsInEuro").bigDecimalValue());
+                cost);
     }
 }

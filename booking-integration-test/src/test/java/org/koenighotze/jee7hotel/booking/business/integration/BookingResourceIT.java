@@ -9,35 +9,42 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.koenighotze.jee7hotel.booking.business.BookingService;
+import org.koenighotze.jee7hotel.booking.business.ReservationCostCalculator;
+import org.koenighotze.jee7hotel.booking.business.json.ReservationBodyReader;
+import org.koenighotze.jee7hotel.booking.business.json.ReservationBodyWriter;
 import org.koenighotze.jee7hotel.booking.domain.Reservation;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URL;
 
+import static javax.ws.rs.client.Entity.entity;
+import static javax.ws.rs.core.HttpHeaders.LOCATION;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.Response.Status.*;
 import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.koenighotze.jee7hotel.framework.integration.BaseArquillianSetup.createStandardDeployment;
 
 /**
  * @author dschmitz
  */
 @RunWith(Arquillian.class)
-public class BookingServiceRestIT {
+public class BookingResourceIT {
     private Client client;
 
     @Deployment
     public static WebArchive createMicroDeployment() {
-        return createStandardDeployment(BookingService.class.getPackage());
+        return createStandardDeployment(BookingResourceIT.class.getPackage());
     }
 
     @Before
     public void setup() {
         client = ClientBuilder.newClient();
+        client.register(new ReservationBodyReader(new ReservationCostCalculator())).register(ReservationBodyWriter.class);
     }
 
     @After
@@ -55,24 +62,24 @@ public class BookingServiceRestIT {
         WebTarget webTarget = client.target(targetUrl);
 
         Response response = webTarget
-                .request(MediaType.APPLICATION_JSON)
+                .request(APPLICATION_JSON)
                 .get();
 
-        assertThat(response.getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
+        assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
     }
 
     @Test
     @RunAsClient
-    public void fetching_a_non_existing_guest_results_in_not_found(@ArquillianResource URL baseURI) throws InterruptedException {
+    public void fetching_a_non_existing_reservation_results_in_not_found(@ArquillianResource URL baseURI) throws InterruptedException {
         String targetUrl = baseURI + "rest/bookings/1234";
 
         WebTarget webTarget = client.target(targetUrl);
 
         Response response = webTarget
-                .request(MediaType.APPLICATION_JSON)
+                .request(APPLICATION_JSON)
                 .get();
 
-        assertThat(response.getStatus()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
+        assertThat(response.getStatus()).isEqualTo(NOT_FOUND.getStatusCode());
     }
 
     @RunAsClient
@@ -83,11 +90,11 @@ public class BookingServiceRestIT {
         WebTarget webTarget = client.target(targetUrl);
 
         Response response = webTarget
-                .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity("{\"guest\":\"9999\",\"reservationNumber\":\"abc-123\",\"checkinDate\":\"2013-01-01\",\"checkoutDate\":\"2013-02-01\",\"assignedRoom\":\"999\",\"reservationStatus\":\"OPEN\",\"costsInEuro\":242.23}", MediaType.APPLICATION_JSON));
+                .request(APPLICATION_JSON)
+                .post(entity("{\"guestId\":\"9999\",\"reservationNumber\":\"abc-123\",\"checkinDate\":\"2013-01-01\",\"checkoutDate\":\"2013-02-01\",\"assignedRoomId\":\"999\",\"reservationStatus\":\"OPEN\",\"costsInEuro\":242.23}", APPLICATION_JSON));
 
-        assertThat(response.getStatus()).isEqualTo(Response.Status.CREATED.getStatusCode());
-        assertThat(response.getHeaderString("Location")).isNotEmpty();
+        assertThat(response.getStatus()).isEqualTo(CREATED.getStatusCode());
+        assertThat(response.getHeaderString(LOCATION)).isNotEmpty();
     }
 
     @RunAsClient
@@ -98,19 +105,20 @@ public class BookingServiceRestIT {
         WebTarget webTarget = client.target(targetUrl);
 
         Response response = webTarget
-                .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity("{\"guest\":\"9999\",\"reservationNumber\":\"abc-123\",\"checkinDate\":\"2013-01-01\",\"checkoutDate\":\"2013-02-01\",\"assignedRoom\":\"999\",\"reservationStatus\":\"OPEN\",\"costsInEuro\":242.23}", MediaType.APPLICATION_JSON));
+                .request(APPLICATION_JSON)
+                .post(entity("{\"guestId\":\"9999\",\"reservationNumber\":\"abc-123\",\"checkinDate\":\"2013-01-01\",\"checkoutDate\":\"2013-02-01\",\"assignedRoomId\":\"999\",\"reservationStatus\":\"OPEN\"}", APPLICATION_JSON));
 
+        assertEquals(CREATED.getStatusCode(), response.getStatus());
 
-        webTarget = client.target(response.getHeaderString("Location"));
-        Reservation reservation = webTarget.request(MediaType.APPLICATION_JSON)
+        final String expectedPublicId = response.getHeaderString(LOCATION);
+        assertNotNull(expectedPublicId);
+
+        webTarget = client.target(response.getHeaderString(LOCATION));
+        Reservation reservation = webTarget.request(APPLICATION_JSON)
                 .get(Reservation.class);
 
-        System.err.println(reservation);
-
-        assertThat(reservation.getReservationNumber()).isEqualTo(response.getHeaderString("Location"));
+        assertThat(expectedPublicId).endsWith(reservation.getReservationNumber());
         assertThat(reservation.getCostsInEuro()).isNotNull();
         assertThat(reservation.getReservationStatus()).isNotNull();
     }
-
 }

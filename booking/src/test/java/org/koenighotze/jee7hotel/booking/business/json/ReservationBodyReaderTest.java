@@ -18,7 +18,7 @@ import static org.koenighotze.jee7hotel.booking.domain.ReservationStatus.OPEN;
 public class ReservationBodyReaderTest {
     @Test
     public void a_json_reservation_can_be_read() throws IOException {
-        String json = "{\"guest\":\"9999\",\"reservationNumber\":\"abc-123\",\"checkinDate\":\"2013-01-01\",\"checkoutDate\":\"2013-02-01\",\"assignedRoom\":\"999\",\"reservationStatus\":\"CLOSED\",\"costsInEuro\":242.23}";
+        String json = "{\"guestId\":\"9999\",\"reservationNumber\":\"abc-123\",\"checkinDate\":\"2013-01-01\",\"checkoutDate\":\"2013-02-01\",\"assignedRoomId\":\"999\",\"reservationStatus\":\"CLOSED\",\"costsInEuro\":242.23}";
 
         Reservation reservation = new ReservationBodyReader(new ReservationCostCalculator()).readFrom(Reservation.class, null, null, null, null, new ByteArrayInputStream(json.getBytes()));
         assertThat(reservation).isNotNull();

@@ -15,12 +15,15 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static org.koenighotze.jee7hotel.booking.business.json.ReservationJsonFields.*;
+
 /**
  * @author koenighotze
  */
 
 @Provider
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(APPLICATION_JSON)
 public class ReservationBodyWriter implements MessageBodyWriter<Reservation> {
     @Override
     public boolean isWriteable(Class<?> aClass, Type type, Annotation[] annotations, MediaType mediaType) {
@@ -36,13 +39,13 @@ public class ReservationBodyWriter implements MessageBodyWriter<Reservation> {
     public void writeTo(Reservation reservation, Class<?> aClass, Type type, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> multivaluedMap, OutputStream outputStream) throws IOException, WebApplicationException {
         JsonGenerator writer = Json.createGenerator(outputStream);
         writer.writeStartObject()
-                .write("guestId", reservation.getGuest())
-                .write("reservationNumber", reservation.getReservationNumber())
-                .write("checkinDate", reservation.getCheckinDate().toString())
-                .write("checkoutDate", reservation.getCheckoutDate().toString())
-                .write("assignedRoomId", reservation.getAssignedRoom())
-                .write("reservationStatus", reservation.getReservationStatus().toString())
-                .write("costsInEuro", reservation.getCostsInEuro())
+                .write(GUESTID.fieldName(), reservation.getGuest())
+                .write(RESERVATIONNUMBER.fieldName(), reservation.getReservationNumber())
+                .write(CHECKINDATE.fieldName(), reservation.getCheckinDate().toString())
+                .write(CHECKOUTDATE.fieldName(), reservation.getCheckoutDate().toString())
+                .write(ASSIGNEDROOMID.fieldName(), reservation.getAssignedRoom())
+                .write(RESERVATIONSTATUS.fieldName(), reservation.getReservationStatus().toString())
+                .write(COSTSINEURO.fieldName(), reservation.getCostsInEuro())
                 .writeEnd();
         writer.flush();
     }

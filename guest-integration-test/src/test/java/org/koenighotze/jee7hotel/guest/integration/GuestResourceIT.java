@@ -26,8 +26,8 @@ import static org.koenighotze.jee7hotel.framework.integration.BaseArquillianSetu
  * @author dschmitz
  */
 @RunWith(Arquillian.class)
-public class GuestServiceArquillianRestIT {
-    private static final Logger LOGGER = Logger.getLogger(GuestServiceArquillianRestIT.class.getName());
+public class GuestResourceIT {
+    private static final Logger LOGGER = Logger.getLogger(GuestResourceIT.class.getName());
     private Client client;
 
     @Deployment

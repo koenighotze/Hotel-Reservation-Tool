@@ -37,8 +37,6 @@ public class GuestFeedSubscriber {
     static final String GUEST_URI_ENV_PROPERTY_KEY = "GUEST_URI";
     private static final Logger LOGGER = Logger.getLogger(GuestFeedSubscriber.class.getName());
 
-//    private static final String GUEST_URL = "http://guest:8080/guest/rest/guest";
-
     private Date lastUpdate = null;
 
     @Inject

@@ -12,21 +12,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.ws.rs.*;
-import javax.ws.rs.container.ResourceContext;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.UUID.randomUUID;
 import static java.util.logging.Level.WARNING;
 import static org.koenighotze.jee7hotel.booking.domain.ReservationStatus.*;
 import static org.koenighotze.jee7hotel.booking.domain.RoomEquipment.BUDGET;
@@ -36,7 +29,6 @@ import static org.koenighotze.jee7hotel.booking.domain.RoomEquipment.BUDGET;
  */
 @Named
 @Stateless
-@Path("bookings")
 // declare interceptor w/o using a stereotype (annotation based) binding
 // this way the interceptor will work w/o beans.xml
 //@Interceptors({
@@ -47,9 +39,6 @@ import static org.koenighotze.jee7hotel.booking.domain.RoomEquipment.BUDGET;
 //@PerformanceLog
 public class BookingService {
     private static final Logger LOGGER = Logger.getLogger(BookingService.class.getName());
-
-    @Context
-    private ResourceContext resourceContext;
 
     private ReservationCostCalculator reservationCostCalculator;
 
@@ -89,9 +78,8 @@ public class BookingService {
         return false;
     }
 
-
     public String newReservationNumber() {
-        return UUID.randomUUID().toString();
+        return randomUUID().toString();
     }
 
     public List<Reservation> findReservationForGuest(String guestId) {
@@ -106,41 +94,8 @@ public class BookingService {
         return new ArrayList<>(this.em.createQuery(cq).getResultList());
     }
 
-    @GET
-    @Produces({"application/xml", "application/json"})
-    public Response allReservations() {
-        List<Reservation> allReservations = getAllReservations();
-        return Response.ok(allReservations).build();
-    }
-
-    @GET
-    @Produces({"application/xml", "application/json"})
-    @Path("/{publicId}")
-    public Response reservation(@PathParam("publicId") String id) {
-        Optional<Reservation> reservation = findReservationByNumber(id);
-
-        if (reservation.isPresent()) {
-
-            LOGGER.info(() -> "Returning reservation " + reservation.get());
-            return Response.ok(reservation.get()).build();
-        }
-
-        return Response.ok().status(Response.Status.NOT_FOUND).build();
-    }
-
     public Reservation getReservation(Long id) {
         return this.em.find(Reservation.class, id);
-    }
-
-
-    @POST
-    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON })
-    public Response reservation(Reservation booking,  @Context UriInfo uriInfo) {
-        Reservation reservation = bookRoom(booking.getGuest(), booking.getAssignedRoom(), booking.getCheckinDate(), booking.getCheckoutDate());
-
-        URI build = uriInfo.getAbsolutePathBuilder().path(reservation.getReservationNumber()).build();
-        LOGGER.info(() -> "New reservation at " + build);
-        return Response.created(build).build();
     }
 
     public Reservation bookRoom(String guestId, String roomId, LocalDate checkin, LocalDate checkout) {

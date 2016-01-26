@@ -31,7 +31,7 @@ public class ReservationGenerationTriggerBeanRestIT {
 
     @Deployment
     public static WebArchive createMicroDeployment() {
-        return createStandardDeployment(ReservationGenerationBeanArquillianIT.class.getPackage());
+        return createStandardDeployment(ReservationGenerationBeanIT.class.getPackage());
     }
 
     @Test
