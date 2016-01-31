@@ -2,6 +2,7 @@ package org.koenighotze.jee7hotel.framework.eventing.feed;
 
 import org.apache.abdera.Abdera;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -13,7 +14,14 @@ import javax.inject.Singleton;
 @Named
 @Singleton
 public class AbderaProducer {
-    private final Abdera abdera = new Abdera();
+    private Abdera abdera;
+
+    @PostConstruct
+    public void init() {
+        abdera = new Abdera();
+
+
+    }
 
     @Produces
     public Abdera abdera() {

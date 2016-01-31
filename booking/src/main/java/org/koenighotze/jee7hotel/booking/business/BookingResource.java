@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+import static javax.ws.rs.core.Response.created;
+import static javax.ws.rs.core.Response.ok;
 
 /**
  * @author dschmitz
@@ -42,7 +44,7 @@ public class BookingResource {
     @Produces({"application/xml", "application/json"})
     public Response allReservations() {
         List<Reservation> allReservations = bookingService.getAllReservations();
-        return Response.ok(allReservations).build();
+        return ok(allReservations).build();
     }
 
     @GET
@@ -53,10 +55,10 @@ public class BookingResource {
 
         if (reservation.isPresent()) {
             LOGGER.info(() -> "Returning reservation " + reservation.get());
-            return Response.ok(reservation.get()).build();
+            return ok(reservation.get()).build();
         }
 
-        return Response.ok().status(NOT_FOUND).build();
+        return ok().status(NOT_FOUND).build();
     }
 
     @POST
@@ -66,6 +68,6 @@ public class BookingResource {
 
         URI build = uriInfo.getAbsolutePathBuilder().path(reservation.getReservationNumber()).build();
         LOGGER.info(() -> "New reservation at " + build);
-        return Response.created(build).build();
+        return created(build).build();
     }
 }

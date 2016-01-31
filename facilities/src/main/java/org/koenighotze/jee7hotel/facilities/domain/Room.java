@@ -6,6 +6,7 @@ import org.koenighotze.jee7hotel.facilities.domain.converter.RoomEquipmentConver
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -28,6 +29,7 @@ import static javax.persistence.GenerationType.IDENTITY;
         )
 })
 @Cacheable
+@XmlRootElement
 public class Room implements Serializable {
     private static final Room NULL_VALUE = new Room("", RoomEquipment.BUDGET);
 
@@ -45,7 +47,7 @@ public class Room implements Serializable {
     @Convert(converter = RoomEquipmentConverter.class)
     private RoomEquipment roomEquipment;
 
-    Room() {
+    public Room() {
     }
 
     public Room(String roomNumber, RoomEquipment roomEquipment) {
@@ -67,6 +69,14 @@ public class Room implements Serializable {
 
     public Long getVersion() {
         return version;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public void setRoomEquipment(RoomEquipment roomEquipment) {
+        this.roomEquipment = roomEquipment;
     }
 
     @Override
