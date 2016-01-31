@@ -12,13 +12,18 @@ import org.junit.runner.RunWith;
 import org.koenighotze.jee7hotel.guest.domain.Guest;
 
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
+import static java.util.UUID.randomUUID;
+import static javax.ws.rs.client.ClientBuilder.newClient;
+import static javax.ws.rs.client.Entity.json;
+import static javax.ws.rs.core.HttpHeaders.LOCATION;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
+import static javax.ws.rs.core.Response.Status.*;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.koenighotze.jee7hotel.framework.integration.BaseArquillianSetup.createStandardDeployment;
 
@@ -37,7 +42,7 @@ public class GuestResourceIT {
 
     @Before
     public void setupWebClient() {
-        client = ClientBuilder.newClient();
+        client = newClient();
     }
 
     @After
@@ -49,33 +54,94 @@ public class GuestResourceIT {
 
     @Test
     @RunAsClient
-    public void a_known_guest_can_be_fetched_using_the_rest_service(@ArquillianResource URL baseURI) throws InterruptedException {
-        String targetUrl = baseURI + "rest/guest/9999"; // well known guest id
+    public void a_guest_can_be_created_using_post(@ArquillianResource URL baseURI) {
+        String targetUrl = baseURI + "rest/guests/";
 
         WebTarget webTarget = client.target(targetUrl);
 
-        Guest guest = webTarget
-                .request()
-                .get(Guest.class);
+        final Guest guest = new Guest("", "Bratislav", "metulski@foobar.com");
+        Response response = webTarget
+                .request(APPLICATION_JSON_TYPE)
+                .post(json(guest));
 
-        assertThat(guest).isNotNull();
-        assertThat(guest.getPublicId()).isEqualTo("dschm1");
+        assertThat(response.getStatus()).isEqualTo(CREATED.getStatusCode());
+        final String location = response.getHeaderString(LOCATION);
+        assertThat(location).isNotEmpty();
+
+        Response getResponse = client.target(location).request(APPLICATION_JSON_TYPE).get();
+        assertThat(getResponse.getStatus()).isEqualTo(OK.getStatusCode());
+
+        final Guest createdGuest = getResponse.readEntity(Guest.class);
+        assertThat(createdGuest).isNotNull();
+        assertThat(location).endsWith(createdGuest.getPublicId());
+        assertThat(guest.getEmail()).isEqualTo("metulski@foobar.com");
+        assertThat(guest.getName()).isEqualTo("Bratislav");
+    }
+
+    @Test
+    @RunAsClient
+    public void unknown_guests_result_in_a_not_found(@ArquillianResource URL baseURI) {
+        String targetUrl = baseURI + "rest/guests/notthere";
+
+        Response response = client.target(targetUrl).request(APPLICATION_JSON_TYPE).get();
+        assertThat(response.getStatus()).isEqualTo(NOT_FOUND.getStatusCode());
     }
 
     @Test
     @RunAsClient
     public void guests_can_be_fetched_via_the_rest_api(@ArquillianResource URL baseURI) throws InterruptedException {
-        String targetUrl = baseURI + "rest/guest";
+        String targetUrl = baseURI + "rest/guests";
 
         LOGGER.fine("Looking up rest interface using " + targetUrl);
 
         WebTarget webTarget = client.target(targetUrl);
 
         Guest[] guests = webTarget
-                .request(MediaType.APPLICATION_JSON_TYPE)
+                .request(APPLICATION_JSON_TYPE)
                 .get(Guest[].class);
 
         LOGGER.fine("Received " + Arrays.toString(guests));
         assertThat(guests.length).isGreaterThan(0);
+    }
+
+
+    @Test
+    @RunAsClient
+    public void deleting_existing_guest(@ArquillianResource URL baseURI) throws InterruptedException {
+        String targetUrl = baseURI + "rest/guests/";
+
+        WebTarget webTarget = client.target(targetUrl);
+
+        Response response = webTarget
+                .request(APPLICATION_JSON_TYPE)
+                .post(json(new Guest("", "Bratislav", "metulski@foobar.com")));
+
+        assertThat(response.getStatus()).isEqualTo(CREATED.getStatusCode());
+        final String location = response.getHeaderString(LOCATION);
+
+        final Guest guest = client.target(location).request(APPLICATION_JSON_TYPE).get(Guest.class);
+
+        response = webTarget
+                .path(guest.getPublicId())
+                .request(APPLICATION_JSON_TYPE)
+                .delete();
+
+        assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
+    }
+
+
+    @Test
+    @RunAsClient
+    public void deleting_existing_unknown_guest_results_in_not_found(@ArquillianResource URL baseURI) throws InterruptedException {
+        String targetUrl = baseURI + "rest/guests/";
+
+        WebTarget webTarget = client.target(targetUrl);
+
+        Response response = webTarget
+                .path(randomUUID().toString())
+                .request(APPLICATION_JSON_TYPE)
+                .delete();
+
+        assertThat(response.getStatus()).isEqualTo(NOT_FOUND.getStatusCode());
     }
 }

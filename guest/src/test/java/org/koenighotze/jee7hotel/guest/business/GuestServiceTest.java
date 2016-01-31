@@ -87,4 +87,18 @@ public class GuestServiceTest extends AbstractBasePersistenceTest {
 
         assertThat(updated.get().getVersion()).isGreaterThan(guest.get().getVersion());
     }
+
+    @Test
+    public void deleting_an_existing_guest_results_in_true() {
+        Guest guest = guestService.findById(WELL_KNOWN_ID).get();
+
+        assertThat(guestService.deleteGuest(guest.getPublicId())).isTrue();
+
+        assertThat(guestService.findById(guest.getId()).isPresent()).isFalse();
+    }
+
+    @Test
+    public void deleting_a_unknown_guest_results_in_false() {
+        assertThat(guestService.deleteGuest(randomUUID().toString())).isFalse();
+    }
 }

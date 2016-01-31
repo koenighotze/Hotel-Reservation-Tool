@@ -14,14 +14,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.ws.rs.*;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.PathParam;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Optional.*;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+import static java.util.UUID.randomUUID;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * Sample for a REST-based bean, that can also be used locally.
@@ -30,7 +32,6 @@ import static javax.ws.rs.core.MediaType.APPLICATION_XML;
  */
 @Named
 @Stateless
-@Path("guest")
 @Interceptors({
         PerformanceLogger.class,
         EventSourceInterceptor.class
@@ -55,24 +56,22 @@ public class GuestService {
         this.em = em;
     }
 
-    @PUT
-    @Consumes({APPLICATION_XML, APPLICATION_JSON})
     public void saveGuest(Guest guest) {
         LOGGER.info(() -> "Saving guest " + guest);
+
+        if (isBlank(guest.getPublicId())) {
+            guest.setPublicId(randomUUID().toString());
+        }
+
         this.em.persist(guest);
 
         guestEvents.fire(guest);
     }
 
-    @GET
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
-    @Path("/{guestId}")
     public Guest findSingleGuestById(@PathParam("guestId") Long guestId) {
         return this.em.find(Guest.class, guestId);
     }
 
-    @GET
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
     public List<Guest> getAllGuests() {
         CriteriaQuery<Guest> cq = this.em.getCriteriaBuilder().createQuery(Guest.class);
         cq.select(cq.from(Guest.class));
@@ -99,5 +98,12 @@ public class GuestService {
             return empty();
         }
         return of(resultList.get(0));
+    }
+
+    public boolean deleteGuest(@NotNull String publicId) {
+        return findByPublicId(publicId).flatMap( g -> {
+          em.remove(g);
+          return of(TRUE);
+        }).orElse(false);
     }
 }
