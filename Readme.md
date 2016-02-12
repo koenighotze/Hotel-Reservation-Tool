@@ -8,6 +8,10 @@ foundation of a training session.
 See [step_by_step.md](step_by_step.md) for a step by step introduction for setting up
 a JEE7 app with JSF, persistence and REST services.
 
+
+Current build status: [![Build Status](https://travis-ci.org/koenighotze/Hotel-Reservation-Tool.svg?branch=master)](https://travis-ci.org/koenighotze/Hotel-Reservation-Tool)
+
+
 ## Quick Start
 
 This project consists of three applications, each is constraint to a clear domain:
