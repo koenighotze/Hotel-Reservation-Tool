@@ -1,23 +1,40 @@
-booking:
-  image: koenighotze/jee7hotelbooking
-  ports:
-    - 8080:8080
-    - 9990:9990
-  links:
-    - mongodb
-    - guest
-  environment:
-    - MONGO_URI=mongodb
-    - GUEST_URI=guest:8080
-guest:
-  image: koenighotze/jee7hotelguest
-  ports:
-    - 8081:8080
-  expose:
-    - 8080
-mongodb:
-  container_name: jee7hotelmongo
-  image: mongo:3.1.9
-  expose:
-    - "27017"
+version: "2"
 
+services:
+  booking:
+    container_name: booking
+    image: koenighotze/jee7hotelbooking
+    ports:
+      - 8080:8080
+      - 9990:9990
+    # networks:
+    #   - front
+    #   - back
+    # links:
+    #   - mongodb
+    #   - guest
+    environment:
+      - MONGO_URI=mongodb
+      - GUEST_URI=guest:8080
+  guest:
+    container_name: guest
+    image: koenighotze/jee7hotelguest
+    ports:
+      - 8081:8080
+    expose:
+      - 8080
+    # networks:
+    #   - front
+  mongodb:
+    container_name: mongodb
+    image: mongo:3.1.9
+    expose:
+      - "27017"
+    # networks:
+    #   - back
+
+# networks:
+#   front:
+#     driver: overlay
+#   back:
+#     driver: overlay
