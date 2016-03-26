@@ -1,37 +1,22 @@
-booking:
-  container_name: jee7booking
-#  build: ../booking/src/docker/
-  image: koenighotze/jee7hotelbooking
-  ports:
-    - 8082:8080
-    - 9992:9990
-  links:
-    - mongodb
-mongodb:
-  container_name: jee7mongo
-  image: mongo:3.1.9
-  expose:
-    - "27017"
-facilities:
-  container_name: jee7facilities
-  image: koenighotze/jee7hotelfacilities
-#  build: ../facilities/src/docker/
-  ports:
-    - 9991:9990
-    - 8081:8080
-guest:
-  container_name: jee7guest
-  image: koenighotze/jee7hotelguest
-#  build: ../guest/src/docker/
-  ports:
-    - 9998:9990
-    - 8083:8080
-portal:
-  container_name: jee7portal
-  image: koenighotze/jee7hotelportal
-#  build: ../portal/src/docker/
-  environment:
-      DOCKER_MACHINE_IP: $(docker-machine ip default)
-  ports:
-    - 9995:9990
-    - 80:8080
+version: "2"
+
+services:
+  booking:
+    image: koenighotze/jee7hotelbooking
+    ports:
+      - 8082:8080
+    environment:
+      - MONGO_URI=mongodb
+      - GUEST_URI=guest:8080
+  mongodb:
+    image: mongo:3.1.9
+    expose:
+      - "27017"
+  facilities:
+   image: koenighotze/jee7hotelfacilities
+   ports:
+     - 8081:8080
+  guest:
+    image: koenighotze/jee7hotelguest
+    ports:
+      - 8083:8080
