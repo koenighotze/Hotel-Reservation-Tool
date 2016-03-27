@@ -8,15 +8,28 @@ services:
     environment:
       - MONGO_URI=mongodb
       - GUEST_URI=guest:8080
+    networks:
+      - front
+      - db
   mongodb:
     image: mongo:3.1.9
     expose:
       - "27017"
+    networks:
+      - db
   facilities:
    image: koenighotze/jee7hotelfacilities
    ports:
      - 8081:8080
+   networks:
+     - front
   guest:
     image: koenighotze/jee7hotelguest
     ports:
       - 8083:8080
+    networks:
+      - front
+
+networks:
+  front:
+  db:

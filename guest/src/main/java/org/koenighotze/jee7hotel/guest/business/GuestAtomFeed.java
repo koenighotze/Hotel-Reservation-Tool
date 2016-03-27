@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 import static java.time.ZoneOffset.UTC;
+import static java.util.Date.from;
 
 /**
  * @author dschmitz
@@ -55,19 +56,13 @@ public class GuestAtomFeed {
         feed.setUpdated(new Date());
 
         final String baseUri = uriInfo.getBaseUri().toString();
-        //feed.addLink("http://" + getLocalhostName() + ":8080/guest/rest/feed", "self"); // todo self ref
         feed.addLink(baseUri + "feed", "self"); // todo self ref
         guestService.getAllGuests().stream().forEach(guest -> {
             Entry entry = feed.addEntry();
             entry.setId(guest.getId() + "");
-            entry.setUpdated(Date.from(guest.getLastUpdate().toInstant(UTC)));
+            entry.setUpdated(from(guest.getLastUpdate().toInstant(UTC)));
             entry.setAttributeValue("Version", guest.getVersion() + "");
-//            entry.setTitle("Entry title");
-//            entry.setSummaryAsHtml("<p>This is the entry title</p>");
-//            entry.setPublished(new Date());
-//            entry.setContent(guest.toString());
-//            entry.addLink("http://localhost:8080/guest/rest/guest/" + guest.getId());
-            entry.addLink(baseUri + "guest/" + guest.getId());
+            entry.addLink(baseUri + "guests/" + guest.getPublicId());
         });
 
         return feed;
