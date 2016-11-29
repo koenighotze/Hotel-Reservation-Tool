@@ -11,6 +11,8 @@ a JEE7 app with JSF, persistence and REST services.
 
 Current build status: [![Build Status](https://travis-ci.org/koenighotze/Hotel-Reservation-Tool.svg?branch=master)](https://travis-ci.org/koenighotze/Hotel-Reservation-Tool)
 
+Codacy status: [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ffc68d6e59df47569d425c9193e767bd)](https://www.codacy.com/app/david-schmitz-privat/Hotel-Reservation-Tool?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=koenighotze/Hotel-Reservation-Tool&amp;utm_campaign=Badge_Grade)
+
 
 ## Quick Start
 
