@@ -13,6 +13,8 @@ Current build status: [![Build Status](https://travis-ci.org/koenighotze/Hotel-R
 
 Codacy status: [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ffc68d6e59df47569d425c9193e767bd)](https://www.codacy.com/app/david-schmitz-privat/Hotel-Reservation-Tool?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=koenighotze/Hotel-Reservation-Tool&amp;utm_campaign=Badge_Grade)
 
+[![](https://codescene.io/projects/1671/status.svg) Get more details at **codescene.io**.](https://codescene.io/projects/1671/jobs/latest-successful/results)
+
 
 ## Quick Start
 
